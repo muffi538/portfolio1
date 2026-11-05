@@ -1,7 +1,7 @@
 /**
  * Shared content types.
- * These describe the shape of the data in `data/`, not any visual design.
- * Extend them as real portfolio content is added.
+ * These describe the shape of the data in `data/`. Every value there is drawn
+ * from the portfolio deck or the resume — nothing is invented.
  */
 
 export type NavItem = {
@@ -11,33 +11,87 @@ export type NavItem = {
   href: string;
 };
 
+export type ExternalLink = {
+  label: string;
+  href: string;
+};
+
 export type SiteConfig = {
+  /** Short wordmark used in the navbar. */
   name: string;
+  /** Full name. */
+  fullName: string;
   title: string;
   description: string;
   url: string;
-  author: string;
+  role: string;
+  location: string;
+  email: string;
+  phone: string;
+  /** Path under /public. */
+  resume: string;
 };
 
-export type SocialLink = {
-  label: string;
-  href: string;
+export type SocialLink = ExternalLink & {
+  /** Shown under the label, e.g. "@mufmuf_eats". */
+  handle?: string;
+};
+
+/** A logo or photograph pulled out of the portfolio deck. */
+export type Asset = {
+  /** Path under /public/images. */
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
+export type ExperienceItem = {
+  slug: string;
+  role: string;
+  organisation: string;
+  /** Free-form, e.g. "Dec 2025". */
+  period: string;
+  location?: string;
+  /** Sub-title, e.g. "TikTok Shop UK | Affiliate & Creator Partnerships". */
+  focus?: string;
+  summary: string;
+  /** Bullet points. */
+  highlights: string[];
+  /** The headline number, e.g. "£5,000+ GMV". */
+  metric?: { value: string; label: string };
+  tags: string[];
+  logo?: Asset;
+  images?: Asset[];
+  links?: ExternalLink[];
 };
 
 export type Project = {
   slug: string;
   title: string;
+  /** e.g. "Website build", "Consumer research". */
+  kind: string;
+  year: string;
   summary: string;
+  highlights: string[];
   tags: string[];
-  /** Path under /public/images, e.g. "/images/projects/example.png". */
-  image?: string;
-  href?: string;
+  logo?: Asset;
+  images?: Asset[];
+  links?: ExternalLink[];
 };
 
-export type ExperienceItem = {
-  role: string;
-  organisation: string;
-  /** Free-form, e.g. "2023 — Present". */
+export type EducationItem = {
+  institution: string;
+  qualification: string;
   period: string;
+  location: string;
   description: string;
+  highlights: string[];
+  logo?: Asset;
+  image?: Asset;
+};
+
+export type SkillGroup = {
+  label: string;
+  detail: string;
 };

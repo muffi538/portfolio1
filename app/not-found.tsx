@@ -6,10 +6,21 @@ export default function NotFound() {
     <Section
       id="not-found"
       headingLevel="h1"
+      eyebrow="404"
       title="Page not found"
-      description="The page you are looking for does not exist."
+      description="That page doesn't exist. Try one of these instead."
     >
-      <ButtonLink href="/">Back to home</ButtonLink>
+      <div className="flex flex-wrap gap-3">
+        <ButtonLink href="/" variant="primary">
+          Home
+        </ButtonLink>
+        <ButtonLink href="/projects" variant="outline">
+          Projects
+        </ButtonLink>
+        <ButtonLink href="/contact" variant="outline">
+          Contact
+        </ButtonLink>
+      </div>
     </Section>
   );
 }

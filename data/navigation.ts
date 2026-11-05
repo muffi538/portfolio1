@@ -1,10 +1,10 @@
 import type { NavItem } from "@/lib/types";
 
-/** Primary navigation. Order here is the order rendered in the navbar and footer. */
+/** Primary navigation. This order drives the navbar and the footer. */
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
   { label: "Experience", href: "/experience" },
+  { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
 ];

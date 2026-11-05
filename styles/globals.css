@@ -7,36 +7,32 @@
 /* ---------------------------------------------------------------------------
  * Design tokens
  * ---------------------------------------------------------------------------
- * Intentionally neutral. These are the single source of truth for colour,
- * typography, spacing and layout. Replace the values here when the visual
- * direction is defined — no component should hard-code a raw colour or size.
+ * The palette is taken from the hero poster so the whole site reads as one
+ * piece: paper, ink and a single green accent. Change values here, not in
+ * components.
  * ------------------------------------------------------------------------- */
 
 :root {
-  /* Colour — neutral greyscale placeholders */
-  --color-background: #ffffff;
-  --color-foreground: #171717;
-  --color-muted: #f5f5f5;
-  --color-muted-foreground: #6b7280;
-  --color-border: #e5e7eb;
-  --color-accent: #171717;
-  --color-accent-foreground: #ffffff;
-  --color-ring: #9ca3af;
+  color-scheme: light;
+
+  /* Colour */
+  --color-paper: #ebebea;
+  --color-surface: #ffffff;
+  --color-ink: #111111;
+  --color-muted: #e2e2e0;
+  --color-muted-foreground: #5f5f5c;
+  --color-border: #d2d2cf;
+  --color-rule: #111111;
+  --color-accent: #5fb57a;
+  --color-accent-ink: #111111;
+  --color-ring: #111111;
 
   /* Typography */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Archivo Black", "Arial Black", sans-serif;
 
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-
-  --line-height-tight: 1.2;
+  --line-height-tight: 0.92;
+  --line-height-snug: 1.15;
   --line-height-normal: 1.6;
 
   /* Spacing scale */
@@ -50,51 +46,39 @@
   --space-3xl: 4rem;
 
   /* Layout */
-  --layout-max-width: 72rem;
-  --layout-gutter: 1rem;
+  --layout-max-width: 78rem;
+  --layout-gutter: 1.25rem;
   --layout-header-height: 4rem;
-  --layout-section-gap: 4rem;
+  --layout-section-gap: 3.5rem;
 
   /* Radii */
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius-lg: 0.875rem;
+  --radius-pill: 999px;
 }
 
 @media (min-width: 768px) {
   :root {
-    --layout-gutter: 2rem;
-    --layout-section-gap: 5rem;
+    --layout-gutter: 2.5rem;
+    --layout-section-gap: 5.5rem;
   }
 }
 
-/* Dark scheme kept minimal — tokens only, no theming decisions yet. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #0a0a0a;
-    --color-foreground: #ededed;
-    --color-muted: #171717;
-    --color-muted-foreground: #a1a1aa;
-    --color-border: #262626;
-    --color-accent: #ededed;
-    --color-accent-foreground: #0a0a0a;
-    --color-ring: #52525b;
-  }
-}
-
-/* Expose the tokens above to Tailwind utilities (bg-background, text-muted-foreground, …). */
+/* Expose the tokens to Tailwind utilities (bg-paper, text-ink, border-border, …). */
 @theme inline {
-  --color-background: var(--color-background);
-  --color-foreground: var(--color-foreground);
+  --color-paper: var(--color-paper);
+  --color-surface: var(--color-surface);
+  --color-ink: var(--color-ink);
   --color-muted: var(--color-muted);
   --color-muted-foreground: var(--color-muted-foreground);
   --color-border: var(--color-border);
   --color-accent: var(--color-accent);
-  --color-accent-foreground: var(--color-accent-foreground);
+  --color-accent-ink: var(--color-accent-ink);
   --color-ring: var(--color-ring);
 
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
 
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
@@ -102,7 +86,7 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Base styles
+ * Base
  * ------------------------------------------------------------------------- */
 
 @layer base {
@@ -111,16 +95,53 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     line-height: var(--line-height-normal);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 
   :focus-visible {
     outline: 2px solid var(--color-ring);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Display type — the deck's oversized condensed-black headings.
+ * ------------------------------------------------------------------------- */
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+/* Fills the measure: scales with the viewport, floored and capped. */
+@utility display-xl {
+  font-size: clamp(2.75rem, 11vw, 9rem);
+}
+
+@utility display-lg {
+  font-size: clamp(2.25rem, 7.5vw, 5.5rem);
+}
+
+@utility display-md {
+  font-size: clamp(1.75rem, 4.2vw, 3rem);
+}
+
+/* A hairline rule in ink, used to divide blocks the way the deck does. */
+@utility rule-ink {
+  border-top: 1px solid var(--color-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -134,5 +155,6 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

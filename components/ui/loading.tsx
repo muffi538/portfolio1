@@ -30,12 +30,12 @@ export function Loading({ message = "Loading…", className }: LoadingProps) {
       role="status"
       aria-live="polite"
       className={cn(
-        "flex min-h-[50vh] flex-col items-center justify-center gap-3 text-muted-foreground",
+        "flex min-h-[60vh] flex-col items-center justify-center gap-3 text-muted-foreground",
         className,
       )}
     >
       <Spinner label={message} />
-      <p className="text-sm">{message}</p>
+      <p className="text-sm font-medium uppercase tracking-widest">{message}</p>
     </div>
   );
 }

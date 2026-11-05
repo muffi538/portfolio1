@@ -1,8 +1,9 @@
-# Portfolio
+# Portfolio — Mufaddal Yousuf
 
-Foundation for a personal portfolio website. The structure, tooling and component
-architecture are in place; **the visual design and all real content are still to come**.
-Every page currently shows a placeholder marking where content will go.
+Personal portfolio site. Content is drawn from the portfolio deck and resume;
+the landing hero is the supplied `MascotPortfolioHero` template, with its
+palette (paper, ink, a single green accent) carried through the whole site and
+the deck's oversized condensed-black display type used for section headings.
 
 ---
 
@@ -14,7 +15,7 @@ Every page currently shows a placeholder marking where content will go.
 | [React](https://react.dev) | 19.3.0 | UI library |
 | [TypeScript](https://www.typescriptlang.org) | ^5 | Static typing (`strict` mode) |
 | [Tailwind CSS](https://tailwindcss.com) | ^4 | Utility-first styling |
-| [Framer Motion](https://www.framer.com/motion/) | ^14.9 | Animation — installed, not yet used |
+| [Framer Motion](https://www.framer.com/motion/) | ^14.9 | Scroll reveals (`components/ui/reveal.tsx`) |
 | [lucide-react](https://lucide.dev) | ^1.69 | Icon set |
 | [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | ^2.1 / ^3.7 | The `cn()` class helper in `lib/utils.ts` |
 | [ESLint](https://eslint.org) | ^9 | Linting via `eslint-config-next` |
@@ -24,11 +25,11 @@ Every page currently shows a placeholder marking where content will go.
 ```
 portfolio/
 ├── app/                        # Routes (App Router)
-│   ├── layout.tsx              # Root layout: fonts, metadata, SiteLayout
-│   ├── page.tsx                # /            Home
-│   ├── about/page.tsx          # /about
-│   ├── projects/page.tsx       # /projects
+│   ├── layout.tsx              # Fonts, metadata, Open Graph, no-JS reveal fallback
+│   ├── page.tsx                # /            Hero, intro, metrics, work, experience, CTA
+│   ├── about/page.tsx          # /about       About, skills, education, sport, food, awards
 │   ├── experience/page.tsx     # /experience
+│   ├── projects/page.tsx       # /projects
 │   ├── contact/page.tsx        # /contact
 │   ├── loading.tsx             # Route-level loading state
 │   ├── error.tsx               # Error boundary (client component)
@@ -38,27 +39,43 @@ portfolio/
 ├── components/
 │   ├── layout/                 # Site chrome
 │   │   ├── site-layout.tsx     # Skip link + navbar + main + footer
-│   │   ├── navbar.tsx          # Responsive navigation (client component)
+│   │   ├── navbar.tsx          # Responsive nav + résumé button (client component)
 │   │   ├── nav-link.tsx        # Single link with active state
 │   │   └── footer.tsx
-│   ├── sections/               # Page sections (one per route, all placeholders)
-│   │   ├── placeholder.tsx     # "content goes here" marker — delete when done
-│   │   ├── hero-section.tsx
+│   ├── sections/               # Page sections
+│   │   ├── hero-section.tsx            # Wraps the mascot hero with Mufaddal's copy
+│   │   ├── intro-section.tsx
+│   │   ├── metrics-section.tsx
+│   │   ├── selected-work-section.tsx   # Home teaser → /projects
+│   │   ├── experience-preview-section.tsx
+│   │   ├── cta-section.tsx
 │   │   ├── about-section.tsx
-│   │   ├── projects-section.tsx
+│   │   ├── skills-section.tsx
+│   │   ├── education-section.tsx
+│   │   ├── sport-section.tsx
+│   │   ├── food-section.tsx
+│   │   ├── awards-section.tsx
 │   │   ├── experience-section.tsx
+│   │   ├── projects-section.tsx
+│   │   ├── project-card.tsx
 │   │   └── contact-section.tsx
 │   └── ui/                     # Reusable primitives
+│       ├── mascot-portfolio-hero.tsx   # Supplied template (see note below)
 │       ├── container.tsx       # Page container (max width + gutter)
-│       ├── section.tsx         # Section wrapper (spacing + optional heading)
+│       ├── section.tsx         # Section wrapper (spacing + display heading)
 │       ├── button.tsx          # Button + ButtonLink
+│       ├── tag.tsx             # Outlined pill
+│       ├── reveal.tsx          # Scroll-reveal wrapper
 │       └── loading.tsx         # Spinner + Loading
 │
-├── data/                       # Content, separated from presentation
-│   ├── site.ts                 # Site metadata and social links
+├── data/                       # All content, separated from presentation
+│   ├── site.ts                 # Identity, contact details, social links, intro
 │   ├── navigation.ts           # Navigation items
-│   ├── projects.ts             # Project entries (empty)
-│   └── experience.ts           # Experience entries (empty)
+│   ├── experience.ts           # Six roles
+│   ├── projects.ts             # Four projects
+│   ├── education.ts            # Three institutions
+│   ├── skills.ts               # Skill groups, tools, core skills, awards
+│   └── sport.ts                # Football background
 │
 ├── lib/
 │   ├── utils.ts                # cn() class-name helper
@@ -70,11 +87,12 @@ portfolio/
 │   └── use-scroll-lock.ts      # Lock body scroll (used by the mobile menu)
 │
 ├── styles/
-│   └── globals.css             # Tailwind import, design tokens, base styles
+│   └── globals.css             # Tailwind import, design tokens, display utilities
 │
 ├── public/
-│   ├── images/                 # Portfolio images
-│   └── fonts/                  # Self-hosted font files
+│   ├── images/                 # Assets extracted from the portfolio deck
+│   ├── fonts/                  # Self-hosted font files (currently empty)
+│   └── mufaddal-yousuf-resume.pdf
 │
 ├── next.config.ts
 ├── tsconfig.json
@@ -149,15 +167,26 @@ Two options:
 
 ### Portfolio content
 
-Content lives in `data/`, not inside components:
+Content lives in `data/`, never hard-coded in JSX:
 
-- `data/site.ts` — name, title, description, author, social links.
-- `data/navigation.ts` — which links appear in the navbar and footer.
-- `data/projects.ts` — project entries (shape: `Project` in `lib/types.ts`).
-- `data/experience.ts` — experience entries (shape: `ExperienceItem`).
+| File | Holds |
+| --- | --- |
+| `data/site.ts` | Name, role, location, email, phone, social links, intro paragraphs |
+| `data/navigation.ts` | Which links appear in the navbar and footer |
+| `data/experience.ts` | Roles — Ultrahuman, Frido, ChewCheer, Procur.AI, @mufmuf_eats, Sports Secretary |
+| `data/projects.ts` | Elemax, Procur.AI, Nua, ChewCheer |
+| `data/education.ts` | Mesa School of Business, RIMS Pune, Cambridge Dubai |
+| `data/skills.ts` | Skill groups, tools, core skills, awards |
+| `data/sport.ts` | Football background and photos |
 
-The projects and experience sections already render these arrays and fall back to a
-placeholder while they are empty.
+Each entry is typed by `lib/types.ts`, so adding a field means extending the type
+first. Images attached to an entry carry their own `alt`, `width` and `height`.
+
+### Résumé
+
+`public/mufaddal-yousuf-resume.pdf`, linked from the navbar, the Contact page and
+the footer via `siteConfig.resume`. Replace the file in place to publish a new
+version — no code change needed.
 
 ### Components
 
@@ -197,6 +226,16 @@ A dark-scheme token set responds to `prefers-color-scheme: dark`, and a
   pattern.
 - **`AGENTS.md`** is generated and maintained by `next dev`; it is committed so the
   working tree stays clean.
+- **The hero component** (`components/ui/mascot-portfolio-hero.tsx`) is used as
+  supplied, with one change: the two font stacks point at this project's
+  `next/font` CSS variables (`--font-inter`, `--font-archivo`), keeping the
+  original families as fallbacks. The React Compiler lint rules misfire on its
+  ref-callback factory and its `requestAnimationFrame` loop, so `react-hooks/refs`
+  and `react-hooks/purity` are disabled for that one file in `eslint.config.mjs`
+  and stay on everywhere else.
+- **Scroll reveals** render at `opacity: 0` on the server and are animated in by
+  Framer Motion. A `<noscript>` rule in `app/layout.tsx` forces every
+  `[data-reveal]` block visible when JavaScript never runs.
 
 ## Accessibility
 
