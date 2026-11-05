@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* Explicit source roots so Tailwind scans every folder that can hold classes. */
+@source "../app";
+@source "../components";
+
+/* ---------------------------------------------------------------------------
+ * Design tokens
+ * ---------------------------------------------------------------------------
+ * Intentionally neutral. These are the single source of truth for colour,
+ * typography, spacing and layout. Replace the values here when the visual
+ * direction is defined — no component should hard-code a raw colour or size.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* Colour — neutral greyscale placeholders */
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #6b7280;
+  --color-border: #e5e7eb;
+  --color-accent: #171717;
+  --color-accent-foreground: #ffffff;
+  --color-ring: #9ca3af;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+
+  /* Spacing scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Layout */
+  --layout-max-width: 72rem;
+  --layout-gutter: 1rem;
+  --layout-header-height: 4rem;
+  --layout-section-gap: 4rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --layout-gutter: 2rem;
+    --layout-section-gap: 5rem;
+  }
+}
+
+/* Dark scheme kept minimal — tokens only, no theming decisions yet. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
+    --color-muted: #171717;
+    --color-muted-foreground: #a1a1aa;
+    --color-border: #262626;
+    --color-accent: #ededed;
+    --color-accent-foreground: #0a0a0a;
+    --color-ring: #52525b;
+  }
+}
+
+/* Expose the tokens above to Tailwind utilities (bg-background, text-muted-foreground, …). */
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-border: var(--color-border);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-ring: var(--color-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+/* ---------------------------------------------------------------------------
+ * Base styles
+ * ------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    line-height: var(--line-height-normal);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
