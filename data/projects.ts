@@ -99,6 +99,14 @@ export const projects: Project[] = [
     },
     images: [
       {
+        src: "/images/nua-pitch.jpg",
+        alt: "Mufaddal presenting an audience-insight slide to a seated room",
+        width: 960,
+        height: 1280,
+        // A 9:16 portrait in a 16:9 card: hold the slide headline and him.
+        focus: "center 55%",
+      },
+      {
         src: "/images/nua-presentation.jpg",
         alt: "Mufaddal presenting research findings to the Nua team",
         width: 317,
