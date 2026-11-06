@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 
 /* ------------------------------------------------------------------ types */
 
@@ -15,41 +16,19 @@ export type MascotPortfolioHeroProps = {
   minHeight?: string
 
   /* ---- top rule ---- */
-  /** Set in the green half of the index pill, top left. */
-  index?: string
-  /** Set beside the index, inside the same pill. */
-  discipline?: string
-  /** The bold line beside the pill. */
+  /** The bold line, top left. */
   tagline?: string
-  /** Centre-right, set inside braces: `{ first / second }`. */
-  collection?: [string, string]
   /** Top right, two lines beside the green dot. */
   reel?: [string, string]
 
   /* ---- headline ---- */
-  /** First headline line, before the arrow. */
-  year?: string
-  /** First headline line, after the arrow. */
-  initials?: string
-  /** The ringed stamp beside the first line. */
-  badge?: string
-  /** Second headline line. */
-  line2?: string
-  /** Third headline line. Its last letter gets the looping swash. */
-  line3?: string
-  /** Fourth line, the big one — set before the vertical tag. */
-  word?: string
-  /** The vertical label between `word` and the bracketed letters. */
-  verticalTag?: string
-  /** Set between the two arcs, followed by an asterisk. */
-  bracketed?: string
+  /** The name, one word per line. It is the whole headline. */
+  name?: [string, string]
 
-  /* ---- pill and services ---- */
-  /** White half of the pill. */
-  seekingLabel?: string
-  /** Green half of the pill. */
-  seeking?: string
-  /** Turns the green half into a link. */
+  /* ---- call to action and services ---- */
+  /** Label on the pill button below the name. Omit to drop the button. */
+  ctaLabel?: string
+  /** Where the button goes. Paths starting "/" route client-side. */
   href?: string
   /** The row along the bottom edge. */
   services?: string[]
@@ -191,24 +170,6 @@ function room(): { back: Seg[]; rays: Seg[]; depth: string[] } {
 
 const ROOM = room()
 
-/** Five irregular petals, closed, as one outline — so the stroke never crosses itself. */
-function flowerPath() {
-  const n = 180
-  const lens = [1, 0.84, 0.95, 0.78, 0.9]
-  let d = ""
-  for (let i = 0; i <= n; i++) {
-    const a = (i / n) * Math.PI * 2
-    const k = Math.floor(((a + Math.PI / 5) / (Math.PI * 2)) * 5) % 5
-    const lobe = Math.pow(Math.abs(Math.cos((a * 5) / 2)), 0.9)
-    const r = 50 * (0.3 + 0.7 * lobe * lens[k])
-    const x = 60 + Math.cos(a - Math.PI / 2) * r
-    const y = 60 + Math.sin(a - Math.PI / 2) * r
-    d += (i ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1)
-  }
-  return d + "Z"
-}
-
-const FLOWER = flowerPath()
 
 /* ----------------------------------------------------------------- styles */
 
@@ -218,52 +179,23 @@ const CSS = `
 .mph-room line,.mph-room path{vector-effect:non-scaling-stroke;}
 .mph-stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100cqw,177.78cqh);aspect-ratio:16/9;container:mphs / inline-size;}
 
-.mph-top{position:absolute;left:4.6%;right:4.6%;top:4.4%;display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;column-gap:2.4cqw;font-size:1.05cqw;font-weight:800;line-height:1.1;text-transform:uppercase;letter-spacing:.02em;}
-.mph-index{display:inline-flex;align-items:center;gap:.9em;border:.12cqw solid var(--mph-ink);border-radius:999px;padding:.12em .9em .12em .12em;font-size:.72em;}
-.mph-index b{background:var(--mph-accent);color:var(--mph-ink);border-radius:999px;padding:.3em 1.2em;font-weight:800;}
-.mph-tagline{font-size:1.18em;font-weight:900;margin-left:1cqw;}
-.mph-brace{grid-column:4;font-size:1.3em;font-weight:700;letter-spacing:.04em;margin-right:2.6cqw;}
-.mph-reel{grid-column:5;display:flex;align-items:center;gap:.8em;font-size:.8em;text-align:right;}
+.mph-top{position:absolute;left:4.6%;right:4.6%;top:4.4%;display:flex;align-items:center;justify-content:space-between;gap:2.4cqw;font-size:1.05cqw;font-weight:800;line-height:1.1;text-transform:uppercase;letter-spacing:.02em;}
+.mph-tagline{font-size:1.18em;font-weight:900;}
+.mph-reel{display:flex;align-items:center;gap:.8em;font-size:.8em;text-align:right;}
 .mph-reel i{display:block;width:1.9em;height:1.9em;border-radius:50%;background:var(--mph-accent);border:.12cqw solid var(--mph-ink);flex:none;}
 
-.mph-h1{position:absolute;left:8.8%;top:17.5%;margin:0;font-family:var(--mph-display);font-weight:900;font-size:6.5cqw;line-height:.93;letter-spacing:-.045em;text-transform:uppercase;color:var(--mph-ink);}
+.mph-h1{position:absolute;left:8.8%;top:29%;margin:0;font-family:var(--mph-display);font-weight:900;font-size:7.2cqw;line-height:.96;letter-spacing:-.045em;text-transform:uppercase;color:var(--mph-ink);}
 .mph-line{display:block;width:max-content;white-space:nowrap;position:relative;}
 .mph-ch{display:inline-block;transition:transform .35s cubic-bezier(.3,1.6,.5,1),color .2s;}
 .mph-ch:hover{transform:translateY(-.08em) rotate(-4deg);color:var(--mph-accent);}
-.mph-arrow{display:inline-block;width:.6em;height:.6em;margin:0 .06em 0 .1em;vertical-align:-.02em;}
-.mph-arrow path{stroke:currentColor;stroke-width:15;fill:none;stroke-linecap:square;}
-.mph-badge{position:absolute;top:-.02em;left:calc(100% + .55em);font-family:var(--mph-sans);font-size:.2em;font-weight:800;letter-spacing:0;line-height:1;text-transform:none;border:.13cqw solid var(--mph-ink);border-radius:50%;padding:.75em 1.15em;transform:rotate(-9deg);transition:background .25s,transform .4s cubic-bezier(.3,1.6,.5,1);cursor:default;}
-.mph-badge sup{font-size:.7em;margin-left:.1em;}
-.mph-badge:hover{background:var(--mph-accent);transform:rotate(6deg) scale(1.08);}
-.mph-swash{position:relative;display:inline-block;}
-.mph-swash svg{position:absolute;left:-.95em;top:.3em;width:2.55em;height:.72em;overflow:visible;pointer-events:none;}
-.mph-swash path{fill:none;stroke:var(--mph-ink);stroke-width:.2cqw;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;animation:mph-draw 1.6s .5s cubic-bezier(.6,0,.2,1) both;}
-.mph-h1:hover .mph-swash path{animation:mph-draw 1.1s cubic-bezier(.6,0,.2,1) both;}
-.mph-l4{font-size:1.2em;letter-spacing:-.02em;margin-top:.04em;}
-.mph-vtag{display:inline-flex;flex-direction:column;align-items:stretch;vertical-align:-.02em;margin:0 .1em 0 .06em;width:.2em;}
-.mph-vtag span{display:block;background:var(--mph-ink);color:var(--mph-paper);writing-mode:vertical-rl;font-family:var(--mph-sans);font-size:.105em;font-weight:800;letter-spacing:.12em;padding:.55em 0;text-align:center;}
-.mph-vtag i{display:block;height:.34em;background:repeating-linear-gradient(to bottom,var(--mph-ink) 0 .02em,transparent .02em .045em);}
-.mph-bracket{position:relative;display:inline-block;padding:0 .08em;}
-.mph-bracket svg{position:absolute;left:-.02em;right:-.02em;top:-.1em;bottom:-.12em;width:calc(100% + .04em);height:calc(100% + .22em);overflow:visible;}
-.mph-bracket path{fill:none;stroke:var(--mph-ink);stroke-width:.62cqw;stroke-linecap:butt;transition:transform .45s cubic-bezier(.3,1.6,.5,1);}
-.mph-bracket:hover .mph-arc-t{transform:translateY(-10px);}
-.mph-bracket:hover .mph-arc-b{transform:translateY(10px);}
-.mph-star{display:inline-block;font-size:.66em;vertical-align:.5em;margin-left:.02em;transition:transform .6s cubic-bezier(.3,1.6,.5,1);}
-.mph-l4:hover .mph-star{transform:rotate(180deg) scale(1.2);}
 
-.mph-pill{position:absolute;left:8.8%;top:72.8%;display:flex;align-items:stretch;font-size:1.72cqw;font-weight:800;line-height:1;}
-.mph-pill-a{position:relative;z-index:1;background:#fff;color:var(--mph-ink);border:.16cqw solid var(--mph-ink);border-radius:999px;padding:.72em 1.25em;}
-.mph-pill-b{display:inline-flex;align-items:center;gap:.5em;margin-left:-1.4em;padding:.72em 3.4em .72em 3.1em;background:var(--mph-accent);color:var(--mph-ink);border:.16cqw solid var(--mph-ink);border-radius:0 999px 999px 0;text-decoration:none;transition:background .25s,color .25s,padding .35s cubic-bezier(.3,1.4,.5,1);}
-.mph-pill-b em{font-style:normal;display:inline-block;width:0;overflow:hidden;opacity:0;transition:width .35s,opacity .25s;}
-.mph-pill-b:hover,.mph-pill-b:focus-visible{background:var(--mph-ink);color:var(--mph-paper);padding-right:2.4em;outline:none;}
-.mph-pill-b:hover em,.mph-pill-b:focus-visible em{width:1em;opacity:1;}
-
-.mph-flower{position:absolute;left:35.4%;top:64%;width:7.4%;aspect-ratio:1;animation:mph-spin 22s linear infinite;cursor:grab;}
-.mph-flower svg{display:block;width:100%;height:100%;overflow:visible;transition:transform .5s cubic-bezier(.3,1.8,.5,1);}
-.mph-flower:hover svg{transform:scale(1.18) rotate(40deg);}
-.mph-flower path{fill:#fff;stroke:var(--mph-ink);stroke-width:2.6;stroke-linejoin:round;}
-.mph-curl{position:absolute;left:43.2%;top:52.5%;width:5.6%;aspect-ratio:1;overflow:visible;pointer-events:none;}
-.mph-curl path{fill:none;stroke:var(--mph-ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;animation:mph-draw 1.4s 1s cubic-bezier(.6,0,.2,1) both;}
+/* Minimal pill: ink type, a hairline border, the arrow nudging on hover and
+   the whole button easing down on press. */
+.mph-cta{position:absolute;left:8.8%;top:62%;display:inline-flex;align-items:center;gap:.65em;padding:1em 2.1em;border:.08cqw solid color-mix(in srgb,var(--mph-ink) 30%,transparent);border-radius:999px;background:transparent;color:var(--mph-ink);font-family:var(--mph-sans);font-size:1.5cqw;font-weight:700;line-height:1;letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:border-color .35s cubic-bezier(.22,1,.36,1),background-color .35s cubic-bezier(.22,1,.36,1),transform .18s cubic-bezier(.22,1,.36,1);}
+.mph-cta em{font-style:normal;display:inline-block;transition:transform .35s cubic-bezier(.22,1,.36,1);}
+.mph-cta:hover,.mph-cta:focus-visible{border-color:var(--mph-ink);background:color-mix(in srgb,var(--mph-ink) 6%,transparent);}
+.mph-cta:hover em,.mph-cta:focus-visible em{transform:translate(.22em,-.22em);}
+.mph-cta:active{transform:scale(.96);}
 
 .mph-services{position:absolute;left:4.6%;bottom:4.6%;display:flex;gap:4cqw;margin:0;padding:0;list-style:none;font-size:1.3cqw;font-weight:800;}
 .mph-services li{position:relative;cursor:default;padding-bottom:.25em;}
@@ -284,24 +216,32 @@ const CSS = `
 .mph-bubble[data-on="true"]{transform:scale(1) rotate(-4deg);opacity:1;}
 
 @keyframes mph-draw{from{stroke-dashoffset:1;}to{stroke-dashoffset:0;}}
-@keyframes mph-spin{to{transform:rotate(360deg);}}
 @keyframes mph-wiggle{0%{transform:rotate(0);}25%{transform:rotate(-14deg);}55%{transform:rotate(9deg);}80%{transform:rotate(-4deg);}100%{transform:rotate(0);}}
 
 @container mph (orientation: portrait){
 .mph-stage{top:0;transform:translateX(-50%);width:min(100cqw,56.25cqh);height:100cqh;aspect-ratio:auto;}
-.mph-top{top:5cqw;left:6%;right:6%;grid-template-columns:auto 1fr auto;font-size:2.5cqw;}
-.mph-tagline,.mph-brace{display:none;}
-.mph-reel{grid-column:3;}
-.mph-h1{left:7%;top:17cqw;font-size:11.4cqw;}
-.mph-badge{left:calc(100% + .35em);top:.1em;font-size:.22em;}
-.mph-pill{left:7%;top:70cqw;font-size:3.5cqw;}
-.mph-flower{left:auto;right:6%;top:66cqw;width:13%;}
-.mph-curl{left:auto;right:4%;top:44cqw;width:11%;}
+.mph-top{top:5cqw;left:6%;right:6%;font-size:2.5cqw;}
+.mph-h1{left:7%;top:22cqw;font-size:13.5cqw;}
+.mph-cta{left:7%;top:56cqw;font-size:3.4cqw;border-width:.18cqw;}
 .mph-services{left:7%;right:7%;bottom:auto;top:84cqw;flex-wrap:wrap;gap:1.6cqw 5cqw;font-size:3cqw;}
 .mph-rule-l{left:3%;top:22cqw;height:12cqw;}
 .mph-rule-r{left:95%;top:auto;bottom:40cqw;height:12cqw;}
 .mph-char{left:12%;width:76%;bottom:-.6%;}
 .mph-bubble{font-size:3cqw;left:-8%;top:2%;max-width:52%;}
+}
+
+/* Tall, narrow stages (phones) have more height than the portrait rules above
+   can fill, which left a band of empty grid between the services row and the
+   character. Spread the block out and let the character rise to meet it. The
+   bound excludes tablets, whose stage is wider relative to its height. */
+@container mph (orientation: portrait) and (max-aspect-ratio: 5/9){
+.mph-h1{top:28cqw;}
+.mph-cta{top:62cqw;}
+/* Anchored to the bottom, not the top: the character is bottom-aligned and its
+   height is a multiple of the stage width, so this keeps the same clearance
+   above its head on every phone rather than drifting with stage height. */
+.mph-services{top:auto;bottom:104cqw;}
+.mph-char{left:6%;width:88%;}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -325,21 +265,10 @@ const DEFAULT_GREETINGS = ["Hi there!", "Let's make something bold.", "Psst — 
 export default function MascotPortfolioHero({
   height = "100svh",
   minHeight = "440px",
-  index = "08/01",
-  discipline = "Visual design",
   tagline = "Make it helpful",
-  collection = ["Selected", "Works"],
-  reel = ["Sample reels @ 2026", "Visual design"],
-  year = "2026",
-  initials = "UI",
-  badge = "Hire me",
-  line2 = "Portfolio",
-  line3 = "Design",
-  word = "Work",
-  verticalTag = "Visual",
-  bracketed = "S",
-  seekingLabel = "Seeking*",
-  seeking = "UI / Graphic",
+  reel = ["Portfolio", "Visual design"],
+  name = ["Portfolio", "Design"],
+  ctaLabel,
   href,
   services = DEFAULT_SERVICES,
   greetings = DEFAULT_GREETINGS,
@@ -501,9 +430,6 @@ export default function MascotPortfolioHero({
       </span>
     ))
 
-  const l3 = Array.from(line3)
-  const l3Head = l3.slice(0, -1).join("")
-  const l3Tail = l3[l3.length - 1] ?? ""
   const greeting = said >= 0 ? greetings[said % greetings.length] : greetings[0]
 
   const vars = {
@@ -516,10 +442,10 @@ export default function MascotPortfolioHero({
     minHeight,
   } as React.CSSProperties
 
-  const pillInner = (
+  const ctaInner = ctaLabel && (
     <>
-      {seeking}
-      <em aria-hidden="true">→</em>
+      {ctaLabel}
+      <em aria-hidden="true">↗</em>
     </>
   )
 
@@ -543,16 +469,7 @@ export default function MascotPortfolioHero({
 
       <div className="mph-stage">
         <header className="mph-top">
-          <span className="mph-index">
-            <b>{index}</b>
-            {discipline}
-          </span>
           <span className="mph-tagline">{tagline}</span>
-          <span className="mph-brace">
-            {"{"}
-            {collection[0]}/{collection[1]}
-            {"}"}
-          </span>
           <span className="mph-reel">
             <i aria-hidden="true" />
             <span>
@@ -566,76 +483,33 @@ export default function MascotPortfolioHero({
         <span className="mph-rule mph-rule-l" aria-hidden="true" />
         <span className="mph-rule mph-rule-r" aria-hidden="true" />
 
-        <h1 className="mph-h1" aria-label={[year, initials, line2, line3, word + bracketed].join(" ")}>
+        <h1 className="mph-h1" aria-label={name.join(" ")}>
           <span className="mph-line" aria-hidden="true">
-            {chars(year)}
-            <svg className="mph-arrow" viewBox="0 0 100 100">
-              <path d="M14 14 L84 84 M84 30 V84 H30" />
-            </svg>
-            {chars(initials)}
-            <span className="mph-badge">
-              {badge}
-              <sup>@</sup>
-            </span>
+            {chars(name[0])}
+            {/* Separates the two words for anything reading textContent.
+                It collapses at the end of the line, so layout is unchanged. */}{" "}
           </span>
           <span className="mph-line" aria-hidden="true">
-            {chars(line2)}
-          </span>
-          <span className="mph-line" aria-hidden="true">
-            {chars(l3Head)}
-            <span className="mph-swash">
-              <span className="mph-ch">{l3Tail}</span>
-              <svg viewBox="0 0 255 72" preserveAspectRatio="none">
-                <path
-                  pathLength={1}
-                  d="M6 44 C40 18 150 4 222 14 C262 20 258 48 214 58 C150 72 60 70 30 60 C10 53 20 40 60 34"
-                />
-              </svg>
-            </span>
-          </span>
-          <span className="mph-line mph-l4" aria-hidden="true">
-            {chars(word)}
-            <span className="mph-vtag">
-              <span>{verticalTag}</span>
-              <i />
-            </span>
-            <span className="mph-bracket">
-              <svg viewBox="0 0 100 120" preserveAspectRatio="none">
-                <path className="mph-arc-t" vectorEffect="non-scaling-stroke" d="M4 16 Q50 -8 96 16" />
-                <path className="mph-arc-b" vectorEffect="non-scaling-stroke" d="M4 104 Q50 128 96 104" />
-              </svg>
-              {bracketed}
-            </span>
-            <span className="mph-star">*</span>
+            {chars(name[1])}
           </span>
         </h1>
 
-        <svg className="mph-curl" viewBox="0 0 100 100" aria-hidden="true">
-          <path
-            pathLength={1}
-            d="M92 8 C70 6 52 22 58 40 C63 56 84 52 80 36 C76 22 50 30 40 48 C32 62 26 74 16 84 M14 66 L14 86 L34 86"
-          />
-        </svg>
-
-        <div className="mph-pill">
-          <span className="mph-pill-a">{seekingLabel}</span>
-          {href ? (
-            <a className="mph-pill-b" href={href}>
-              {pillInner}
-            </a>
+        {ctaInner &&
+          (href ? (
+            href.startsWith("/") ? (
+              <Link className="mph-cta" href={href}>
+                {ctaInner}
+              </Link>
+            ) : (
+              <a className="mph-cta" href={href}>
+                {ctaInner}
+              </a>
+            )
           ) : (
-            <span className="mph-pill-b" tabIndex={0}>
-              {pillInner}
-            </span>
-          )}
-        </div>
-
-        <div className="mph-flower" aria-hidden="true">
-          <svg viewBox="0 0 120 120">
-            <path d={FLOWER} />
-            <circle cx="60" cy="60" r="4" fill="none" stroke={ink} strokeWidth="2" />
-          </svg>
-        </div>
+            <button type="button" className="mph-cta">
+              {ctaInner}
+            </button>
+          ))}
 
         <ul className="mph-services">
           {services.map((s) => (

@@ -1,31 +1,21 @@
 import MascotPortfolioHero from "@/components/ui/mascot-portfolio-hero";
-import { siteConfig } from "@/data/site";
 
 /**
- * The landing poster. Copy is Mufaddal's; the character, palette and layout
- * are the supplied template, untouched.
+ * The landing poster: the name, one supporting line top-left, a single call to
+ * action and the character. Everything else the template offered — the index
+ * pill, the year, the ringed badge, the bracketed word and the swash — is off,
+ * to keep the composition quiet enough for the name to lead.
  */
 export function HeroSection() {
   return (
     <MascotPortfolioHero
       height="calc(100svh - var(--layout-header-height))"
       minHeight="560px"
-      index="2026"
-      discipline="Growth & Ops"
       tagline="Zero to one"
-      collection={["Selected", "Work"]}
-      reel={["Portfolio @ 2026", "Growth · Ops · D2C"]}
-      year="2026"
-      initials="MY"
-      badge="Hire me"
-      line2="Mufaddal"
-      line3="Yousuf"
-      word="Work"
-      verticalTag="Growth"
-      bracketed="S"
-      seekingLabel="Seeking*"
-      seeking="Growth / Ops roles"
-      href={`mailto:${siteConfig.email}`}
+      reel={["Portfolio", "Bengaluru, India"]}
+      name={["Mufaddal", "Yousuf"]}
+      ctaLabel="Currently Building"
+      href="/projects"
       /* Kept short: the row sits along the bottom edge and longer labels
          run under the character. */
       services={["Growth", "Supply chain", "D2C brands", "AI products"]}
