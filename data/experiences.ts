@@ -498,10 +498,11 @@ export const experience: ExperienceItem[] = [
         image: {
           src: "/images/mesa-team-huddle.jpg",
           alt: "Mufaddal in a Muffi 9 shirt briefing a circle of players on a floodlit pitch",
-          width: 930,
-          height: 1600,
+          width: 956,
+          height: 1645,
           ratio: "1 / 1",
-          focus: "center 48%",
+          // Holds the whole circle of players and him head to shin.
+          focus: "center 40%",
         },
       },
       work: {
