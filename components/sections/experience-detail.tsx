@@ -22,7 +22,7 @@ function Block({
   if (empty) return null;
 
   return (
-    <section className="rule-ink pt-8">
+    <section className="rule-ink pt-7">
       <Reveal>
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
           {index}
@@ -150,7 +150,7 @@ export function ExperienceDetail({ item }: { item: ExperienceItem }) {
 
       {/* Body */}
       <Container>
-        <div className="space-y-14 pb-6">
+        <div className="space-y-12 pb-6">
           <Block title="Overview" block={detail.overview} index="01 / Overview" />
           <Block
             title="Responsibilities"
@@ -165,7 +165,7 @@ export function ExperienceDetail({ item }: { item: ExperienceItem }) {
           <Block title="Outcomes" block={detail.outcomes} index="04 / Outcomes" />
 
           {/* Visuals */}
-          <section className="rule-ink pt-8">
+          <section className="rule-ink pt-7">
             <Reveal>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
                 05 / Visuals

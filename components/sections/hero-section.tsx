@@ -22,7 +22,7 @@ export function HeroSection() {
       greetings={[
         "Hi, I'm Mufaddal.",
         "I build brands and ship products.",
-        "Open to growth & ops roles.",
+        "Open to internships with D2C brands.",
         "Okay, you can stop poking me :)",
       ]}
     />

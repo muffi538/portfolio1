@@ -10,10 +10,10 @@ export function ContactSection() {
       id="contact"
       headingLevel="h1"
       eyebrow="Contact"
-      title="Let's talk"
-      description="Open to growth, operations and D2C roles — and to anyone building something from zero."
+      title="Let's connect."
+      description="Interested in collaborating, building something together, or discussing an opportunity? I'd love to hear from you."
     >
-      <div className="grid gap-12 md:grid-cols-2">
+      <div className="grid gap-10 md:grid-cols-2">
         <Reveal>
           <dl className="rule-ink">
             <div className="flex items-center gap-4 border-b border-border py-5">
@@ -49,7 +49,7 @@ export function ContactSection() {
             </div>
           </dl>
 
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href={`mailto:${siteConfig.email}`} variant="accent" size="lg">
               <Mail className="size-4" aria-hidden="true" />
               Email me

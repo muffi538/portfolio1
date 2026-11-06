@@ -49,7 +49,7 @@
   --layout-max-width: 78rem;
   --layout-gutter: 1.25rem;
   --layout-header-height: 4rem;
-  --layout-section-gap: 3.5rem;
+  --layout-section-gap: 2.5rem;
 
   /* Radii */
   --radius-sm: 0.25rem;
@@ -61,7 +61,7 @@
 @media (min-width: 768px) {
   :root {
     --layout-gutter: 2.5rem;
-    --layout-section-gap: 5.5rem;
+    --layout-section-gap: 3.5rem;
   }
 }
 

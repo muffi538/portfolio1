@@ -14,7 +14,7 @@ export function ExperiencePreviewSection() {
     >
       <ExperienceList />
 
-      <div className="mt-12">
+      <div className="mt-10">
         <ButtonLink href="/experience" variant="primary">
           Full experience
         </ButtonLink>

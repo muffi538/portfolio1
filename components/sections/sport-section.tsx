@@ -6,12 +6,12 @@ import { sport } from "@/data/sport";
 export function SportSection() {
   return (
     <Section id="sport" eyebrow="Extracurricular" title="Sportsman" ruled>
-      <div className="grid gap-12 md:grid-cols-[1fr_1fr]">
+      <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-12">
         <Reveal>
           <p className="text-lg leading-relaxed sm:text-xl">{sport.summary}</p>
-          <p className="mt-6 leading-relaxed text-muted-foreground">{sport.club}</p>
+          <p className="mt-4 leading-relaxed text-muted-foreground">{sport.club}</p>
 
-          <ul className="mt-8 space-y-2">
+          <ul className="mt-6 space-y-2">
             {sport.wins.map((win) => (
               <li key={win} className="flex gap-3 text-sm font-medium leading-relaxed">
                 <span
@@ -23,7 +23,7 @@ export function SportSection() {
             ))}
           </ul>
 
-          <div className="mt-8 inline-flex items-center gap-4 rounded-lg border border-border bg-surface p-4">
+          <div className="mt-6 inline-flex items-center gap-4 rounded-lg border border-border bg-surface p-4">
             <Image
               src={sport.logo.src}
               alt={sport.logo.alt}

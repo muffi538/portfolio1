@@ -5,9 +5,9 @@ export const siteConfig: SiteConfig = {
   fullName: "Mufaddal Yousuf Vijliwala",
   title: "Mufaddal Yousuf",
   description:
-    "Growth, operations and 0→1 brand building. Student at Mesa School of Business, Bengaluru. Previously Ultrahuman (Growth UK) and Frido.",
+    "Student at Mesa School of Business, Bengaluru, building D2C brands and AI products. Previously Ultrahuman and Frido.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  role: "Growth · Operations · D2C",
+  role: "Building brands and products",
   location: "Bengaluru, India",
   email: "mufaddal66you@gmail.com",
   phone: "8010592847",
@@ -36,6 +36,16 @@ export const intro = [
   "I'm a first-year student at Mesa School of Business, pursuing entrepreneurship while serving as Sports Secretary on the student council.",
   "Always exploring new ideas — currently building a sports brand, working on football equipment, specifically engineering the best shoe possible.",
 ];
+
+/**
+ * How availability is stated, in the one place it is stated. Deliberately
+ * understated — a line, not a banner.
+ */
+export const availability = {
+  label: "Open to internship opportunities",
+  description:
+    "Interested in working with ambitious D2C brands, startups and teams building something from zero.",
+};
 
 /** Background and interests — from the deck's sportsman and food-reviewer slides. */
 export const background =

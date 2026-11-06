@@ -24,7 +24,7 @@ export function SelectedWorkSection() {
         ))}
       </ul>
 
-      <div className="mt-12">
+      <div className="mt-10">
         <ButtonLink href="/projects" variant="primary">
           All projects
         </ButtonLink>

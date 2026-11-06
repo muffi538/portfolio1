@@ -43,7 +43,7 @@ export type MascotPortfolioHeroProps = {
   tag?: string
 
   /* ---- palette ---- */
-  /** The green: index pill, dot, seeking pill, hover rules. */
+  /** The green: the status dot and the name underline on hover. */
   accent?: string
   /** The sheet. */
   paper?: string

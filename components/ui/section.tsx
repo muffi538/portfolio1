@@ -53,7 +53,7 @@ export function Section({
   const content = (
     <>
       {(title || description || eyebrow) && (
-        <header className={cn("mb-10", ruled && "rule-ink pt-6")}>
+        <header className={cn("mb-8", ruled && "rule-ink pt-5")}>
           {eyebrow && (
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
               {eyebrow}
@@ -65,7 +65,7 @@ export function Section({
             </Heading>
           )}
           {description && (
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               {description}
             </p>
           )}

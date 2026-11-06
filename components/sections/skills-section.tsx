@@ -10,7 +10,7 @@ export function SkillsSection() {
         {skillGroups.map((group, i) => (
           <div key={group.label} className="border-b border-border">
             <Reveal delay={i * 0.05}>
-              <div className="flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:gap-10">
+              <div className="flex flex-col gap-2 py-5 sm:flex-row sm:items-baseline sm:gap-10">
                 <dt className="sm:w-64 sm:shrink-0">
                   <Tag>{group.label}</Tag>
                 </dt>
@@ -21,7 +21,7 @@ export function SkillsSection() {
         ))}
       </dl>
 
-      <div className="mt-12 grid gap-10 sm:grid-cols-2">
+      <div className="mt-10 grid gap-8 sm:grid-cols-2">
         <Reveal>
           <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
             Tools

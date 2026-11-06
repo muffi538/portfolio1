@@ -6,21 +6,21 @@ import { education } from "@/data/education";
 export function EducationSection() {
   return (
     <Section id="education" eyebrow="Education" title="Education" ruled>
-      <ol className="space-y-12">
+      <ol className="space-y-10">
         {education.map((item, i) => (
           <li key={item.institution}>
             <Reveal delay={Math.min(i, 2) * 0.06}>
-              <article className="grid gap-8 md:grid-cols-[1fr_18rem]">
+              <article className="grid gap-6 md:grid-cols-[1fr_18rem] md:gap-10">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
                     {item.period} · {item.location}
                   </p>
-                  <h3 className="display display-md mt-3">{item.institution}</h3>
+                  <h3 className="display display-md mt-2">{item.institution}</h3>
                   <p className="mt-2 text-base font-bold">{item.qualification}</p>
-                  <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
+                  <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
-                  <ul className="mt-5 space-y-2">
+                  <ul className="mt-4 space-y-2">
                     {item.highlights.map((highlight) => (
                       <li key={highlight} className="flex gap-3 text-sm leading-relaxed">
                         <span

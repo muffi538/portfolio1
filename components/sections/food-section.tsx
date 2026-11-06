@@ -12,11 +12,11 @@ export function FoodSection() {
 
   return (
     <Section id="food" eyebrow="Extracurricular" title="Food reviewer" ruled>
-      <div className="grid gap-12 md:grid-cols-[1fr_1fr]">
+      <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-12">
         <Reveal>
           <p className="text-lg leading-relaxed sm:text-xl">{entry.summary}</p>
 
-          <ul className="mt-8 space-y-2.5">
+          <ul className="mt-6 space-y-2.5">
             {entry.highlights.map((highlight) => (
               <li
                 key={highlight}
@@ -32,14 +32,14 @@ export function FoodSection() {
           </ul>
 
           {entry.metric && (
-            <div className="mt-8 inline-block rounded-lg border border-ink bg-accent p-6 text-accent-ink">
+            <div className="mt-6 inline-block rounded-lg border border-ink bg-accent p-6 text-accent-ink">
               <p className="display display-md">{entry.metric.value}</p>
               <p className="mt-2 text-sm font-medium">{entry.metric.label}</p>
             </div>
           )}
 
           {entry.links?.map((link) => (
-            <p key={link.href} className="mt-8">
+            <p key={link.href} className="mt-6">
               <a
                 href={link.href}
                 target="_blank"
