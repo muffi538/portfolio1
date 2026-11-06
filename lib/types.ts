@@ -46,6 +46,17 @@ export type Asset = {
   height: number;
 };
 
+/**
+ * The photograph beside the About copy.
+ * `fit` is "cover" for an ordinary photograph that should fill the panel, and
+ * "contain" for a cut-out with transparency that would be ruined by cropping.
+ */
+export type AboutImage = Asset & {
+  fit: "cover" | "contain";
+  /** CSS object-position, e.g. "center 25%". */
+  focus?: string;
+};
+
 export type ExperienceItem = {
   slug: string;
   role: string;

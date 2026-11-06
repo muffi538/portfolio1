@@ -1,4 +1,4 @@
-import type { SiteConfig, SocialLink } from "@/lib/types";
+import type { AboutImage, SiteConfig, SocialLink } from "@/lib/types";
 
 export const siteConfig: SiteConfig = {
   name: "Mufaddal",
@@ -36,6 +36,32 @@ export const intro = [
   "I'm a first-year student at Mesa School of Business, pursuing entrepreneurship while serving as Sports Secretary on the student council.",
   "Always exploring new ideas — currently building a sports brand, working on football equipment, specifically engineering the best shoe possible.",
 ];
+
+/** Background and interests — from the deck's sportsman and food-reviewer slides. */
+export const background =
+  "Beyond that: football at club level, previously with the AS Roma youth setup in Dubai, and @mufmuf_eats — a Bengaluru food-review channel past a million views.";
+
+/** The second half of the deck's opening slide, pulled out so it reads as current. */
+export const currentlyBuilding = {
+  label: "Currently building",
+  text: "A sports brand — football equipment, and specifically engineering the best shoe possible.",
+};
+
+/**
+ * The photograph beside the About copy.
+ * TODO: swap `src`, `alt`, `width` and `height` for the new photograph, and set
+ * `fit` to "cover" so it fills the panel edge to edge. The current file is the
+ * transparent cut-out from the deck, which is why it is contained rather than
+ * cropped.
+ */
+export const aboutImage: AboutImage = {
+  src: "/images/football-muffi-66.png",
+  alt: "Mufaddal on the pitch in a shirt reading MUFFI 66",
+  width: 464,
+  height: 1120,
+  fit: "contain",
+  focus: "center bottom",
+};
 
 /** One-line positioning used on the home page and in metadata. */
 export const positioning =
