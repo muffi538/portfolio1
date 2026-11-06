@@ -124,6 +124,14 @@ export const experience: ExperienceItem[] = [
           "The role spanned Amazon, e-commerce, Q-commerce and D2C channels, across the India and Middle East markets.",
         ],
         todo: "Add a line on what Frido makes and sells.",
+        image: {
+          src: "/images/frido-office.jpg",
+          alt: "The Frido office reception wall, carrying the brand mark and the line freedom to do more",
+          width: 1000,
+          height: 1333,
+          ratio: "1 / 1",
+          focus: "center 50%",
+        },
       },
       responsibilities: {
         points: [
@@ -131,6 +139,14 @@ export const experience: ExperienceItem[] = [
           "Inventory and supply chain.",
           "Marketplace operations across Amazon, e-commerce, Q-commerce and D2C.",
         ],
+        image: {
+          src: "/images/frido-stock-count.jpg",
+          alt: "Mufaddal counting stock against a notebook in front of racked Frido inventory",
+          width: 1000,
+          height: 1333,
+          ratio: "1 / 1",
+          focus: "center 62%",
+        },
       },
       work: {
         points: [
@@ -138,14 +154,30 @@ export const experience: ExperienceItem[] = [
           "Built an Amazon Performance Dashboard comparing India against Middle East marketplace performance.",
           "Built operational dashboards to improve visibility across key metrics.",
         ],
+        image: {
+          src: "/images/frido-dashboard-build.jpg",
+          alt: "A laptop on a windowsill showing the dashboard code in progress, overlooking the city",
+          width: 1000,
+          height: 1333,
+          ratio: "1 / 1",
+          focus: "center 60%",
+        },
+        imageSide: "left",
       },
       outcomes: {
         points: [
           "Improved visibility, tracking and decision-making across procurement and marketplace operations.",
         ],
+        image: {
+          src: "/images/frido-warehouse-floor.jpg",
+          alt: "The Frido warehouse floor, with racking and pallets of stock running the length of the building",
+          width: 1000,
+          height: 1333,
+          ratio: "1 / 1",
+          focus: "center 58%",
+        },
         todo: "Add numbers if you have them — time saved, SKUs covered, accuracy before and after.",
       },
-      visualsTodo: "Add dashboard screenshots and warehouse photographs.",
     },
   },
   {
