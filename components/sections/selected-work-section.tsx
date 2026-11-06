@@ -18,7 +18,12 @@ export function SelectedWorkSection() {
         {projects.slice(0, 3).map((project, i) => (
           <li key={project.slug}>
             <Reveal delay={i * 0.08} className="h-full">
-              <ProjectCard project={project} priority={i === 0} />
+              <ProjectCard
+                project={project}
+                priority={i === 0}
+                /* one column, two from md, three from lg */
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 48vw, 32vw"
+              />
             </Reveal>
           </li>
         ))}

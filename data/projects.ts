@@ -25,9 +25,9 @@ export const projects: Project[] = [
     images: [
       {
         src: "/images/elemax-website.jpg",
-        alt: "The Elemax website showing a top-category product grid with quote buttons",
-        width: 640,
-        height: 337,
+        alt: "The Elemax website: the top-category product grid, with the category filters and request-a-quote buttons",
+        width: 1600,
+        height: 848,
       },
     ],
     links: [

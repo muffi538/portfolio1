@@ -16,7 +16,13 @@ export function ProjectsSection() {
         {projects.map((project, i) => (
           <li key={project.slug}>
             <Reveal delay={(i % 2) * 0.08} className="h-full">
-              <ProjectCard project={project} detailed priority={i === 0} />
+              <ProjectCard
+                project={project}
+                detailed
+                priority={i === 0}
+                /* one column, then two from lg */
+                sizes="(max-width: 1024px) 100vw, 48vw"
+              />
             </Reveal>
           </li>
         ))}

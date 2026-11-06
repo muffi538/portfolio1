@@ -9,9 +9,20 @@ type ProjectCardProps = {
   detailed?: boolean;
   /** Set on the first card in a grid — its image is the likely LCP element. */
   priority?: boolean;
+  /**
+   * How wide the card renders, for the image srcset. It differs per grid —
+   * the projects page runs two columns, the home teaser three — and guessing
+   * low makes next/image serve a file smaller than the slot it fills.
+   */
+  sizes?: string;
 };
 
-export function ProjectCard({ project, detailed = false, priority = false }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  detailed = false,
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, 50vw",
+}: ProjectCardProps) {
   const cover = project.images?.[0];
 
   return (
@@ -24,7 +35,7 @@ export function ProjectCard({ project, detailed = false, priority = false }: Pro
             fill
             priority={priority}
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes={sizes}
           />
         </div>
       )}
