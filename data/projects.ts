@@ -100,10 +100,10 @@ export const projects: Project[] = [
     images: [
       {
         src: "/images/nua-pitch.jpg",
-        alt: "Mufaddal presenting an audience-insight slide to a seated room",
-        width: 960,
-        height: 1280,
-        // A 9:16 portrait in a 16:9 card: hold the slide headline and him.
+        alt: "Mufaddal presenting the Nua work, the Nua brand mark on the screen behind him",
+        width: 1086,
+        height: 1448,
+        // A 9:16 portrait in a 16:9 card: hold the brand mark and him.
         focus: "center 55%",
       },
       {
