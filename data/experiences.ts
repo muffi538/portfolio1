@@ -481,24 +481,55 @@ export const experience: ExperienceItem[] = [
         body: [
           "I serve as Sports Secretary on the student council at Mesa School of Business, leading sports initiatives and student athletic engagement across the institution.",
         ],
+        image: {
+          src: "/images/mesa-sport-club.jpg",
+          alt: "Mufaddal presenting the Mesa Sport Club to a seated audience, the opening slide on the screen beside him",
+          width: 960,
+          height: 1280,
+          ratio: "1 / 1",
+          focus: "center 45%",
+        },
       },
       responsibilities: {
         points: [
           "Leading and coordinating a cohort of 98 students across all sports activities and events.",
           "End-to-end event logistics.",
         ],
+        image: {
+          src: "/images/mesa-team-huddle.jpg",
+          alt: "Mufaddal in a Muffi 9 shirt briefing a circle of players on a floodlit pitch",
+          width: 930,
+          height: 1600,
+          ratio: "1 / 1",
+          focus: "center 48%",
+        },
       },
       work: {
         points: [
           "Secured sponsorship from Epigamia, with 1,000+ units distributed across inter-collegiate events.",
           "Hosted tournaments featuring 10+ top colleges across Bengaluru.",
         ],
+        image: {
+          src: "/images/mesa-tournament.jpg",
+          alt: "The Mesa squad with the trophy after a five-a-side inter-collegiate tournament",
+          width: 1170,
+          height: 731,
+          // The photograph's own 8:5, so the squad is not cropped at the ends.
+          ratio: "8 / 5",
+        },
+        imageSide: "left",
       },
       outcomes: {
         points: ["98 students coordinated across the sports programme."],
+        image: {
+          src: "/images/mesa-cohort-session.jpg",
+          alt: "Mufaddal on stage with a microphone addressing the full student cohort",
+          width: 1400,
+          height: 1050,
+          ratio: "4 / 3",
+        },
         todo: "Add participation numbers or event outcomes you want to highlight.",
       },
-      visualsTodo: "Add event photographs and tournament coverage.",
     },
   },
 ];
