@@ -58,6 +58,18 @@ export type AboutImage = Asset & {
 };
 
 /**
+ * A photograph sitting beside a detail block.
+ *
+ * `ratio` frames it so sections stay consistent: landscape shots take "4 / 3"
+ * and portraits "4 / 5", both within a few percent of the source, so nothing
+ * is badly cropped. `focus` keeps the subject in frame when it is not centred.
+ */
+export type SectionImage = Asset & {
+  ratio?: string;
+  focus?: string;
+};
+
+/**
  * One block of an experience detail page.
  *
  * `body` and `points` hold material drawn from the portfolio deck and resume.
@@ -68,6 +80,10 @@ export type DetailBlock = {
   body?: string[];
   points?: string[];
   todo?: string;
+  /** Photograph shown beside the copy. Omit and the block runs full width. */
+  image?: SectionImage;
+  /** Which side the photograph takes from `lg` up. Defaults to the right. */
+  imageSide?: "left" | "right";
 };
 
 /** The body of an experience detail page, in the order it is shown. */

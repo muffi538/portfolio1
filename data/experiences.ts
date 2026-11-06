@@ -195,6 +195,13 @@ export const experience: ExperienceItem[] = [
           "ChewCheer is a clean-label functional pet nutrition brand I co-founded, improving gut health for dogs through prebiotic-based dog sticks.",
           "It came out of a gap in the pet nutrition market, where most treats were highly processed and lacked functional health benefits — particularly for dogs facing digestion and gut-related issues.",
         ],
+        image: {
+          src: "/images/chewcheer-pouches.jpg",
+          alt: "Three ChewCheer PawBiota prebiotic inulin stick pouches on a wooden table, with loose sticks in front",
+          width: 1184,
+          height: 864,
+          ratio: "4 / 3",
+        },
       },
       responsibilities: {
         points: [
@@ -203,20 +210,44 @@ export const experience: ExperienceItem[] = [
           "Retail partnerships.",
           "End-to-end operations: packaging design, supplier sourcing and logistics.",
         ],
+        image: {
+          src: "/images/chewcheer-packaging.jpg",
+          alt: "ChewCheer printed packaging and leaflets explaining the prebiotic stick's ingredients",
+          width: 960,
+          height: 1280,
+          ratio: "1 / 1",
+          focus: "center 48%",
+        },
       },
       work: {
         points: [
           "Ran 50+ customer interviews with pet parents on digestion, ingredient transparency and preventive nutrition.",
           "Ran Meta Ads campaigns that stayed profitable.",
         ],
+        image: {
+          src: "/images/chewcheer-customers.jpg",
+          alt: "Two pet parents on a Bengaluru street holding a ChewCheer pack beside their dogs",
+          width: 720,
+          height: 1280,
+          ratio: "1 / 1",
+          focus: "center 64%",
+        },
+        imageSide: "left",
       },
       outcomes: {
         points: [
           "₹1,00,000+ in revenue from Meta Ads while remaining profitable.",
           "Named Best D2C Product at Mesa School of Business.",
         ],
+        image: {
+          src: "/images/chewcheer-stall.jpg",
+          alt: "The ChewCheer market stall, with the brand mascot holding a free hugs sign beside the product display",
+          width: 960,
+          height: 1280,
+          ratio: "1 / 1",
+          focus: "center 52%",
+        },
       },
-      visualsTodo: "Add packaging shots, retail photographs and campaign creative.",
     },
   },
   {
