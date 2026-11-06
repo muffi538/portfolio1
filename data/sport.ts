@@ -16,18 +16,10 @@ export const sport = {
     width: 225,
     height: 225,
   } satisfies Asset,
-  images: [
-    {
-      src: "/images/football-mitwpu-trophy.jpg",
-      alt: "Mufaddal holding a trophy and certificate in an MIT-WPU football kit",
-      width: 583,
-      height: 557,
-    },
-    {
-      src: "/images/football-trophies.jpg",
-      alt: "A line of football trophies and medals on a pitch",
-      width: 950,
-      height: 491,
-    },
-  ] satisfies Asset[],
+  image: {
+    src: "/images/football-trophies.jpg",
+    alt: "Mufaddal kneeling behind a line of football trophies and medals on a pitch",
+    width: 950,
+    height: 491,
+  } satisfies Asset,
 };

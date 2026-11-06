@@ -6,7 +6,10 @@ import { sport } from "@/data/sport";
 export function SportSection() {
   return (
     <Section id="sport" eyebrow="Extracurricular" title="Sportsman" ruled>
-      <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-12">
+      {/* Centred against each other: the photograph is a 1.9:1 landscape and
+          the copy runs taller, so any slack is split rather than pooling
+          under one column. */}
+      <div className="grid items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
         <Reveal>
           <p className="text-lg leading-relaxed sm:text-xl">{sport.summary}</p>
           <p className="mt-4 leading-relaxed text-muted-foreground">{sport.club}</p>
@@ -23,38 +26,34 @@ export function SportSection() {
             ))}
           </ul>
 
-          <div className="mt-6 inline-flex items-center gap-4 rounded-lg border border-border bg-surface p-4">
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          {/* Natural ratio, so none of the trophies are cropped off the edges. */}
+          <Image
+            src={sport.image.src}
+            alt={sport.image.alt}
+            width={sport.image.width}
+            height={sport.image.height}
+            className="h-auto w-full rounded-lg border border-ink"
+            sizes="(max-width: 1024px) 100vw, 45vw"
+          />
+
+          {/* The club badge sits with the photograph rather than the copy: it
+              is the same subject, and it evens the two columns out. */}
+          <div className="mt-4 inline-flex items-center gap-4 rounded-lg border border-border bg-surface p-4">
             <Image
               src={sport.logo.src}
               alt={sport.logo.alt}
               width={sport.logo.width}
               height={sport.logo.height}
-              className="h-12 w-auto object-contain"
+              className="h-10 w-auto object-contain"
               sizes="6rem"
             />
             <p className="text-sm font-medium text-muted-foreground">
               AS Roma youth setup, Dubai
             </p>
           </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <ul className="grid gap-5">
-            {sport.images.map((image) => (
-              <li
-                key={image.src}
-                className="relative aspect-[4/3] overflow-hidden rounded-lg border border-ink bg-surface"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                />
-              </li>
-            ))}
-          </ul>
         </Reveal>
       </div>
     </Section>
