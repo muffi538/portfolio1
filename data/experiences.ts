@@ -54,6 +54,14 @@ export const experience: ExperienceItem[] = [
           "The products I worked across were the Ultrahuman Ring, blue-light blocking glasses and sleep masks.",
         ],
         todo: "Add a line on what Ultrahuman does as a company, and how the internship came about.",
+        image: {
+          src: "/images/ultrahuman-affiliate-deck.jpg",
+          alt: "The Ultrahuman TikTok Shop affiliate deck: premium sleep tech, 20% commission, blue-light glasses and the blackout sleep mask",
+          width: 880,
+          height: 1170,
+          // The deck's own 3:4, so nothing is cropped off a document.
+          ratio: "3 / 4",
+        },
       },
       responsibilities: {
         points: [
@@ -62,6 +70,13 @@ export const experience: ExperienceItem[] = [
           "Coordinating product shipments to affiliates.",
           "Scaling TikTok Shop traction through influencer-led campaigns.",
         ],
+        image: {
+          src: "/images/ultrahuman-creators.jpg",
+          alt: "The TikTok Shop creator table: affiliate handles, follower counts and sample requests against the glasses and the ring",
+          width: 1400,
+          height: 693,
+          ratio: "2 / 1",
+        },
       },
       work: {
         todo: "Add the specific campaigns, creators and activations you ran, and anything you built or changed along the way.",
@@ -72,7 +87,6 @@ export const experience: ExperienceItem[] = [
         ],
         todo: "Add any other numbers you can share — creators onboarded, campaign reach, conversion rate.",
       },
-      visualsTodo: "Add campaign screenshots, creator content or TikTok Shop dashboards.",
     },
   },
   {
