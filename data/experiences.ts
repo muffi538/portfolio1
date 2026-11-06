@@ -391,26 +391,60 @@ export const experience: ExperienceItem[] = [
         body: [
           "@mufmuf_eats is my food review channel, exploring Bengaluru's food culture through upcoming cafés, food chains, hidden gems and unique dining experiences.",
         ],
+        image: {
+          src: "/images/mufmuf-dining.jpg",
+          alt: "Mufaddal at a western-themed burger café in Bengaluru, holding props at the table",
+          width: 960,
+          height: 1280,
+          ratio: "1 / 1",
+          focus: "center 45%",
+        },
       },
       responsibilities: {
         points: [
           "Consistent short-form content built around discoveries across the city.",
           "Planning content hooks and platform-native video.",
         ],
+        image: {
+          src: "/images/mufmuf-filming.jpg",
+          alt: "Mufaddal filming a review to camera on a restaurant terrace hung with marigold garlands",
+          width: 912,
+          height: 1600,
+          ratio: "1 / 1",
+          focus: "center 56%",
+        },
       },
       work: {
         points: [
           "Built a deep understanding of the Instagram algorithm, content hooks and engagement tactics.",
           "Grew a personal brand through consistent storytelling.",
         ],
+        image: {
+          src: "/images/mufmuf-burger.jpg",
+          alt: "A finished review frame: a burger held to camera under the title In N Out Burger",
+          width: 1000,
+          height: 1575,
+          ratio: "1 / 1",
+          focus: "center 48%",
+        },
+        imageSide: "left",
       },
       outcomes: {
         points: [
           "1M+ combined views.",
           "Multiple reels crossing 100K+ views organically.",
         ],
+        image: {
+          src: "/images/mufmuf-reach.jpg",
+          alt: "The @mufmuf_eats profile: 1,506 followers, with reels at 1.4M, 322K and 214K views",
+          width: 778,
+          height: 1600,
+          ratio: "4 / 5",
+          // A phone screenshot: cropping it would cut off the very numbers
+          // it is there to show, so it sits whole on the panel instead.
+          fit: "contain",
+        },
       },
-      visualsTodo: "Add reel stills and any brand collaborations.",
     },
   },
   {

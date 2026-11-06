@@ -67,6 +67,12 @@ export type AboutImage = Asset & {
 export type SectionImage = Asset & {
   ratio?: string;
   focus?: string;
+  /**
+   * "cover" fills the frame and is right for photographs. "contain" shows the
+   * whole thing on the panel instead, for screenshots that would lose their
+   * point to a crop.
+   */
+  fit?: "cover" | "contain";
 };
 
 /**

@@ -84,7 +84,7 @@ function Block({
         src={image.src}
         alt={image.alt}
         fill
-        className="object-cover"
+        className={image.fit === "contain" ? "object-contain" : "object-cover"}
         style={{ objectPosition: image.focus }}
         sizes="(max-width: 1024px) 100vw, 45vw"
       />
