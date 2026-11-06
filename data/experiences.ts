@@ -513,8 +513,8 @@ export const experience: ExperienceItem[] = [
         image: {
           src: "/images/mesa-tournament.jpg",
           alt: "The Mesa squad with the trophy after a five-a-side inter-collegiate tournament",
-          width: 1170,
-          height: 731,
+          width: 1586,
+          height: 992,
           // The photograph's own 8:5, so the squad is not cropped at the ends.
           ratio: "8 / 5",
         },
