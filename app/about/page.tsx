@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      {/* Education sits last, after everything else. */}
+      {/* Education second, skills last. */}
       <AboutSection />
-      <SkillsSection />
+      <EducationSection />
       <SportSection />
       <FoodSection />
       <AwardsSection />
-      <EducationSection />
+      <SkillsSection />
     </>
   );
 }
