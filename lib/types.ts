@@ -57,6 +57,33 @@ export type AboutImage = Asset & {
   focus?: string;
 };
 
+/**
+ * One block of an experience detail page.
+ *
+ * `body` and `points` hold material drawn from the portfolio deck and resume.
+ * `todo` names what is still missing, and renders as a visible placeholder —
+ * nothing is written to fill a gap.
+ */
+export type DetailBlock = {
+  body?: string[];
+  points?: string[];
+  todo?: string;
+};
+
+/** The body of an experience detail page, in the order it is shown. */
+export type ExperienceDetail = {
+  /** The organisation, what it does, and how I was involved. */
+  overview: DetailBlock;
+  /** Specific tasks and the workstreams I held. */
+  responsibilities: DetailBlock;
+  /** Projects shipped, problems solved, systems contributed to. */
+  work: DetailBlock;
+  /** Results, with metrics where they exist. */
+  outcomes: DetailBlock;
+  /** Prompt for the photographs and screenshots still to be added. */
+  visualsTodo?: string;
+};
+
 export type ExperienceItem = {
   slug: string;
   role: string;
@@ -75,6 +102,8 @@ export type ExperienceItem = {
   logo?: Asset;
   images?: Asset[];
   links?: ExternalLink[];
+  /** Everything the detail page at /experience/<slug> renders. */
+  detail: ExperienceDetail;
 };
 
 export type Project = {

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { experience } from "@/data/experience";
+import { experience } from "@/data/experiences";
 
 const entry = experience.find((item) => item.slug === "mufmuf-eats");
 
