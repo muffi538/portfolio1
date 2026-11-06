@@ -140,10 +140,13 @@ export const projects: Project[] = [
     },
     images: [
       {
-        src: "/images/chewcheer-products.jpg",
-        alt: "Three ChewCheer prebiotic inulin stick pouches on a wooden surface",
-        width: 1053,
-        height: 465,
+        src: "/images/chewcheer-customers.jpg",
+        alt: "Two pet parents on a Bengaluru street holding a ChewCheer pack, with a golden retriever and a labrador",
+        width: 720,
+        height: 1280,
+        // A tall portrait in a 16:9 card: aim the crop at the faces, the pack
+        // and the dogs rather than the trees above them.
+        focus: "center 54%",
       },
     ],
     links: [

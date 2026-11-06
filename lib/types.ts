@@ -138,7 +138,8 @@ export type Project = {
   highlights: string[];
   tags: string[];
   logo?: Asset;
-  images?: Asset[];
+  /** The first one is the card's cover; `focus` aims its 16:9 crop. */
+  images?: SectionImage[];
   links?: ExternalLink[];
 };
 

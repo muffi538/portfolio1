@@ -35,6 +35,7 @@ export function ProjectCard({
             fill
             priority={priority}
             className="object-cover"
+            style={{ objectPosition: cover.focus }}
             sizes={sizes}
           />
         </div>
