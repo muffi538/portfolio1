@@ -80,6 +80,7 @@ export const projects: Project[] = [
       },
     ],
     links: [
+      { label: "Full case study", href: "/experience/procur-ai" },
       { label: "GitHub repository", href: "https://github.com/muffi538/msme-rfq" },
     ],
   },

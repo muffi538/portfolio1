@@ -32,6 +32,11 @@ export type MascotPortfolioHeroProps = {
   href?: string
   /** The row along the bottom edge. */
   services?: string[]
+  /**
+   * Logos for that row instead of words. When given, these replace
+   * `services` — the row is one or the other, never both.
+   */
+  brands?: { src: string; alt: string; width: number; height: number }[]
 
   /* ---- the character ---- */
   /** Cycled through, one per click on the character. */
@@ -308,6 +313,14 @@ const CSS = `
 .mph-services li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.18em;background:var(--mph-accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.6,0,.2,1);}
 .mph-services li:hover::after{transform:scaleX(1);}
 
+/* Logos in place of words: sized off the row's own type, so they stay small
+   against the name and scale with the stage like everything else. */
+.mph-brands{gap:2.4cqw;align-items:center;}
+.mph-brands li{padding-bottom:0;}
+.mph-brands li::after{content:none;}
+.mph-brands img{display:block;height:2.9em;width:auto;border-radius:.4em;transition:transform .35s cubic-bezier(.6,0,.2,1);}
+.mph-brands li:hover img{transform:translateY(-6%) scale(1.04);}
+
 .mph-rule{position:absolute;width:0;border-left:.1cqw solid var(--mph-ink);}
 .mph-rule::after{content:"";position:absolute;bottom:0;left:-.1cqw;width:1.1cqw;border-top:.1cqw solid var(--mph-ink);transform:rotate(28deg);transform-origin:left;}
 .mph-rule-l{left:3.7%;top:23%;height:13%;}
@@ -374,6 +387,7 @@ export default function MascotPortfolioHero({
   ctaLabel,
   href,
   services = DEFAULT_SERVICES,
+  brands,
   greetings = DEFAULT_GREETINGS,
   skin = "#bf7d54",
   hair = "#241a13",
@@ -614,11 +628,29 @@ export default function MascotPortfolioHero({
             </button>
           ))}
 
-        <ul className="mph-services">
-          {services.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
+        {brands && brands.length > 0 ? (
+          <ul className="mph-services mph-brands">
+            {brands.map((brand) => (
+              <li key={brand.src}>
+                {/* Plain <img>: the row is sized in container units, which
+                    next/image's own sizing cannot follow. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={brand.src}
+                  alt={brand.alt}
+                  width={brand.width}
+                  height={brand.height}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="mph-services">
+            {services.map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+          </ul>
+        )}
 
         <button
           ref={charRef}

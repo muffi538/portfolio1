@@ -87,6 +87,20 @@ export type AwardGroup = {
   items: string[];
 };
 
+/** A course currently in progress, shown on the home page with its progress. */
+export type StudyItem = {
+  institution: string;
+  /** The course, e.g. "UG Program · Business Management & Entrepreneurship". */
+  programme: string;
+  startYear: number;
+  endYear: number;
+  /** Which year of the course is running now. */
+  year: number;
+  /** How many years the course runs for. */
+  years: number;
+  logo?: Asset;
+};
+
 /** A number worth scanning for, shown large with the label under it. */
 export type Metric = {
   /** The figure itself, e.g. "£5,000" or "6 → 2". */

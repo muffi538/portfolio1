@@ -2,6 +2,10 @@ import { Section } from "@/components/ui/section";
 import { ExperienceCard } from "@/components/sections/experience-card";
 import { experience } from "@/data/experiences";
 
+/* Procur.AI is a product rather than a role, so it is listed under Projects.
+   Its case study still lives at /experience/procur-ai, linked from there. */
+const roles = experience.filter((item) => item.slug !== "procur-ai");
+
 /**
  * The /experience directory: one wide card per role, photographs stacked on
  * the left, the role and its numbers on the right. "Know more" opens that
@@ -16,10 +20,10 @@ export function ExperienceSection() {
       headingLevel="h1"
       eyebrow="Experience"
       title="Where I've worked"
-      description="Growth, supply chain and operations roles, alongside the brands and products I've built myself. Open any one for the full picture."
+      description="Growth, supply chain and operations roles, alongside the brands I've built myself. Open any one for the full picture."
     >
       <ul className="space-y-8 lg:space-y-10">
-        {experience.map((item, i) => (
+        {roles.map((item, i) => (
           <li key={item.slug}>
             <ExperienceCard item={item} priority={i === 0} />
           </li>

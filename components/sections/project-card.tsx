@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Tag } from "@/components/ui/tag";
 import type { Project } from "@/lib/types";
@@ -76,19 +77,34 @@ export function ProjectCard({
 
         {project.links && project.links.length > 0 && (
           <ul className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-8">
-            {project.links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-sm text-sm font-bold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent"
-                >
-                  {link.label}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </a>
-              </li>
-            ))}
+            {project.links.map((link) => {
+              const internal = link.href.startsWith("/");
+              const classes =
+                "inline-flex items-center gap-1 rounded-sm text-sm font-bold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent";
+
+              return (
+                <li key={link.href}>
+                  {/* A path stays on the site and routes client-side; anything
+                      else is somewhere else and opens in its own tab. */}
+                  {internal ? (
+                    <Link href={link.href} className={classes}>
+                      {link.label}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes}
+                    >
+                      {link.label}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

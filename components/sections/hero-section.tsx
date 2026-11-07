@@ -16,9 +16,23 @@ export function HeroSection() {
       name={["Mufaddal", "Yousuf"]}
       ctaLabel="Currently Building"
       href="/projects"
-      /* Kept short: the row sits along the bottom edge and longer labels
-         run under the character. */
-      services={["Growth", "Supply chain", "D2C brands", "AI products"]}
+      /* Where the work actually happened, in place of the category words
+         that were there before. */
+      brands={[
+        {
+          src: "/images/logo-ultrahuman.jpg",
+          alt: "Ultrahuman",
+          width: 600,
+          height: 381,
+        },
+        { src: "/images/logo-frido.jpg", alt: "Frido", width: 472, height: 219 },
+        {
+          src: "/images/logo-chewcheer.jpg",
+          alt: "ChewCheer",
+          width: 585,
+          height: 550,
+        },
+      ]}
       greetings={[
         "Hi, I'm Mufaddal.",
         "I build brands and ship products.",
