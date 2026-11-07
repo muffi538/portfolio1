@@ -55,14 +55,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 40%",
       },
     ],
-    thumb: {
-      src: "/images/ultrahuman-affiliate-deck.jpg",
-      alt: "The Ultrahuman affiliate deck",
-      width: 880,
-      height: 1170,
-      // Lands on the products rather than the body copy.
-      focus: "center 55%",
-    },
     detail: {
       sections: [
         {
@@ -198,13 +190,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 45%",
       },
     ],
-    thumb: {
-      src: "/images/frido-stock-count.jpg",
-      alt: "Counting stock in the Frido warehouse",
-      width: 1000,
-      height: 1333,
-      focus: "center 62%",
-    },
     detail: {
       sections: [
         {
@@ -363,13 +348,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 50%",
       },
     ],
-    thumb: {
-      src: "/images/chewcheer-customers.jpg",
-      alt: "Pet parents holding a ChewCheer pack",
-      width: 720,
-      height: 1280,
-      focus: "center 60%",
-    },
     detail: {
       sections: [
         {
@@ -536,13 +514,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 40%",
       },
     ],
-    thumb: {
-      src: "/images/procur-ai-landing.jpg",
-      alt: "The Procur.AI landing page",
-      width: 792,
-      height: 400,
-      focus: "center 40%",
-    },
     detail: {
       sections: [
         {
@@ -691,13 +662,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 45%",
       },
     ],
-    thumb: {
-      src: "/images/mufmuf-burger.jpg",
-      alt: "A finished @mufmuf_eats review frame",
-      width: 1000,
-      height: 1575,
-      focus: "center 46%",
-    },
     detail: {
       sections: [
         {
@@ -844,13 +808,6 @@ export const experience: ExperienceItem[] = [
         focus: "center 45%",
       },
     ],
-    thumb: {
-      src: "/images/mesa-tournament.jpg",
-      alt: "The Mesa squad with the tournament trophy",
-      width: 1170,
-      height: 731,
-      focus: "center 50%",
-    },
     detail: {
       sections: [
         {

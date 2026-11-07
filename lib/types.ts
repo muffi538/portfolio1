@@ -163,12 +163,6 @@ export type ExperienceItem = {
   /** Extra frames a section on another page draws on (the About food block). */
   images?: Asset[];
   links?: ExternalLink[];
-  /**
-   * The small frame beside the entry in the directory. Named explicitly
-   * rather than derived, because the best image for a 96px crop is not
-   * always the first one a page happens to use.
-   */
-  thumb?: SectionImage;
   /** Everything the detail page at /experience/<slug> renders. */
   detail: ExperienceDetail;
 };

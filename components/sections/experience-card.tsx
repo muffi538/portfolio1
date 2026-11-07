@@ -41,14 +41,29 @@ const slots = [
 ];
 
 /** The overlapping stack of photographs on the left of a card. */
-function Collage({ item, priority }: { item: ExperienceItem; priority: boolean }) {
+function Collage({
+  item,
+  priority,
+  compact,
+}: {
+  item: ExperienceItem;
+  priority: boolean;
+  compact: boolean;
+}) {
   const frames = (item.collage ?? []).slice(0, slots.length);
   if (frames.length === 0) return null;
 
   return (
     /* A fixed stage, so the stack occupies the same box on every card
-       regardless of how many frames the role has. */
-    <div className="relative aspect-4/3 w-full">
+       regardless of how many frames the role has. Capped below lg, where the
+       card stacks and a full-width stage would otherwise stand taller than
+       everything it illustrates. */
+    <div
+      className={cn(
+        "relative aspect-4/3 w-full lg:max-w-none",
+        compact ? "max-w-[19rem]" : "max-w-[23rem]",
+      )}
+    >
       {frames.map((frame, i) => {
         const slot = slots[i];
         return (
@@ -88,34 +103,54 @@ function Collage({ item, priority }: { item: ExperienceItem; priority: boolean }
  * The card is not itself a link — it holds two of them — so hover is driven
  * from `group` on the article, which lets the frames, the heading rule and
  * the buttons all answer to the same gesture.
+ *
+ * `compact` is the home page's size: the same card, scaled down in padding,
+ * column split, type and controls, so six of them read as a preview rather
+ * than taking the page. Nothing is removed at that size.
  */
 export function ExperienceCard({
   item,
   priority = false,
+  compact = false,
 }: {
   item: ExperienceItem;
   /** Set on the first card: its photographs are the likely LCP element. */
   priority?: boolean;
+  /** The smaller home page size. */
+  compact?: boolean;
 }) {
   const deck = item.links?.[0];
 
   return (
     <article
       className={cn(
-        "group rounded-xl border border-border bg-surface p-6 sm:p-8 lg:p-10",
+        "group rounded-xl border border-border bg-surface",
+        compact ? "p-5 sm:p-6 lg:p-7" : "p-6 sm:p-8 lg:p-10",
         "transition-all duration-500 ease-out hover:-translate-y-1 hover:border-ink",
         "hover:shadow-[0_24px_48px_-32px_rgb(17_17_17/0.45)]",
       )}
     >
-      <div className="grid gap-9 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-12">
+      <div
+        className={cn(
+          "grid lg:items-center",
+          compact
+            ? "gap-6 lg:grid-cols-[0.6fr_1.4fr] lg:gap-9"
+            : "gap-9 lg:grid-cols-[0.78fr_1.22fr] lg:gap-12",
+        )}
+      >
         <Reveal>
-          <Collage item={item} priority={priority} />
+          <Collage item={item} priority={priority} compact={compact} />
         </Reveal>
 
         {/* Staggered behind the photographs, as the brief asks. */}
         <Reveal delay={0.1}>
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-            <h3 className="display relative text-2xl sm:text-3xl">
+            <h3
+              className={cn(
+                "display relative",
+                compact ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl",
+              )}
+            >
               {item.organisation}
               {/* Accent rule, drawn from the left when the card is hovered. */}
               <span
@@ -129,27 +164,50 @@ export function ExperienceCard({
           </div>
 
           {item.stats && item.stats.length > 0 && (
-            <ul className="mt-5 flex flex-wrap gap-2.5">
+            <ul className={cn("flex flex-wrap", compact ? "mt-4 gap-2" : "mt-5 gap-2.5")}>
               {item.stats.map((stat) => (
                 <li
                   key={stat.label}
-                  className="inline-flex items-baseline gap-2 rounded-full border border-border bg-muted/60 px-4 py-2 transition-colors duration-500 group-hover:border-ink/25"
+                  className={cn(
+                    "inline-flex items-baseline gap-2 rounded-full border border-border bg-muted/60 transition-colors duration-500 group-hover:border-ink/25",
+                    compact ? "px-3 py-1.5" : "px-4 py-2",
+                  )}
                 >
-                  <span className="display text-base leading-none">{stat.value}</span>
-                  <span className="text-xs text-muted-foreground">{stat.label}</span>
+                  <span
+                    className={cn("display leading-none", compact ? "text-sm" : "text-base")}
+                  >
+                    {stat.value}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-muted-foreground",
+                      compact ? "text-[0.7rem]" : "text-xs",
+                    )}
+                  >
+                    {stat.label}
+                  </span>
                 </li>
               ))}
             </ul>
           )}
 
-          <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground sm:text-lg">
+          <p
+            className={cn(
+              "max-w-2xl leading-relaxed text-muted-foreground",
+              compact ? "mt-4 text-sm sm:text-base" : "mt-5 sm:text-lg",
+            )}
+          >
             {item.summary}
           </p>
 
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className={cn("flex flex-wrap gap-3", compact ? "mt-5" : "mt-7")}>
             <Link
               href={`/experience/${item.slug}`}
-              className={buttonClasses({ variant: "primary", className: "group/cta" })}
+              className={buttonClasses({
+                variant: "primary",
+                size: compact ? "sm" : "md",
+                className: "group/cta",
+              })}
             >
               Know more
               <ArrowUpRight
@@ -164,7 +222,11 @@ export function ExperienceCard({
                 href={deck.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={buttonClasses({ variant: "outline", className: "group/cta" })}
+                className={buttonClasses({
+                  variant: "outline",
+                  size: compact ? "sm" : "md",
+                  className: "group/cta",
+                })}
               >
                 {deck.label}
                 <ArrowUpRight
