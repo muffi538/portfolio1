@@ -18,6 +18,11 @@ export const projects: Project[] = [
       "Deployed live with full domain setup and production launch.",
       "Built with Lovable, Antigravity and Claude Code — a client-ready product using AI-first no-code tooling.",
     ],
+    stats: [
+      { value: "Live", label: "on its own domain" },
+      { value: "End to end", label: "design to deployment" },
+      { value: "AI-first", label: "Lovable · Claude Code" },
+    ],
     tags: ["Web", "Design", "Deployment", "AI-first build"],
     logo: {
       src: "/images/logo-elemax.jpg",
@@ -57,6 +62,11 @@ export const projects: Project[] = [
       "Achieved 85%+ extraction accuracy.",
       "Automated inquiry categorisation and supplier routing.",
       "Simplified procurement workflows for MSMEs.",
+    ],
+    stats: [
+      { value: "6 → 2", label: "people on the workflow" },
+      { value: "85%+", label: "extraction accuracy" },
+      { value: "<2 min", label: "per RFQ" },
     ],
     tags: ["AI", "SaaS", "Automation", "B2B"],
     logo: {
@@ -100,6 +110,11 @@ export const projects: Project[] = [
       "Led primary and secondary research to identify pain points, behavioural patterns and the trust factors behind purchase decisions.",
       "Synthesised insights and presented strategic recommendations directly to the Nua team.",
       "Developed a competitive repositioning pitch and presented it to a panel.",
+    ],
+    stats: [
+      { value: "45+", label: "in-depth interviews" },
+      { value: "16–25", label: "age group covered" },
+      { value: "Pitched", label: "to the Nua team" },
     ],
     tags: ["Market research", "Consumer insights", "Brand strategy"],
     logo: {
@@ -154,6 +169,11 @@ export const projects: Project[] = [
       "₹1,00,000+ in revenue in three weeks, across roughly 200 packets.",
       "Named Best D2C Product at Mesa School of Business.",
     ],
+    stats: [
+      { value: "₹1L+", label: "revenue in 3 weeks" },
+      { value: "~200", label: "packets sold" },
+      { value: "200–250", label: "customer conversations" },
+    ],
     tags: ["D2C", "0→1", "Operations", "Shopify"],
     logo: {
       src: "/images/logo-chewcheer.jpg",
@@ -173,6 +193,7 @@ export const projects: Project[] = [
       },
     ],
     links: [
+      { label: "Full case study", href: "/experience/chewcheer" },
       { label: "Instagram", href: "https://www.instagram.com/chewcheerr" },
     ],
   },

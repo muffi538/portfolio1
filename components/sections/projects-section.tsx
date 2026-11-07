@@ -3,6 +3,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { ProjectCard } from "@/components/sections/project-card";
 import { projects } from "@/data/projects";
 
+/** The /projects page: one wide card per project, each opening what it links to. */
 export function ProjectsSection() {
   return (
     <Section
@@ -12,17 +13,11 @@ export function ProjectsSection() {
       title="What I've built"
       description="Products shipped, brands launched and research run — end to end."
     >
-      <ul className="grid gap-8 lg:grid-cols-2">
+      <ul className="space-y-8 lg:space-y-10">
         {projects.map((project, i) => (
           <li key={project.slug}>
-            <Reveal delay={(i % 2) * 0.08} className="h-full">
-              <ProjectCard
-                project={project}
-                detailed
-                priority={i === 0}
-                /* one column, then two from lg */
-                sizes="(max-width: 1024px) 100vw, 48vw"
-              />
+            <Reveal>
+              <ProjectCard project={project} priority={i === 0} />
             </Reveal>
           </li>
         ))}

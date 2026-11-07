@@ -197,8 +197,13 @@ export type Project = {
   summary: string;
   highlights: string[];
   tags: string[];
+  /**
+   * Two or three figures for the card. Drawn from this entry's own summary
+   * and highlights — nothing here is a new claim.
+   */
+  stats?: Metric[];
   logo?: Asset;
-  /** The first one is the card's cover; `focus` aims its 16:9 crop. */
+  /** The first is the card's front frame, the second sits behind it. */
   images?: SectionImage[];
   links?: ExternalLink[];
 };
