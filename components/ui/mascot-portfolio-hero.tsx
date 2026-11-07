@@ -168,72 +168,114 @@ function room(): { back: Seg[]; rays: Seg[]; depth: string[] } {
 const ROOM = room()
 
 /* ------------------------------------------------------------------ hair
-   Curls are stroked arcs, not circles: a fat arc with round caps reads as a
-   ringlet, where a disc read as a polka dot. Laid along three bands — crown,
-   inner mass and hairline — each with its own rotation so the surface does
-   not repeat.
+   Locks, not rings and not spikes. Each tuft leaves a wide base, bows to one
+   side and closes in a rounded lobe — the curves meet the tip tangentially,
+   so it reads as a curl rather than a shard. Each one also carries a shorter
+   twin that nests inside it and catches the light.
 
-   Everything is rounded to two decimals. The spec lets each engine pick its
-   own precision for sin and cos, so Node and the browser disagreed in the
-   last decimal and React reported a hydration mismatch on every curl. */
+   Everything is rounded to two decimals: the spec lets each engine choose
+   its own precision for sin and cos, so Node and the browser disagreed in
+   the last decimal and React reported a hydration mismatch on every lock. */
 
-type Curl = { d: string; w: number }
+type Lock = { d: string; hi: string; i: number }
 
 const r2 = (v: number) => Math.round(v * 100) / 100
 
-function hairCurls(): Curl[] {
-  const out: Curl[] = []
+/** One tuft: wide base, bowed body, rounded tip. */
+function lockPath(bx: number, by: number, ang: number, len: number, wid: number, bow: number) {
+  const dx = Math.cos(ang)
+  const dy = Math.sin(ang)
+  const nx = -dy
+  const ny = dx
+  const tipw = wid * 0.3
+  const P = (x: number, y: number) => `${r2(x)} ${r2(y)}`
 
-  /** One ringlet: an arc of `sweep` radians around (x, y), stroked fat. */
-  const curl = (x: number, y: number, r: number, a0: number, sweep: number) => {
-    const px = (a: number) => r2(x + Math.cos(a) * r)
-    const py = (a: number) => r2(y + Math.sin(a) * r)
-    const large = Math.abs(sweep) > Math.PI ? 1 : 0
+  const b1x = bx + (nx * wid) / 2
+  const b1y = by + (ny * wid) / 2
+  const b2x = bx - (nx * wid) / 2
+  const b2y = by - (ny * wid) / 2
+  const tx = bx + dx * len
+  const ty = by + dy * len
+
+  // Control points run along the lock and arrive at the tip side-on, which
+  // is what rounds the apex instead of pinching it to a point.
+  const c1x = b1x + dx * len * 0.6 + nx * bow
+  const c1y = b1y + dy * len * 0.6 + ny * bow
+  const c2x = tx + nx * tipw
+  const c2y = ty + ny * tipw
+  const c3x = tx - nx * tipw
+  const c3y = ty - ny * tipw
+  const c4x = b2x + dx * len * 0.6 + nx * bow * 0.3
+  const c4y = b2y + dy * len * 0.6 + ny * bow * 0.3
+
+  return (
+    `M${P(b1x, b1y)} C${P(c1x, c1y)} ${P(c2x, c2y)} ${P(tx, ty)}` +
+    ` C${P(c3x, c3y)} ${P(c4x, c4y)} ${P(b2x, b2y)} Z`
+  )
+}
+
+function hairLocks(): Lock[] {
+  const out: Lock[] = []
+  let n = 0
+
+  const add = (bx: number, by: number, ang: number, len: number, wid: number, bow: number) => {
     out.push({
-      d: `M${px(a0)} ${py(a0)} A${r2(r)} ${r2(r)} 0 ${large} 1 ${px(a0 + sweep)} ${py(a0 + sweep)}`,
-      w: r2(r * 0.92),
+      d: lockPath(bx, by, ang, len, wid, bow),
+      hi: lockPath(bx, by, ang, len * 0.74, wid * 0.4, bow * 0.8),
+      i: n++,
     })
   }
 
-  /** A band of ringlets following an ellipse around the skull. */
-  const band = (n: number, rx: number, ry: number, cy: number, rad: number, phase: number) => {
-    for (let i = 0; i <= n; i++) {
-      const t = i / n
+  /** A ring of tufts growing outward from the crown. */
+  const ring = (
+    count: number,
+    rx: number,
+    ry: number,
+    cy: number,
+    len: number,
+    wid: number,
+    phase: number,
+  ) => {
+    for (let i = 0; i <= count; i++) {
+      const t = i / count
       const a = Math.PI * (1 - t)
-      const wob = Math.sin(t * 17.3 + phase) * 8
-      curl(
-        300 + Math.cos(a) * (rx + wob),
-        cy - Math.sin(a) * (ry + wob),
-        rad + 6 * Math.sin(t * 11.2 + phase),
-        t * 8.3 + phase,
-        3.6 + 1.1 * Math.sin(t * 6.7 + phase),
+      const bx = 300 + Math.cos(a) * rx
+      const by = cy - Math.sin(a) * ry
+      add(
+        bx,
+        by,
+        Math.atan2(by - 318, bx - 300) + 0.42 * Math.sin(t * 9.1 + phase),
+        len + 13 * Math.sin(t * 7.4 + phase),
+        wid + 10 * Math.sin(t * 5.2 + phase),
+        22 * Math.sin(t * 6.1 + phase),
       )
     }
   }
 
-  band(15, 150, 168, 312, 25, 0.5)   // crown, the outer silhouette
-  band(12, 112, 124, 318, 23, 2.1)   // inner mass
-  band(9, 62, 66, 250, 18, 3.4)      // centre, filling the top of the head
+  ring(16, 130, 150, 286, 56, 60, 0.4)  // crown: the standing silhouette
+  ring(12, 88, 100, 292, 46, 54, 2.2)   // second layer
+  ring(7, 42, 48, 298, 38, 46, 3.9)     // centre of the head
 
-  // The hairline, curling down onto the forehead.
-  for (let i = 0; i <= 10; i++) {
-    const t = i / 10
-    curl(
-      r2(172 + t * 256),
-      r2(224 + Math.sin(t * Math.PI) * 10 + Math.sin(t * 8.4 + 0.9) * 8),
-      14 + 4 * Math.sin(t * 7.9 + 1.2),
-      t * 9.1 + 1.7,
-      3.9,
+  // The hairline: short, broad tufts falling forward over the brow.
+  for (let i = 0; i <= 9; i++) {
+    const t = i / 9
+    add(
+      r2(180 + t * 240),
+      r2(236 + Math.sin(t * Math.PI) * 6),
+      Math.PI / 2 + 0.75 * Math.sin(t * 5.3 + 0.8),
+      24 + 6 * Math.sin(t * 8.1),
+      44,
+      14 * Math.sin(t * 7.2 + 1.1),
     )
   }
   return out
 }
 
-const HAIR = hairCurls()
+const HAIR = hairLocks()
 
-/** The solid mass under the ringlets, so the silhouette has no holes. */
+/** The mass the tufts grow out of, so no skin shows between them. */
 const HAIR_CAP =
-  "M300 104 C404 104 470 186 470 300 C470 322 466 336 460 344 C452 298 440 228 300 228 C160 228 148 298 140 344 C134 336 130 322 130 300 C130 186 196 104 300 104 Z"
+  "M300 118 C410 118 470 196 470 288 C470 302 466 310 462 314 C452 300 440 258 300 258 C160 258 148 300 138 314 C134 310 130 302 130 288 C130 196 190 118 300 118 Z"
 
 /* ----------------------------------------------------------------- styles */
 
@@ -451,8 +493,8 @@ export default function MascotPortfolioHero({
       )
       // Pivot on each ear's own centre, so foreshortening squashes it in
       // place instead of sliding it along the side of the head.
-      L.earL?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(152 378) scale(" + p.ears.lead.toFixed(3) + " 1) translate(-152 -378)")
-      L.earR?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(448 378) scale(" + p.ears.trail.toFixed(3) + " 1) translate(-448 -378)")
+      L.earL?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(144 382) scale(" + p.ears.lead.toFixed(3) + " 1) translate(-144 -382)")
+      L.earR?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(456 382) scale(" + p.ears.trail.toFixed(3) + " 1) translate(-456 -382)")
       L.hair?.setAttribute("transform", tr(p.hair.dx, p.hair.dy))
       L.blush?.setAttribute("transform", tr(p.blush.dx, p.blush.dy))
       L.face?.setAttribute("transform", tr(p.face.dx, p.face.dy))
@@ -635,14 +677,14 @@ export default function MascotPortfolioHero({
                   Per-curl it compounded wherever two overlapped. */}
               <mask id={id("hairmask")}>
                 <path d={HAIR_CAP} fill="#fff" />
-                <g fill="none" stroke="#fff" strokeLinecap="round">
-                  {HAIR.map((c, i) => (
-                    <path key={"m" + i} d={c.d} strokeWidth={c.w} />
+                <g fill="#fff">
+                  {HAIR.map((c) => (
+                    <path key={"m" + c.i} d={c.d} />
                   ))}
                 </g>
               </mask>
               <clipPath id={id("collar")}>
-                <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" />
+                <path d="M206 580 Q300 554 394 580 L404 658 Q300 692 196 658 Z" />
               </clipPath>
               <clipPath id={id("mouth")}>
                 <path d="M240 444 Q300 462 360 444 Q356 512 300 520 Q244 512 240 444 Z" />
@@ -662,15 +704,14 @@ export default function MascotPortfolioHero({
               <path d="M24 730 C36 646 100 604 200 590 L400 590 C500 604 564 646 576 730 Z" fill={u("cloth")} />
 
               {/* High ribbed collar, standing away from the neck. */}
-              <ellipse cx="300" cy="588" rx="78" ry="22" fill="#000" opacity="0.3" />
-              <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" fill="#2a3560" />
+              <path d="M206 580 Q300 554 394 580 L404 658 Q300 692 196 658 Z" fill="#2a3560" />
               <g clipPath={u("collar")} stroke="#000" strokeOpacity="0.22" strokeWidth="3">
                 {Array.from({ length: 21 }, (_, i) => (
-                  <line key={i} x1={222 + i * 8.4} y1="550" x2={222 + i * 8.4} y2="690" />
+                  <line key={i} x1={208 + i * 9.4} y1="548" x2={208 + i * 9.4} y2="696" />
                 ))}
               </g>
-              <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" fill={u("cloth")} />
-              <path d="M222 582 Q300 558 378 582" fill="none" stroke="#000" strokeOpacity="0.28" strokeWidth="3" />
+              <path d="M206 580 Q300 554 394 580 L404 658 Q300 692 196 658 Z" fill={u("cloth")} />
+              <path d="M206 580 Q300 554 394 580" fill="none" stroke="#000" strokeOpacity="0.28" strokeWidth="3" />
 
               {/* The zip: tape, teeth, then the pull. */}
               <rect x="291" y="576" width="18" height="154" rx="3" fill="#323d68" />
@@ -689,20 +730,20 @@ export default function MascotPortfolioHero({
 
             <g ref={set("head")}>
               <g ref={set("earL")}>
-                <ellipse cx="152" cy="378" rx="38" ry="52" fill={skin} />
-                <ellipse cx="152" cy="378" rx="38" ry="52" fill={u("shade")} />
-                <path d="M162 352 Q134 362 139 390 Q144 410 161 408" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
+                <ellipse cx="144" cy="382" rx="46" ry="60" fill={skin} />
+                <ellipse cx="144" cy="382" rx="46" ry="60" fill={u("shade")} />
+                <path d="M156 352 Q124 364 130 396 Q136 420 155 416" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
               </g>
               <g ref={set("earR")}>
-                <ellipse cx="448" cy="378" rx="38" ry="52" fill={skin} />
-                <ellipse cx="448" cy="378" rx="38" ry="52" fill={u("shade")} />
-                <path d="M438 352 Q466 362 461 390 Q456 410 439 408" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
+                <ellipse cx="456" cy="382" rx="46" ry="60" fill={skin} />
+                <ellipse cx="456" cy="382" rx="46" ry="60" fill={u("shade")} />
+                <path d="M444 352 Q476 364 470 396 Q464 420 445 416" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
               </g>
 
               {/* Skull and face. */}
-              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={skin} />
-              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={u("shade")} />
-              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={u("hi")} />
+              <path d="M300 148 C400 148 462 228 462 350 C462 460 404 550 338 564 C322 567 278 567 262 564 C196 550 138 460 138 350 C138 228 200 148 300 148 Z" fill={skin} />
+              <path d="M300 148 C400 148 462 228 462 350 C462 460 404 550 338 564 C322 567 278 567 262 564 C196 550 138 460 138 350 C138 228 200 148 300 148 Z" fill={u("shade")} />
+              <path d="M300 148 C400 148 462 228 462 350 C462 460 404 550 338 564 C322 567 278 567 262 564 C196 550 138 460 138 350 C138 228 200 148 300 148 Z" fill={u("hi")} />
 
               <g ref={set("blush")}>
                 <ellipse cx="202" cy="428" rx={happy ? 46 : 40} ry={happy ? 32 : 28} fill={u("blush")} />
@@ -751,35 +792,32 @@ export default function MascotPortfolioHero({
 
                 <g ref={set("nose")}>
                   <path d="M300 348 Q292 378 286 396" fill="none" stroke="#6b3a20" strokeOpacity="0.18" strokeWidth="9" strokeLinecap="round" />
-                  <ellipse cx="300" cy="416" rx="24" ry="10" fill="#4a2312" opacity="0.16" />
-                  <ellipse cx="300" cy="400" rx="24" ry="23" fill={skin} />
-                  <ellipse cx="300" cy="400" rx="24" ry="23" fill={u("nose")} />
-                  <ellipse cx="292" cy="390" rx="8" ry="6.5" fill="#fff" opacity="0.4" />
+                  <ellipse cx="300" cy="418" rx="27" ry="11" fill="#4a2312" opacity="0.16" />
+                  <ellipse cx="300" cy="400" rx="28" ry="26" fill={skin} />
+                  <ellipse cx="300" cy="400" rx="28" ry="26" fill={u("nose")} />
+                  <ellipse cx="291" cy="389" rx="9" ry="7.5" fill="#fff" opacity="0.42" />
                 </g>
               </g>
 
               <g ref={set("hair")}>
+                {/* The mass, then the tufts, then one lighting pass over the
+                    whole thing. Shading drawn per tuft compounds wherever two
+                    overlap, which is what made the first pass read as bubbles. */}
                 <path d={HAIR_CAP} fill={hair} />
-                {/* Ringlets: the body of each curl, then a lighter inner stroke
-                    catching the light along it, then a single lighting pass
-                    over the whole mass. */}
-                <g fill="none" stroke={hair} strokeLinecap="round">
-                  {HAIR.map((c, i) => (
-                    <path key={"b" + i} d={c.d} strokeWidth={c.w} />
+                <g fill={hair}>
+                  {HAIR.map((c) => (
+                    <path key={"b" + c.i} d={c.d} />
                   ))}
                 </g>
-                <g fill="none" stroke="#000" strokeOpacity="0.45" strokeLinecap="round">
-                  {HAIR.map((c, i) => (
-                    <path key={"o" + i} d={c.d} strokeWidth={c.w * 0.96} />
-                  ))}
-                </g>
-                <g fill="none" stroke="#6b4e39" strokeLinecap="round" opacity="0.18">
-                  {HAIR.filter((_, i) => i % 2 === 0).map((c, i) => (
-                    <path key={"k" + i} d={c.d} strokeWidth={c.w * 0.2} />
+                {/* Every third tuft, drawn again smaller and lifted, so the
+                    surface is sculpted rather than flat. */}
+                <g fill="#3a2a1f" opacity="0.32">
+                  {HAIR.filter((c) => c.i % 3 !== 2).map((c) => (
+                    <path key={"l" + c.i} d={c.hi} />
                   ))}
                 </g>
                 <g mask={u("hairmask")}>
-                  <rect x="80" y="40" width="440" height="400" fill={u("hair")} />
+                  <rect x="80" y="20" width="440" height="420" fill={u("hair")} />
                 </g>
               </g>
             </g>
