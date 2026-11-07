@@ -14,13 +14,25 @@ export const study: StudyItem[] = [
     endYear: 2029,
     year: 2,
     years: 4,
+    logo: {
+      src: "/images/logo-mesa.png",
+      alt: "Mesa School of Business logo",
+      width: 295,
+      height: 316,
+    },
   },
   {
     institution: "NMIMS",
-    programme: "BBA · 65% merit scholarship",
+    programme: "BBA",
     startYear: 2025,
     endYear: 2028,
     year: 2,
     years: 3,
+    logo: {
+      src: "/images/logo-nmims.png",
+      alt: "NMIMS logo",
+      width: 281,
+      height: 101,
+    },
   },
 ];

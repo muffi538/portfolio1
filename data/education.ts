@@ -3,7 +3,7 @@ import type { EducationItem } from "@/lib/types";
 export const education: EducationItem[] = [
   {
     institution: "Mesa School of Business",
-    qualification: "BBA (NMIMS, batch of 2029) · 65% merit scholarship",
+    qualification: "BBA (NMIMS, batch of 2029)",
     period: "2025 – 2029",
     location: "Bengaluru",
     description:

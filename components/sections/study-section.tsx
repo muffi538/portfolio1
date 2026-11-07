@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { study } from "@/data/study";
@@ -18,16 +19,36 @@ export function StudySection() {
             <li key={item.institution}>
               <Reveal delay={i * 0.08}>
                 <article className="group h-full rounded-xl border border-border bg-muted/50 p-5 transition-colors duration-500 hover:border-ink sm:p-6">
-                  <h3 className="display text-lg sm:text-xl">{item.institution}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground">
-                    {item.programme}
-                  </p>
+                  <div className="flex items-center gap-4">
+                    {/* A fixed-height plate rather than a fixed square: one
+                        mark is a tile and the other a wide lockup, and both
+                        have to stay legible. */}
+                    {item.logo && (
+                      <span className="inline-flex h-14 shrink-0 items-center justify-center rounded-lg border border-border bg-surface px-3">
+                        <Image
+                          src={item.logo.src}
+                          alt=""
+                          width={item.logo.width}
+                          height={item.logo.height}
+                          className="h-7 w-auto object-contain"
+                          sizes="8rem"
+                        />
+                      </span>
+                    )}
+
+                    <div className="min-w-0">
+                      <h3 className="display text-lg sm:text-xl">{item.institution}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {item.programme}
+                      </p>
+                    </div>
+                  </div>
 
                   {/* The bar is decoration over the figures below it, which
                       already say the same thing in words. */}
                   <div
                     aria-hidden="true"
-                    className="mt-6 h-1 w-full overflow-hidden rounded-full bg-border"
+                    className="mt-7 h-1 w-full overflow-hidden rounded-full bg-border"
                   >
                     <span
                       className="block h-full rounded-full bg-ink transition-colors duration-500 group-hover:bg-accent"

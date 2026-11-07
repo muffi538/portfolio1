@@ -97,10 +97,11 @@ function Polaroid({
 export function MomentsSection() {
   return (
     <Section
-      id="lately"
-      eyebrow="04 / Lately"
-      title="Lately"
+      id="in-action"
+      eyebrow="04 / In action"
+      title="In action"
       description="Some of the work, as it actually looked."
+      titleSize="md"
       ruled
     >
       <Reveal>

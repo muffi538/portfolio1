@@ -24,6 +24,8 @@ type SectionProps = {
   contained?: boolean;
   /** Draws a hairline rule above the section. */
   ruled?: boolean;
+  /** "md" sets the heading a step down, for a lighter band of the page. */
+  titleSize?: "lg" | "md";
 };
 
 const headingClasses: Record<HeadingLevel, string> = {
@@ -46,6 +48,7 @@ export function Section({
   className,
   contained = true,
   ruled = false,
+  titleSize = "lg",
 }: SectionProps) {
   const headingId = id ? `${id}-heading` : undefined;
   const Heading = headingLevel;
@@ -60,7 +63,13 @@ export function Section({
             </p>
           )}
           {title && (
-            <Heading id={headingId} className={headingClasses[headingLevel]}>
+            <Heading
+              id={headingId}
+              className={cn(
+                headingClasses[headingLevel],
+                titleSize === "md" && "display display-md",
+              )}
+            >
               {title}
             </Heading>
           )}
