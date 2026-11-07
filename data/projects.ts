@@ -4,6 +4,9 @@ export const projects: Project[] = [
   {
     slug: "elemax",
     title: "Elemax Building Materials",
+    shortName: "Elemax",
+    gist:
+      "a full corporate website for a UAE building-materials company — designed, built, and shipped live on its own domain.",
     kind: "Full website build",
     year: "2025",
     summary:
@@ -41,6 +44,9 @@ export const projects: Project[] = [
   {
     slug: "procur-ai",
     title: "Procur.AI",
+    shortName: "Procur.AI",
+    gist:
+      "an AI procurement platform for Indian MSMEs that reads RFQ emails and routes them to the right suppliers, in under two minutes at 85%+ extraction accuracy.",
     kind: "AI SaaS product",
     year: "2025",
     summary:
@@ -79,6 +85,9 @@ export const projects: Project[] = [
   {
     slug: "nua",
     title: "Nua — Zero Irritation",
+    shortName: "Nua",
+    gist:
+      "45+ interviews on the brand's \u201cZero Irritation\u201d claim, turned into a repositioning pitch and presented to their team.",
     kind: "Consumer research & brand strategy",
     year: "2025",
     summary:
@@ -129,6 +138,9 @@ export const projects: Project[] = [
   {
     slug: "chewcheer",
     title: "ChewCheer",
+    shortName: "ChewCheer",
+    gist:
+      "a clean-label prebiotic dog-treat brand taken 0\u21921 — 50+ customer interviews and \u20b91,00,000+ in profitable Meta Ads revenue.",
     kind: "D2C brand, 0→1",
     year: "2025",
     summary:

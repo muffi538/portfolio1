@@ -137,6 +137,13 @@ export type ExperienceItem = {
 export type Project = {
   slug: string;
   title: string;
+  /** The name as it reads inline in the home page gist. */
+  shortName: string;
+  /**
+   * One line for the home page, condensed from this entry's own summary and
+   * highlights. It continues from `shortName`, so it starts lower-case.
+   */
+  gist: string;
   /** e.g. "Website build", "Consumer research". */
   kind: string;
   year: string;

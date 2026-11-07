@@ -26,7 +26,12 @@ export function ProjectCard({
   const cover = project.images?.[0];
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-ink bg-surface">
+    <article
+      /* Anchor target for the home page gist list, offset clear of the fixed
+         header so the card is not scrolled under it. */
+      id={project.slug}
+      className="flex h-full scroll-mt-28 flex-col overflow-hidden rounded-lg border border-ink bg-surface"
+    >
       {cover && (
         <div className="relative aspect-[16/9] w-full border-b border-ink bg-muted">
           <Image
