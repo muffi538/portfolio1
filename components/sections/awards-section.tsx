@@ -22,7 +22,7 @@ export function AwardsSection() {
   const [lead, ...pile] = awardImages;
 
   return (
-    <Section id="awards" eyebrow="Recognition" title="Awards" ruled>
+    <Section id="awards" eyebrow="Recognition" title="Awards" className="scroll-mt-24" ruled>
       {/* The list runs long and the pile stacks tall, so the two columns are
           evened out rather than left to pool slack under one of them. */}
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-center lg:gap-14">

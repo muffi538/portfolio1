@@ -139,6 +139,17 @@
   font-size: clamp(1.75rem, 4.2vw, 3rem);
 }
 
+/* Scrollable tracks keep their own affordances (snap points, arrows), so the
+   native bar is hidden rather than left to sit across the images. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* A hairline rule in ink, used to divide blocks the way the deck does. */
 @utility rule-ink {
   border-top: 1px solid var(--color-ink);

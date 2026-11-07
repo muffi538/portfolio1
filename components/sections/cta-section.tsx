@@ -19,7 +19,7 @@ export function CtaSection() {
     <Section id="cta" ruled>
       <Reveal>
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-          04 / Contact
+          05 / Contact
         </p>
 
         {/* A pill, not a headline — availability should read as a note, not a
