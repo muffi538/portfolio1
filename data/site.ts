@@ -57,20 +57,16 @@ export const currentlyBuilding = {
   text: "A sports brand — football equipment, and specifically engineering the best shoe possible.",
 };
 
-/**
- * The photograph beside the About copy.
- * TODO: swap `src`, `alt`, `width` and `height` for the new photograph, and set
- * `fit` to "cover" so it fills the panel edge to edge. The current file is the
- * transparent cut-out from the deck, which is why it is contained rather than
- * cropped.
- */
+/** The photograph beside the About copy. */
 export const aboutImage: AboutImage = {
-  src: "/images/football-muffi-66.png",
-  alt: "Mufaddal on the pitch in a shirt reading MUFFI 66",
-  width: 464,
-  height: 1120,
-  fit: "contain",
-  focus: "center bottom",
+  src: "/images/about-portrait.jpg",
+  alt: "Mufaddal, arms folded, in a navy quarter-zip",
+  width: 1239,
+  height: 1269,
+  // Near square, so the panel crops it barely at all side by side; stacked it
+  // takes a 4:5 frame and the focus keeps him centred.
+  fit: "cover",
+  focus: "48% center",
 };
 
 /** One-line positioning used on the home page and in metadata. */
