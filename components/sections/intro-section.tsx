@@ -22,7 +22,7 @@ import {
 export function IntroSection() {
   return (
     <Section id="about-me" contained>
-      <div className="grid items-stretch gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-12 lg:gap-16">
+      <div className="grid items-center gap-10 md:grid-cols-[1.15fr_0.85fr] md:gap-12 lg:gap-16">
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
             01 / About
@@ -54,12 +54,12 @@ export function IntroSection() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.08} className="md:h-full">
-          <Parallax distance={16} className="md:h-full">
-            {/* Stacked, the panel keeps a 4:5 portrait ratio. Side by side it
-                matches the copy's height instead, so neither column leaves a
-                band of empty paper beside the other. */}
-            <div className="relative aspect-4/5 w-full overflow-hidden rounded-lg bg-muted md:aspect-auto md:h-full md:min-h-[26rem]">
+        <Reveal delay={0.08}>
+          <Parallax distance={16}>
+            {/* Capped and centred in its column rather than stretched to the
+                copy's height: at full width it dominated the section. Any
+                slack is split above and below it. */}
+            <div className="relative mx-auto aspect-4/5 w-full max-w-[21rem] overflow-hidden rounded-lg bg-muted md:mx-0 md:ml-auto">
               <Image
                 src={aboutImage.src}
                 alt={aboutImage.alt}
@@ -68,7 +68,7 @@ export function IntroSection() {
                   aboutImage.fit === "cover" ? "object-cover" : "object-contain"
                 }
                 style={{ objectPosition: aboutImage.focus }}
-                sizes="(max-width: 768px) 100vw, 45vw"
+                sizes="(max-width: 768px) 100vw, 21rem"
               />
             </div>
           </Parallax>
