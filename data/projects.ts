@@ -50,8 +50,9 @@ export const projects: Project[] = [
     kind: "AI SaaS product",
     year: "2025",
     summary:
-      "An AI-powered procurement automation platform for Indian MSMEs. It reads RFQ emails, extracts product requirements, categorises inquiries by supplier type and routes them to the right suppliers through a centralised workflow.",
+      "An AI-powered procurement automation platform for Indian MSMEs, built for and deployed inside my father's business. It reads RFQ emails, extracts product requirements, categorises inquiries by supplier type and routes them to the right suppliers through a centralised workflow.",
     highlights: [
+      "Cut the people needed for the procurement workflow from roughly six to two.",
       "Reduced RFQ processing time to under 2 minutes.",
       "Achieved 85%+ extraction accuracy.",
       "Automated inquiry categorisation and supplier routing.",
@@ -140,18 +141,19 @@ export const projects: Project[] = [
     title: "ChewCheer",
     shortName: "ChewCheer",
     gist:
-      "a clean-label prebiotic dog-treat brand taken 0\u21921 — 50+ customer interviews and \u20b91,00,000+ in profitable Meta Ads revenue.",
+      "a clean-label prebiotic dog-treat brand taken 0\u21921 — \u20b91,00,000+ in revenue in three weeks, built on 200–250 customer conversations.",
     kind: "D2C brand, 0→1",
     year: "2025",
     summary:
       "A clean-label functional pet nutrition brand built from scratch, improving gut health for dogs through prebiotic-based dog sticks.",
     highlights: [
-      "Conducted 50+ customer interviews to validate product-market fit and refine brand positioning.",
-      "Led end-to-end operations including packaging design, supplier sourcing and logistics.",
-      "Ran Meta Ads campaigns generating ₹1,00,000+ in revenue while remaining profitable.",
+      "Took the product from concept to roughly 500 sticks produced, then to sale.",
+      "Sold at Cubbon Park from 6 AM to 3 PM, speaking to 200–250 dog owners.",
+      "Set up and ran the Shopify channel, which took ~₹20,000 in orders organically.",
+      "₹1,00,000+ in revenue in three weeks, across roughly 200 packets.",
       "Named Best D2C Product at Mesa School of Business.",
     ],
-    tags: ["D2C", "0→1", "Brand", "Operations"],
+    tags: ["D2C", "0→1", "Operations", "Shopify"],
     logo: {
       src: "/images/logo-chewcheer.jpg",
       alt: "ChewCheer logo, a cocker spaniel holding a chew stick",

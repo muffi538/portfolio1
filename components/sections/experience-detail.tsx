@@ -5,82 +5,139 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
-import { Placeholder } from "@/components/ui/placeholder";
 import { cn } from "@/lib/utils";
-import type { DetailBlock, ExperienceItem } from "@/lib/types";
+import type { DetailSection, ExperienceItem, Metric } from "@/lib/types";
 
 /**
- * One titled block: paragraphs, bullets, and a placeholder for what is missing.
+ * The figures of a section, set to be scanned rather than read.
  *
- * Give the block an `image` in `data/experiences.ts` and it lays out as two
- * columns — roughly 55/45, centred against each other — with the photograph on
- * whichever side `imageSide` names. Without one the copy runs full width, which
- * is how every page that has no photographs yet still renders.
+ * Typography and a hairline carry these — no cards, no panels — so a run of
+ * four numbers reads as a line of the page rather than a dashboard dropped
+ * into it.
  */
-function Block({
-  title,
-  block,
+function Metrics({ metrics, columns }: { metrics: Metric[]; columns: 2 | 4 }) {
+  return (
+    <dl
+      className={cn(
+        "mt-7 grid grid-cols-2 gap-x-8 gap-y-7",
+        columns === 4 && "lg:grid-cols-4",
+      )}
+    >
+      {metrics.map((metric) => (
+        <div key={metric.label} className="border-t border-ink pt-4">
+          <dt className="sr-only">{metric.label}</dt>
+          <dd>
+            <span className="display block text-3xl sm:text-4xl">{metric.value}</span>
+            <span
+              aria-hidden="true"
+              className="mt-2 block text-sm leading-snug text-muted-foreground"
+            >
+              {metric.label}
+            </span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/** The accent-dotted bullet list used throughout the site. */
+function Points({ points, className }: { points: string[]; className?: string }) {
+  return (
+    <ul className={cn("space-y-2.5", className)}>
+      {points.map((point) => (
+        <li key={point} className="flex gap-3 leading-relaxed">
+          <span
+            aria-hidden="true"
+            className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent"
+          />
+          {point}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * One numbered section.
+ *
+ * Give the section an `image` in `data/experiences.ts` and it lays out as two
+ * columns — roughly 55/45, centred against each other — with the photograph on
+ * whichever side `imageSide` names. Without one the copy runs full width.
+ *
+ * Metrics always run full width, under both columns: four figures squeezed
+ * into half a row stop being scannable, which is the only reason they exist.
+ */
+function SectionBlock({
+  section,
   index,
   priority = false,
 }: {
-  title: string;
-  block: DetailBlock;
+  section: DetailSection;
+  /** Position in the page, already padded — "01", "02" … */
   index: string;
-  /** Set on the first block: its photograph is the likely LCP element. */
+  /** Set on the first section: its photograph is the likely LCP element. */
   priority?: boolean;
 }) {
-  const empty = !block.body?.length && !block.points?.length && !block.todo;
-  if (empty) return null;
-
-  const { image } = block;
-  const imageLeft = block.imageSide === "left";
+  const { image, metrics } = section;
+  const imageLeft = section.imageSide === "left";
+  /* Beside a photograph the figures sit in the copy column, two across, so
+     the two columns stay level; on their own they run the full width, four
+     across, which is how they are quickest to scan. */
+  const metricsInColumn = !!image && !!metrics?.length;
+  /* A section built from several workstreams runs much taller than its
+     photograph; one built from a paragraph does not. The two want opposite
+     alignments, so the content decides rather than a single rule. */
+  const tall = (section.groups?.length ?? 0) > 0;
+  /* A paragraph or two beside a tall portrait leaves a column of white, so a
+     short section gets a shorter frame. */
+  const short =
+    !tall &&
+    !metricsInColumn &&
+    (section.body?.length ?? 0) + (section.points?.length ?? 0) <= 3;
 
   const copy = (
     <div>
       <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-        {index}
+        {index} / {section.title}
       </p>
-      <h2 className="display display-md mt-2">{title}</h2>
+      <h2 className="display display-md mt-2">{section.title}</h2>
 
-      {block.body && block.body.length > 0 && (
+      {section.body && section.body.length > 0 && (
         <div className="mt-5 space-y-4 text-lg leading-relaxed">
-          {block.body.map((paragraph) => (
+          {section.body.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
       )}
 
-      {block.points && block.points.length > 0 && (
-        <ul className="mt-5 space-y-2.5">
-          {block.points.map((point) => (
-            <li key={point} className="flex gap-3 leading-relaxed">
-              <span
-                aria-hidden="true"
-                className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent"
-              />
-              {point}
-            </li>
-          ))}
-        </ul>
+      {section.points && section.points.length > 0 && (
+        <Points points={section.points} className="mt-5" />
       )}
 
-      {block.todo && <Placeholder className="mt-5">{block.todo}</Placeholder>}
+      {section.groups && section.groups.length > 0 && (
+        <div className="mt-7 space-y-7">
+          {section.groups.map((group) => (
+            <div key={group.heading}>
+              <h3 className="text-base font-bold">{group.heading}</h3>
+              <Points points={group.points} className="mt-3" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {metricsInColumn && metrics && <Metrics metrics={metrics} columns={2} />}
     </div>
   );
 
-  if (!image) {
-    return (
-      <section className="rule-ink pt-7">
-        <Reveal>
-          <div className="max-w-3xl">{copy}</div>
-        </Reveal>
-      </section>
-    );
-  }
-
-  const figure = (
+  const figure = image ? (
+    /* Capped on wide screens: a 1:1 portrait in a 45% column would otherwise
+       stand 500px tall beside three lines of copy. */
     <div
-      className="relative w-full overflow-hidden rounded-lg border border-border bg-muted"
+      className={cn(
+        "relative mx-auto w-full overflow-hidden rounded-lg border border-border bg-muted",
+        short ? "lg:max-h-[22rem]" : "lg:max-h-[30rem]",
+      )}
       style={{ aspectRatio: image.ratio ?? "4 / 3" }}
     >
       <Image
@@ -93,65 +150,79 @@ function Block({
         sizes="(max-width: 1024px) 100vw, 45vw"
       />
     </div>
-  );
+  ) : null;
 
   return (
     <section className="rule-ink pt-7">
-      {/* `order` moves the elements, not the tracks, so the column widths are
-          mirrored too — otherwise a left-hand photograph would take the wider
-          column and leave the copy in the narrow one. */}
-      <div
-        className={cn(
-          "grid items-center gap-8 lg:gap-14",
-          imageLeft ? "lg:grid-cols-[0.9fr_1.1fr]" : "lg:grid-cols-[1.1fr_0.9fr]",
-        )}
-      >
-        <Reveal className={imageLeft ? "lg:order-2" : undefined}>{copy}</Reveal>
-        <Reveal
-          delay={0.08}
-          className={imageLeft ? "lg:order-1" : undefined}
+      {figure ? (
+        /* `order` moves the elements, not the tracks, so the column widths are
+           mirrored too — otherwise a left-hand photograph would take the wider
+           column and leave the copy in the narrow one. */
+        <div
+          className={cn(
+            "grid gap-8 lg:gap-14",
+            tall ? "lg:items-start" : "lg:items-center",
+            imageLeft ? "lg:grid-cols-[0.9fr_1.1fr]" : "lg:grid-cols-[1.1fr_0.9fr]",
+          )}
         >
-          {figure}
+          <Reveal className={imageLeft ? "lg:order-2" : undefined}>{copy}</Reveal>
+          {/* Where the copy runs long the photograph is pinned, so it travels
+              with the reader instead of leaving a dead band beside it. Sticky
+              needs `items-start` for the row to leave it room to move. */}
+          <Reveal
+            delay={0.08}
+            className={cn(tall && "lg:sticky lg:top-28", imageLeft && "lg:order-1")}
+          >
+            {figure}
+          </Reveal>
+        </div>
+      ) : (
+        <Reveal>
+          <div className="max-w-3xl">{copy}</div>
         </Reveal>
-      </div>
+      )}
+
+      {metrics && metrics.length > 0 && !metricsInColumn && (
+        <Reveal delay={0.12}>
+          <Metrics metrics={metrics} columns={4} />
+        </Reveal>
+      )}
     </section>
+  );
+}
+
+/** Repeated at the top and bottom of every detail page. */
+function BackLink() {
+  return (
+    <Link
+      href="/experience"
+      className="group inline-flex items-center gap-2 rounded-sm text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-ink focus-visible:text-ink"
+    >
+      <ArrowLeft
+        aria-hidden="true"
+        className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5 group-focus-visible:-translate-x-0.5"
+      />
+      Back to experience
+    </Link>
   );
 }
 
 /**
  * The detail page template, shared by every /experience/<slug> route.
- * Content comes from `data/experiences.ts`; nothing is written here.
+ *
+ * Content comes from `data/experiences.ts`; nothing is written here. Sections
+ * are numbered by position, so a role that carries four of them reads 01–04
+ * rather than skipping a number it has nothing to put under.
  */
 export function ExperienceDetail({ item }: { item: ExperienceItem }) {
-  const { detail } = item;
-
-  // A gallery only earns its place when photographs are not already sitting
-  // beside the copy, or when there are none yet and the prompt should show.
-  const hasSectionImages = [
-    detail.overview,
-    detail.responsibilities,
-    detail.work,
-    detail.outcomes,
-  ].some((block) => block.image);
-  const hasVisuals =
-    !hasSectionImages && ((item.images?.length ?? 0) > 0 || !!detail.visualsTodo);
-  const visualsIndex = "05";
+  const { sections } = item.detail;
 
   return (
     <>
       {/* Header */}
       <Section id="experience-detail" headingLevel="h1" contained>
         <Reveal>
-          <Link
-            href="/experience"
-            className="group inline-flex items-center gap-2 rounded-sm text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-ink focus-visible:text-ink"
-          >
-            <ArrowLeft
-              aria-hidden="true"
-              className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5 group-focus-visible:-translate-x-0.5"
-            />
-            Back to experience
-          </Link>
+          <BackLink />
 
           <h1 id="experience-detail-heading" className="display display-lg mt-6">
             {item.organisation}
@@ -165,9 +236,9 @@ export function ExperienceDetail({ item }: { item: ExperienceItem }) {
             </p>
           </div>
 
-          {item.focus && (
-            <p className="mt-2 text-muted-foreground">{item.focus}</p>
-          )}
+          {item.focus && <p className="mt-2 text-muted-foreground">{item.focus}</p>}
+
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed">{item.summary}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-6">
             {item.logo && (
@@ -222,69 +293,17 @@ export function ExperienceDetail({ item }: { item: ExperienceItem }) {
       {/* Body */}
       <Container>
         <div className="space-y-12 pb-6">
-          <Block title="Overview" block={detail.overview} index="01 / Overview" priority />
-          <Block
-            title="Responsibilities"
-            block={detail.responsibilities}
-            index="02 / Responsibilities"
-          />
-          <Block
-            title="Work & contributions"
-            block={detail.work}
-            index="03 / Work"
-          />
-          <Block title="Outcomes" block={detail.outcomes} index="04 / Outcomes" />
-
-          {/* Visuals — only for entries whose photographs are not already
-              placed beside a section. ChewCheer carries its own per-section
-              images, so it has no gallery; the rest still show theirs. */}
-          {hasVisuals && (
-            <section className="rule-ink pt-7">
-              <Reveal>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                  {visualsIndex} / Visuals
-                </p>
-                <h2 className="display display-md mt-2">Visuals</h2>
-
-                {item.images && item.images.length > 0 && (
-                  <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {item.images.map((image) => (
-                      <li
-                        key={image.src}
-                        className="relative aspect-4/3 overflow-hidden rounded-lg border border-border bg-surface"
-                      >
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          fill
-                          className="object-contain p-3"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {detail.visualsTodo && (
-                  <Placeholder className="mt-6 max-w-3xl">
-                    {detail.visualsTodo}
-                  </Placeholder>
-                )}
-              </Reveal>
-            </section>
-          )}
+          {sections.map((section, i) => (
+            <SectionBlock
+              key={section.title}
+              section={section}
+              index={String(i + 1).padStart(2, "0")}
+              priority={i === 0}
+            />
+          ))}
 
           <Reveal>
-            <Link
-              href="/experience"
-              className="group inline-flex items-center gap-2 rounded-sm text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-ink focus-visible:text-ink"
-            >
-              <ArrowLeft
-                aria-hidden="true"
-                className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5 group-focus-visible:-translate-x-0.5"
-              />
-              Back to experience
-            </Link>
+            <BackLink />
           </Reveal>
         </div>
       </Container>

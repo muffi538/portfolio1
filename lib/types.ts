@@ -75,35 +75,63 @@ export type SectionImage = Asset & {
   fit?: "cover" | "contain";
 };
 
+/** A photograph in the awards collection, with the line that runs under it. */
+export type AwardImage = SectionImage & {
+  /** Describes what is in the frame; never claims an award the frame does not show. */
+  caption: string;
+};
+
+/** Awards of one kind, grouped so the list reads rather than runs. */
+export type AwardGroup = {
+  heading: string;
+  items: string[];
+};
+
+/** A number worth scanning for, shown large with the label under it. */
+export type Metric = {
+  /** The figure itself, e.g. "£5,000" or "6 → 2". */
+  value: string;
+  /** What it counts, e.g. "GMV in 3 months". */
+  label: string;
+};
+
+/** A named run of bullets inside a section, e.g. one workstream of several. */
+export type DetailGroup = {
+  heading: string;
+  points: string[];
+};
+
 /**
- * One block of an experience detail page.
+ * One section of an experience detail page.
  *
- * `body` and `points` hold material drawn from the portfolio deck and resume.
- * `todo` names what is still missing, and renders as a visible placeholder —
- * nothing is written to fill a gap.
+ * Everything here is drawn from the portfolio deck, the resume, or what
+ * Mufaddal has written about the role. A section with no material is left out
+ * of the array rather than rendered empty.
  */
-export type DetailBlock = {
+export type DetailSection = {
+  /** Heading, e.g. "What I worked on". Numbered by position when rendered. */
+  title: string;
   body?: string[];
   points?: string[];
-  todo?: string;
-  /** Photograph shown beside the copy. Omit and the block runs full width. */
+  /** Used where a section holds several distinct workstreams. */
+  groups?: DetailGroup[];
+  /** Figures set large, for the results of the role. */
+  metrics?: Metric[];
+  /** Photograph shown beside the copy. Omit and the section runs full width. */
   image?: SectionImage;
   /** Which side the photograph takes from `lg` up. Defaults to the right. */
   imageSide?: "left" | "right";
 };
 
-/** The body of an experience detail page, in the order it is shown. */
+/**
+ * The body of an experience detail page, in the order it is shown.
+ *
+ * An ordered list rather than fixed slots, so each role can carry the sections
+ * its own story needs — and only those. The page numbers them 01, 02, 03 … as
+ * it renders, so there is never a gap in the sequence.
+ */
 export type ExperienceDetail = {
-  /** The organisation, what it does, and how I was involved. */
-  overview: DetailBlock;
-  /** Specific tasks and the workstreams I held. */
-  responsibilities: DetailBlock;
-  /** Projects shipped, problems solved, systems contributed to. */
-  work: DetailBlock;
-  /** Results, with metrics where they exist. */
-  outcomes: DetailBlock;
-  /** Prompt for the photographs and screenshots still to be added. */
-  visualsTodo?: string;
+  sections: DetailSection[];
 };
 
 export type ExperienceItem = {
@@ -122,6 +150,7 @@ export type ExperienceItem = {
   metric?: { value: string; label: string };
   tags: string[];
   logo?: Asset;
+  /** Extra frames a section on another page draws on (the About food block). */
   images?: Asset[];
   links?: ExternalLink[];
   /**
