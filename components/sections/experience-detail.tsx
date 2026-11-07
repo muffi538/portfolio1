@@ -21,10 +21,13 @@ function Block({
   title,
   block,
   index,
+  priority = false,
 }: {
   title: string;
   block: DetailBlock;
   index: string;
+  /** Set on the first block: its photograph is the likely LCP element. */
+  priority?: boolean;
 }) {
   const empty = !block.body?.length && !block.points?.length && !block.todo;
   if (empty) return null;
@@ -84,6 +87,7 @@ function Block({
         src={image.src}
         alt={image.alt}
         fill
+        priority={priority}
         className={image.fit === "contain" ? "object-contain" : "object-cover"}
         style={{ objectPosition: image.focus }}
         sizes="(max-width: 1024px) 100vw, 45vw"
@@ -218,7 +222,7 @@ export function ExperienceDetail({ item }: { item: ExperienceItem }) {
       {/* Body */}
       <Container>
         <div className="space-y-12 pb-6">
-          <Block title="Overview" block={detail.overview} index="01 / Overview" />
+          <Block title="Overview" block={detail.overview} index="01 / Overview" priority />
           <Block
             title="Responsibilities"
             block={detail.responsibilities}

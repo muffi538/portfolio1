@@ -47,6 +47,14 @@ export const experience: ExperienceItem[] = [
         height: 173,
       },
     ],
+    thumb: {
+      src: "/images/ultrahuman-affiliate-deck.jpg",
+      alt: "The Ultrahuman affiliate deck",
+      width: 880,
+      height: 1170,
+      // Lands on the products rather than the body copy.
+      focus: "center 55%",
+    },
     detail: {
       overview: {
         body: [
@@ -131,6 +139,13 @@ export const experience: ExperienceItem[] = [
         href: "https://dashboarddfrido.vercel.app/#/uae",
       },
     ],
+    thumb: {
+      src: "/images/frido-stock-count.jpg",
+      alt: "Counting stock in the Frido warehouse",
+      width: 1000,
+      height: 1333,
+      focus: "center 62%",
+    },
     detail: {
       overview: {
         body: [
@@ -235,6 +250,13 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: "Instagram", href: "https://www.instagram.com/chewcheerr" },
     ],
+    thumb: {
+      src: "/images/chewcheer-customers.jpg",
+      alt: "Pet parents holding a ChewCheer pack",
+      width: 720,
+      height: 1280,
+      focus: "center 60%",
+    },
     detail: {
       overview: {
         body: [
@@ -337,6 +359,13 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: "GitHub repository", href: "https://github.com/muffi538/msme-rfq" },
     ],
+    thumb: {
+      src: "/images/procur-ai-landing.jpg",
+      alt: "The Procur.AI landing page",
+      width: 792,
+      height: 400,
+      focus: "center 40%",
+    },
     detail: {
       overview: {
         body: [
@@ -400,6 +429,13 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: "Instagram", href: "https://www.instagram.com/mufmuf_eats" },
     ],
+    thumb: {
+      src: "/images/mufmuf-burger.jpg",
+      alt: "A finished @mufmuf_eats review frame",
+      width: 1000,
+      height: 1575,
+      focus: "center 46%",
+    },
     detail: {
       overview: {
         body: [
@@ -476,6 +512,13 @@ export const experience: ExperienceItem[] = [
     ],
     metric: { value: "98", label: "students coordinated" },
     tags: ["Leadership", "Events", "Sponsorship", "Logistics"],
+    thumb: {
+      src: "/images/mesa-tournament.jpg",
+      alt: "The Mesa squad with the tournament trophy",
+      width: 1170,
+      height: 731,
+      focus: "center 50%",
+    },
     detail: {
       overview: {
         body: [
