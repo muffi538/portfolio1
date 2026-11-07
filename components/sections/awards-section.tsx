@@ -5,23 +5,47 @@ import { cn } from "@/lib/utils";
 import { awards, awardImages } from "@/data/skills";
 
 /**
- * A different tilt and lift per photograph, so the four read as a pile of
- * prints rather than a grid. Hover straightens the one under the cursor.
+ * A different tilt per photograph, cycled down the pile, so the prints never
+ * sit square to each other. Hover straightens the one under the cursor.
  */
 const tilts = [
   "rotate-[-3deg]",
-  "rotate-[2.5deg] translate-y-1",
-  "rotate-[2deg]",
-  "rotate-[-2.5deg] -translate-y-1",
+  "rotate-[2.5deg]",
+  "rotate-[1.5deg]",
+  "rotate-[-2deg]",
+  "rotate-[3deg]",
+  "rotate-[-1.5deg]",
 ];
 
 export function AwardsSection() {
+  /* The widest frame leads above the list; the rest stack beside it. */
+  const [lead, ...pile] = awardImages;
+
   return (
     <Section id="awards" eyebrow="Recognition" title="Awards" ruled>
-      {/* The list runs long and the photographs stack tall, so the two columns
-          are evened out rather than left to pool slack under one of them. */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_0.7fr] lg:items-center lg:gap-14">
+      {/* The list runs long and the pile stacks tall, so the two columns are
+          evened out rather than left to pool slack under one of them. */}
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-center lg:gap-14">
         <Reveal>
+          {/* Wide enough to read the row of trophies, and it fills the air
+              that a centred list would otherwise leave above itself. */}
+          <figure className="relative mb-8 w-full rotate-[-1.5deg] rounded-lg border border-ink bg-surface p-1.5 transition-transform duration-500 ease-out hover:z-10 hover:rotate-0 hover:scale-[1.02]">
+            <div
+              className="relative w-full overflow-hidden rounded-sm bg-muted"
+              style={{ aspectRatio: lead.ratio }}
+            >
+              <Image
+                src={lead.src}
+                alt={lead.alt}
+                fill
+                priority={false}
+                className="object-cover"
+                style={{ objectPosition: lead.focus }}
+                sizes="(max-width: 1024px) 92vw, 30vw"
+              />
+            </div>
+          </figure>
+
           <ul className="space-y-3.5">
             {awards.map((award) => (
               <li key={award} className="flex gap-3.5 text-base leading-relaxed sm:text-lg">
@@ -35,49 +59,38 @@ export function AwardsSection() {
           </ul>
         </Reveal>
 
-        {/* Two uneven columns of prints, the right one dropped, so nothing
-            lines up across the pile. */}
+        {/* CSS columns rather than a grid: the prints keep their own heights
+            and the browser balances the stacks, so nothing lines up across
+            the pile and the column count can follow the breakpoint. Capped
+            below lg so the pile stays a detail beside the list rather than
+            taking over a tablet. */}
         <Reveal delay={0.1}>
-          {/* Capped below lg so the pile stays a detail beside the list
-              rather than taking over the page on a tablet. */}
-          <div className="mx-auto flex w-full max-w-sm gap-3 px-1 sm:gap-4 lg:max-w-none">
-            {[0, 1].map((col) => (
-              <div
-                key={col}
-                className={cn("flex w-1/2 flex-col gap-4 sm:gap-5", col === 1 && "pt-7 sm:pt-10")}
+          <div className="w-full columns-2 gap-3 px-1 sm:columns-3 sm:gap-4">
+            {pile.map((image, i) => (
+              <figure
+                key={image.src}
+                className={cn(
+                  "relative mb-3 break-inside-avoid rounded-lg border border-ink bg-surface p-1.5 transition-transform duration-500 ease-out hover:z-10 hover:rotate-0 hover:scale-[1.05] sm:mb-4",
+                  tilts[i % tilts.length],
+                )}
               >
-                {awardImages
-                  .filter((_, i) => i % 2 === col)
-                  .map((image) => {
-                    const i = awardImages.indexOf(image);
-                    return (
-                      <figure
-                        key={image.src}
-                        className={cn(
-                          "relative rounded-lg border border-ink bg-surface p-1.5 transition-transform duration-500 ease-out hover:z-10 hover:rotate-0 hover:scale-[1.04]",
-                          tilts[i % tilts.length],
-                        )}
-                      >
-                        {/* Each print is cropped to its own ratio, so no two
-                            sit at the same height down the pile. */}
-                        <div
-                          className="relative w-full overflow-hidden rounded-sm bg-muted"
-                          style={{ aspectRatio: image.ratio }}
-                        >
-                          <Image
-                            src={image.src}
-                            alt={image.alt}
-                            fill
-                            className="object-cover"
-                            style={{ objectPosition: image.focus }}
-                            /* Half the pile: the pile is capped at 24rem below lg. */
-                            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 11rem, 15vw"
-                          />
-                        </div>
-                      </figure>
-                    );
-                  })}
-              </div>
+                {/* Each print is cropped to its own ratio, so no two sit at
+                    the same height down a stack. */}
+                <div
+                  className="relative w-full overflow-hidden rounded-sm bg-muted"
+                  style={{ aspectRatio: image.ratio }}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover"
+                    style={{ objectPosition: image.focus }}
+                    /* Two columns of a 24rem pile, three of 28rem, then ~13vw. */
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 13vw"
+                  />
+                </div>
+              </figure>
             ))}
           </div>
         </Reveal>
