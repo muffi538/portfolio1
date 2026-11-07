@@ -37,10 +37,8 @@ export type MascotPortfolioHeroProps = {
   /** Cycled through, one per click on the character. */
   greetings?: string[]
   skin?: string
-  beanie?: string
+  hair?: string
   shirt?: string
-  /** The leather tag on the beanie cuff. */
-  tag?: string
 
   /* ---- palette ---- */
   /** The green: the status dot and the name underline on hover. */
@@ -98,8 +96,7 @@ export function pose(x: number, y: number, near: number) {
     body: { dx: x * 4, dy: 0 },
     head: { dx: x * 10, dy: y * 7, rot: x * 4 },
     ears: { dx: -x * 7, dy: -y * 3, lead: 1 + x * 0.16, trail: 1 - x * 0.16 },
-    beanie: { dx: x * 13, dy: y * 4 },
-    tag: { dx: x * 7, dy: 0 },
+    hair: { dx: x * 13, dy: y * 4 },
     blush: { dx: x * 20, dy: y * 14 },
     face: { dx: x * 28, dy: y * (y < 0 ? 11 : 20) },
     nose: { dx: x * 10, dy: y * 7 },
@@ -170,6 +167,73 @@ function room(): { back: Seg[]; rays: Seg[]; depth: string[] } {
 
 const ROOM = room()
 
+/* ------------------------------------------------------------------ hair
+   Curls are stroked arcs, not circles: a fat arc with round caps reads as a
+   ringlet, where a disc read as a polka dot. Laid along three bands — crown,
+   inner mass and hairline — each with its own rotation so the surface does
+   not repeat.
+
+   Everything is rounded to two decimals. The spec lets each engine pick its
+   own precision for sin and cos, so Node and the browser disagreed in the
+   last decimal and React reported a hydration mismatch on every curl. */
+
+type Curl = { d: string; w: number }
+
+const r2 = (v: number) => Math.round(v * 100) / 100
+
+function hairCurls(): Curl[] {
+  const out: Curl[] = []
+
+  /** One ringlet: an arc of `sweep` radians around (x, y), stroked fat. */
+  const curl = (x: number, y: number, r: number, a0: number, sweep: number) => {
+    const px = (a: number) => r2(x + Math.cos(a) * r)
+    const py = (a: number) => r2(y + Math.sin(a) * r)
+    const large = Math.abs(sweep) > Math.PI ? 1 : 0
+    out.push({
+      d: `M${px(a0)} ${py(a0)} A${r2(r)} ${r2(r)} 0 ${large} 1 ${px(a0 + sweep)} ${py(a0 + sweep)}`,
+      w: r2(r * 0.92),
+    })
+  }
+
+  /** A band of ringlets following an ellipse around the skull. */
+  const band = (n: number, rx: number, ry: number, cy: number, rad: number, phase: number) => {
+    for (let i = 0; i <= n; i++) {
+      const t = i / n
+      const a = Math.PI * (1 - t)
+      const wob = Math.sin(t * 17.3 + phase) * 8
+      curl(
+        300 + Math.cos(a) * (rx + wob),
+        cy - Math.sin(a) * (ry + wob),
+        rad + 6 * Math.sin(t * 11.2 + phase),
+        t * 8.3 + phase,
+        3.6 + 1.1 * Math.sin(t * 6.7 + phase),
+      )
+    }
+  }
+
+  band(15, 150, 168, 312, 25, 0.5)   // crown, the outer silhouette
+  band(12, 112, 124, 318, 23, 2.1)   // inner mass
+  band(9, 62, 66, 250, 18, 3.4)      // centre, filling the top of the head
+
+  // The hairline, curling down onto the forehead.
+  for (let i = 0; i <= 10; i++) {
+    const t = i / 10
+    curl(
+      r2(172 + t * 256),
+      r2(224 + Math.sin(t * Math.PI) * 10 + Math.sin(t * 8.4 + 0.9) * 8),
+      14 + 4 * Math.sin(t * 7.9 + 1.2),
+      t * 9.1 + 1.7,
+      3.9,
+    )
+  }
+  return out
+}
+
+const HAIR = hairCurls()
+
+/** The solid mass under the ringlets, so the silhouette has no holes. */
+const HAIR_CAP =
+  "M300 104 C404 104 470 186 470 300 C470 322 466 336 460 344 C452 298 440 228 300 228 C160 228 148 298 140 344 C134 336 130 322 130 300 C130 186 196 104 300 104 Z"
 
 /* ----------------------------------------------------------------- styles */
 
@@ -210,13 +274,10 @@ const CSS = `
 .mph-char{position:absolute;left:55.5%;bottom:-1.2%;width:40.5%;aspect-ratio:600/720;padding:0;margin:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:40% 40% 8% 8%;}
 .mph-char:focus-visible{outline:.2cqw dashed var(--mph-ink);outline-offset:.4cqw;}
 .mph-char svg{display:block;width:100%;height:100%;overflow:visible;}
-.mph-tagwig{transform-box:fill-box;transform-origin:50% 0;}
-.mph-happy .mph-tagwig{animation:mph-wiggle .9s cubic-bezier(.3,1.6,.5,1);}
 .mph-bubble{position:absolute;left:-4%;top:6%;max-width:46%;background:#fff;color:var(--mph-ink);border:.16cqw solid var(--mph-ink);border-radius:1.4em 1.4em 1.4em .2em;padding:.8em 1.1em;font-size:1.3cqw;font-weight:800;line-height:1.2;text-align:left;box-shadow:.35cqw .35cqw 0 var(--mph-accent);transform-origin:0 100%;transform:scale(0) rotate(-8deg);opacity:0;transition:transform .45s cubic-bezier(.3,1.6,.5,1),opacity .2s;pointer-events:none;}
 .mph-bubble[data-on="true"]{transform:scale(1) rotate(-4deg);opacity:1;}
 
 @keyframes mph-draw{from{stroke-dashoffset:1;}to{stroke-dashoffset:0;}}
-@keyframes mph-wiggle{0%{transform:rotate(0);}25%{transform:rotate(-14deg);}55%{transform:rotate(9deg);}80%{transform:rotate(-4deg);}100%{transform:rotate(0);}}
 
 @container mph (orientation: portrait){
 .mph-stage{top:0;transform:translateX(-50%);width:min(100cqw,56.25cqh);height:100cqh;aspect-ratio:auto;}
@@ -253,7 +314,7 @@ const CSS = `
 
 type Layers = Partial<
   Record<
-    | "body" | "head" | "earL" | "earR" | "beanie" | "tag" | "blush"
+    | "body" | "head" | "earL" | "earR" | "hair" | "blush"
     | "face" | "nose" | "eyes" | "brows",
     SVGGElement | null
   >
@@ -272,10 +333,9 @@ export default function MascotPortfolioHero({
   href,
   services = DEFAULT_SERVICES,
   greetings = DEFAULT_GREETINGS,
-  skin = "#f7cfb0",
-  beanie = "#1d1d1f",
-  shirt = "#18181a",
-  tag = "#b98158",
+  skin = "#bf7d54",
+  hair = "#241a13",
+  shirt = "#1a2340",
   accent = "#5fb57a",
   paper = "#ebebea",
   ink = "#111111",
@@ -389,10 +449,11 @@ export default function MascotPortfolioHero({
         "transform",
         tr(p.head.dx, p.head.dy + breathe) + " rotate(" + p.head.rot.toFixed(2) + " 300 560)",
       )
-      L.earL?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(138 380) scale(" + p.ears.lead.toFixed(3) + " 1) translate(-138 -380)")
-      L.earR?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(462 380) scale(" + p.ears.trail.toFixed(3) + " 1) translate(-462 -380)")
-      L.beanie?.setAttribute("transform", tr(p.beanie.dx, p.beanie.dy))
-      L.tag?.setAttribute("transform", tr(p.tag.dx, p.tag.dy))
+      // Pivot on each ear's own centre, so foreshortening squashes it in
+      // place instead of sliding it along the side of the head.
+      L.earL?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(152 378) scale(" + p.ears.lead.toFixed(3) + " 1) translate(-152 -378)")
+      L.earR?.setAttribute("transform", tr(p.ears.dx, p.ears.dy) + " translate(448 378) scale(" + p.ears.trail.toFixed(3) + " 1) translate(-448 -378)")
+      L.hair?.setAttribute("transform", tr(p.hair.dx, p.hair.dy))
       L.blush?.setAttribute("transform", tr(p.blush.dx, p.blush.dy))
       L.face?.setAttribute("transform", tr(p.face.dx, p.face.dy))
       L.nose?.setAttribute("transform", tr(p.nose.dx, p.nose.dy))
@@ -529,49 +590,62 @@ export default function MascotPortfolioHero({
               {/* Shading is layered over a flat fill rather than baked into it,
                   so every colour prop still reads as lit and round. */}
               <radialGradient id={id("shade")} cx="46%" cy="40%" r="62%">
-                <stop offset="0.55" stopColor="#7a2e14" stopOpacity="0" />
-                <stop offset="1" stopColor="#7a2e14" stopOpacity="0.34" />
+                <stop offset="0.55" stopColor="#4a2312" stopOpacity="0" />
+                <stop offset="1" stopColor="#4a2312" stopOpacity="0.36" />
               </radialGradient>
               <radialGradient id={id("hi")} cx="36%" cy="30%" r="42%">
                 <stop offset="0" stopColor="#fff" stopOpacity="0.55" />
                 <stop offset="1" stopColor="#fff" stopOpacity="0" />
               </radialGradient>
               <radialGradient id={id("blush")}>
-                <stop offset="0" stopColor="#ff6f6f" stopOpacity="0.55" />
+                <stop offset="0" stopColor="#d4584a" stopOpacity="0.45" />
                 <stop offset="1" stopColor="#ff6f6f" stopOpacity="0" />
               </radialGradient>
-              <radialGradient id={id("knit")} cx="38%" cy="22%" r="80%">
-                <stop offset="0" stopColor="#fff" stopOpacity="0.2" />
-                <stop offset="0.6" stopColor="#fff" stopOpacity="0" />
-                <stop offset="1" stopColor="#000" stopOpacity="0.35" />
+              <radialGradient
+                id={id("hair")}
+                gradientUnits="userSpaceOnUse"
+                cx="240"
+                cy="160"
+                r="310"
+              >
+                <stop offset="0" stopColor="#fff" stopOpacity="0.13" />
+                <stop offset="0.45" stopColor="#fff" stopOpacity="0.02" />
+                <stop offset="1" stopColor="#000" stopOpacity="0.45" />
               </radialGradient>
               <radialGradient id={id("eye")} cx="40%" cy="35%" r="70%">
                 <stop offset="0" stopColor="#3a3a3c" />
                 <stop offset="1" stopColor="#050505" />
               </radialGradient>
               <radialGradient id={id("nose")} cx="42%" cy="36%" r="66%">
-                <stop offset="0" stopColor="#ff9c82" stopOpacity="0.18" />
-                <stop offset="1" stopColor="#b8583a" stopOpacity="0.42" />
+                <stop offset="0" stopColor="#e8a177" stopOpacity="0.2" />
+                <stop offset="1" stopColor="#6d3a20" stopOpacity="0.4" />
               </radialGradient>
               <linearGradient id={id("neck")} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#6b2a14" stopOpacity="0.45" />
-                <stop offset="0.5" stopColor="#6b2a14" stopOpacity="0.08" />
+                <stop offset="0" stopColor="#3f1d0e" stopOpacity="0.5" />
+                <stop offset="0.5" stopColor="#3f1d0e" stopOpacity="0.08" />
               </linearGradient>
               <linearGradient id={id("cloth")} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stopColor="#fff" stopOpacity="0.1" />
                 <stop offset="1" stopColor="#000" stopOpacity="0.3" />
               </linearGradient>
-              {/* Knit fuzz: the beanie's edge is roughed so it reads as wool,
-                  not a plastic cap. */}
-              <filter id={id("fuzz")} x="-5%" y="-5%" width="110%" height="110%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n" />
-                <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G" />
-              </filter>
-              <clipPath id={id("mouth")}>
-                <path d="M218 440 Q300 458 382 440 Q376 524 300 530 Q224 524 218 440 Z" />
+              {/* The whole head of hair as one clip, so the shading overlay can
+                  be a single shape. Drawn per curl it compounded wherever two
+                  circles overlapped and the hair read as bubble wrap. */}
+              {/* The hair as one mask, so the lighting pass is a single shape.
+                  Per-curl it compounded wherever two overlapped. */}
+              <mask id={id("hairmask")}>
+                <path d={HAIR_CAP} fill="#fff" />
+                <g fill="none" stroke="#fff" strokeLinecap="round">
+                  {HAIR.map((c, i) => (
+                    <path key={"m" + i} d={c.d} strokeWidth={c.w} />
+                  ))}
+                </g>
+              </mask>
+              <clipPath id={id("collar")}>
+                <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" />
               </clipPath>
-              <clipPath id={id("cuff")}>
-                <path d="M114 262 Q300 222 486 262 L490 322 Q300 286 110 322 Z" />
+              <clipPath id={id("mouth")}>
+                <path d="M240 444 Q300 462 360 444 Q356 512 300 520 Q244 512 240 444 Z" />
               </clipPath>
             </defs>
 
@@ -579,116 +653,133 @@ export default function MascotPortfolioHero({
             <ellipse cx="300" cy="712" rx="250" ry="16" fill="#000" opacity="0.08" />
 
             <g ref={set("body")}>
-              <path d="M28 730 C40 646 104 604 206 588 L394 588 C496 604 560 646 572 730 Z" fill={shirt} />
-              <path d="M28 730 C40 646 104 604 206 588 L394 588 C496 604 560 646 572 730 Z" fill={u("cloth")} />
-              {/* Neck, with the chin's shadow falling on it. */}
-              <path d="M246 500 L354 500 L360 600 Q300 624 240 600 Z" fill={skin} />
-              <path d="M246 500 L354 500 L360 600 Q300 624 240 600 Z" fill={u("neck")} />
-              {/* Polo collar and placket. */}
-              <path d="M236 566 Q262 604 300 628 L250 668 Q214 628 194 594 Z" fill={shirt} />
-              <path d="M364 566 Q338 604 300 628 L350 668 Q386 628 406 594 Z" fill={shirt} />
-              <path d="M236 566 Q262 604 300 628 L250 668 Q214 628 194 594 Z M364 566 Q338 604 300 628 L350 668 Q386 628 406 594 Z" fill="#fff" opacity="0.07" stroke="#000" strokeOpacity="0.4" strokeWidth="2" />
-              <rect x="288" y="628" width="24" height="102" fill="#fff" opacity="0.05" stroke="#000" strokeOpacity="0.35" strokeWidth="2" />
-              <circle cx="300" cy="656" r="6" fill="#2a2a2c" stroke="#000" strokeOpacity="0.5" />
-              <circle cx="300" cy="698" r="6" fill="#2a2a2c" stroke="#000" strokeOpacity="0.5" />
+              {/* Neck first, so the collar sits over it. */}
+              <path d="M256 498 L344 498 L350 594 Q300 616 250 594 Z" fill={skin} />
+              <path d="M256 498 L344 498 L350 594 Q300 616 250 594 Z" fill={u("neck")} />
+
+              {/* The navy quarter-zip from the photograph. */}
+              <path d="M24 730 C36 646 100 604 200 590 L400 590 C500 604 564 646 576 730 Z" fill={shirt} />
+              <path d="M24 730 C36 646 100 604 200 590 L400 590 C500 604 564 646 576 730 Z" fill={u("cloth")} />
+
+              {/* High ribbed collar, standing away from the neck. */}
+              <ellipse cx="300" cy="588" rx="78" ry="22" fill="#000" opacity="0.3" />
+              <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" fill="#2a3560" />
+              <g clipPath={u("collar")} stroke="#000" strokeOpacity="0.22" strokeWidth="3">
+                {Array.from({ length: 21 }, (_, i) => (
+                  <line key={i} x1={222 + i * 8.4} y1="550" x2={222 + i * 8.4} y2="690" />
+                ))}
+              </g>
+              <path d="M222 582 Q300 558 378 582 L386 654 Q300 684 214 654 Z" fill={u("cloth")} />
+              <path d="M222 582 Q300 558 378 582" fill="none" stroke="#000" strokeOpacity="0.28" strokeWidth="3" />
+
+              {/* The zip: tape, teeth, then the pull. */}
+              <rect x="291" y="576" width="18" height="154" rx="3" fill="#323d68" />
+              <g stroke="#b9bec9" strokeWidth="3.4" strokeLinecap="round">
+                {Array.from({ length: 18 }, (_, i) => (
+                  <line key={i} x1="294" y1={584 + i * 8} x2="306" y2={584 + i * 8} />
+                ))}
+              </g>
+              <rect x="292" y="576" width="16" height="154" rx="3" fill="none" stroke="#000" strokeOpacity="0.25" strokeWidth="2" />
+              <g transform="translate(300 672)">
+                <rect x="-7" y="-10" width="14" height="20" rx="4" fill="#cdd2db" />
+                <rect x="-7" y="-10" width="14" height="20" rx="4" fill={u("cloth")} />
+                <rect x="-3.5" y="6" width="7" height="24" rx="3.5" fill="#b4bac6" />
+              </g>
             </g>
 
             <g ref={set("head")}>
               <g ref={set("earL")}>
-                <ellipse cx="138" cy="380" rx="46" ry="60" fill={skin} />
-                <ellipse cx="138" cy="380" rx="46" ry="60" fill={u("shade")} />
-                <path d="M150 348 Q118 360 124 392 Q130 416 150 414" fill="none" stroke="#a24c2e" strokeOpacity="0.35" strokeWidth="7" strokeLinecap="round" />
-                <ellipse cx="136" cy="392" rx="24" ry="22" fill={u("blush")} />
+                <ellipse cx="152" cy="378" rx="38" ry="52" fill={skin} />
+                <ellipse cx="152" cy="378" rx="38" ry="52" fill={u("shade")} />
+                <path d="M162 352 Q134 362 139 390 Q144 410 161 408" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
               </g>
               <g ref={set("earR")}>
-                <ellipse cx="462" cy="380" rx="46" ry="60" fill={skin} />
-                <ellipse cx="462" cy="380" rx="46" ry="60" fill={u("shade")} />
-                <path d="M450 348 Q482 360 476 392 Q470 416 450 414" fill="none" stroke="#a24c2e" strokeOpacity="0.35" strokeWidth="7" strokeLinecap="round" />
-                <ellipse cx="464" cy="392" rx="24" ry="22" fill={u("blush")} />
+                <ellipse cx="448" cy="378" rx="38" ry="52" fill={skin} />
+                <ellipse cx="448" cy="378" rx="38" ry="52" fill={u("shade")} />
+                <path d="M438 352 Q466 362 461 390 Q456 410 439 408" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="6" strokeLinecap="round" />
               </g>
 
               {/* Skull and face. */}
-              <path d="M300 150 C402 150 470 226 470 348 C470 472 396 562 300 562 C204 562 130 472 130 348 C130 226 198 150 300 150 Z" fill={skin} />
-              <path d="M300 150 C402 150 470 226 470 348 C470 472 396 562 300 562 C204 562 130 472 130 348 C130 226 198 150 300 150 Z" fill={u("shade")} />
-              <path d="M300 150 C402 150 470 226 470 348 C470 472 396 562 300 562 C204 562 130 472 130 348 C130 226 198 150 300 150 Z" fill={u("hi")} />
+              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={skin} />
+              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={u("shade")} />
+              <path d="M300 148 C398 148 456 228 456 348 C456 456 400 548 336 562 C322 565 278 565 264 562 C200 548 144 456 144 348 C144 228 202 148 300 148 Z" fill={u("hi")} />
 
               <g ref={set("blush")}>
-                <ellipse cx="190" cy="430" rx={happy ? 50 : 44} ry={happy ? 34 : 30} fill={u("blush")} />
-                <ellipse cx="410" cy="430" rx={happy ? 50 : 44} ry={happy ? 34 : 30} fill={u("blush")} />
+                <ellipse cx="202" cy="428" rx={happy ? 46 : 40} ry={happy ? 32 : 28} fill={u("blush")} />
+                <ellipse cx="398" cy="428" rx={happy ? 46 : 40} ry={happy ? 32 : 28} fill={u("blush")} />
               </g>
 
               <g ref={set("face")}>
                 <g ref={set("brows")}>
-                  <path d={happy ? "M198 292 Q230 270 264 286" : "M198 300 Q230 282 264 294"} fill="none" stroke="#3b2518" strokeWidth="22" strokeLinecap="round" />
-                  <path d={happy ? "M336 286 Q370 270 402 292" : "M336 294 Q370 282 402 300"} fill="none" stroke="#3b2518" strokeWidth="22" strokeLinecap="round" />
+                  <path d={happy ? "M206 294 Q248 276 288 290" : "M206 302 Q248 288 288 298"} fill="none" stroke="#221a15" strokeWidth="25" strokeLinecap="round" />
+                  <path d={happy ? "M312 290 Q352 276 394 294" : "M312 298 Q352 288 394 302"} fill="none" stroke="#221a15" strokeWidth="25" strokeLinecap="round" />
                 </g>
 
                 <g ref={set("eyes")}>
                   {happy ? (
                     <>
-                      <path d="M214 356 Q240 324 266 356" fill="none" stroke="#111" strokeWidth="13" strokeLinecap="round" />
-                      <path d="M334 356 Q360 324 386 356" fill="none" stroke="#111" strokeWidth="13" strokeLinecap="round" />
+                      <path d="M222 358 Q246 328 270 358" fill="none" stroke="#1b1310" strokeWidth="13" strokeLinecap="round" />
+                      <path d="M330 358 Q354 328 378 358" fill="none" stroke="#1b1310" strokeWidth="13" strokeLinecap="round" />
                     </>
                   ) : (
                     <>
-                      <ellipse cx="240" cy="350" rx="25" ry="31" fill={u("eye")} />
-                      <circle cx="231" cy="336" r="8.5" fill="#fff" />
-                      <circle cx="250" cy="361" r="3.5" fill="#fff" opacity="0.8" />
-                      <ellipse cx="360" cy="350" rx="25" ry="31" fill={u("eye")} />
-                      <circle cx="351" cy="336" r="8.5" fill="#fff" />
-                      <circle cx="370" cy="361" r="3.5" fill="#fff" opacity="0.8" />
+                      <ellipse cx="246" cy="352" rx="23" ry="29" fill={u("eye")} />
+                      <circle cx="238" cy="339" r="8" fill="#fff" />
+                      <circle cx="255" cy="362" r="3.2" fill="#fff" opacity="0.8" />
+                      <ellipse cx="354" cy="352" rx="23" ry="29" fill={u("eye")} />
+                      <circle cx="346" cy="339" r="8" fill="#fff" />
+                      <circle cx="363" cy="362" r="3.2" fill="#fff" opacity="0.8" />
                     </>
                   )}
                 </g>
 
-                {/* Beauty mark — a little star on the cheek. */}
-                <path d="M420 382 L423.5 391 L433 391.5 L425.6 397.5 L428.2 406.8 L420 401.5 L411.8 406.8 L414.4 397.5 L407 391.5 L416.5 391 Z" fill="#2a1a14" />
+                {/* The small mark on his cheek. */}
+                <ellipse cx="396" cy="396" rx="5" ry="4.4" fill="#4a2a1b" opacity="0.85" />
 
                 {/* The grin. */}
                 <g transform={happy ? "translate(300 440) scale(1.06 1.12) translate(-300 -440)" : undefined}>
-                  <path d="M218 440 Q300 458 382 440 Q376 524 300 530 Q224 524 218 440 Z" fill="#3d0f0f" />
+                  <path d="M240 444 Q300 462 360 444 Q356 512 300 520 Q244 512 240 444 Z" fill="#36100f" />
                   <g clipPath={u("mouth")}>
-                    <ellipse cx="300" cy="530" rx="46" ry="22" fill="#d9575a" />
-                    <path d="M210 436 Q300 456 390 436 L390 474 Q300 490 210 474 Z" fill="#fff" />
-                    <path d="M236 516 Q300 500 364 516 L364 540 L236 540 Z" fill="#f3efe9" />
-                    <path d="M262 452 V484 M300 456 V488 M338 452 V484" stroke="#000" strokeOpacity="0.08" strokeWidth="2" />
+                    <ellipse cx="300" cy="520" rx="38" ry="19" fill="#c4504f" />
+                    <path d="M234 440 Q300 460 366 440 L366 474 Q300 488 234 474 Z" fill="#fff" />
+                    <path d="M252 506 Q300 494 348 506 L348 530 L252 530 Z" fill="#f3efe9" />
+                    <path d="M272 454 V480 M300 458 V484 M328 454 V480" stroke="#000" strokeOpacity="0.08" strokeWidth="2" />
                   </g>
-                  <path d="M218 440 Q300 458 382 440 Q376 524 300 530 Q224 524 218 440 Z" fill="none" stroke="#8a3524" strokeOpacity="0.45" strokeWidth="3" />
-                  <path d="M208 432 Q212 442 220 446 M392 432 Q388 442 380 446" fill="none" stroke="#a24c2e" strokeOpacity="0.4" strokeWidth="4" strokeLinecap="round" />
+                  <path d="M240 444 Q300 462 360 444 Q356 512 300 520 Q244 512 240 444 Z" fill="none" stroke="#6b2a1a" strokeOpacity="0.45" strokeWidth="3" />
+                  <path d="M232 440 Q236 448 242 452 M368 440 Q364 448 358 452" fill="none" stroke="#7a3c22" strokeOpacity="0.4" strokeWidth="4" strokeLinecap="round" />
                 </g>
 
                 <g ref={set("nose")}>
-                  <ellipse cx="300" cy="414" rx="28" ry="12" fill="#6b2a14" opacity="0.14" />
-                  <ellipse cx="300" cy="398" rx="29" ry="26" fill={skin} />
-                  <ellipse cx="300" cy="398" rx="29" ry="26" fill={u("nose")} />
-                  <ellipse cx="291" cy="387" rx="10" ry="8" fill="#fff" opacity="0.45" />
+                  <path d="M300 348 Q292 378 286 396" fill="none" stroke="#6b3a20" strokeOpacity="0.18" strokeWidth="9" strokeLinecap="round" />
+                  <ellipse cx="300" cy="416" rx="24" ry="10" fill="#4a2312" opacity="0.16" />
+                  <ellipse cx="300" cy="400" rx="24" ry="23" fill={skin} />
+                  <ellipse cx="300" cy="400" rx="24" ry="23" fill={u("nose")} />
+                  <ellipse cx="292" cy="390" rx="8" ry="6.5" fill="#fff" opacity="0.4" />
                 </g>
               </g>
 
-              <g ref={set("beanie")}>
-                {/* Sits a little high on the skull, so the brows have forehead under the cuff. */}
-                <g transform="translate(0 -22)">
-                  <g filter={u("fuzz")}>
-                    <path d="M126 300 C112 168 196 88 300 88 C404 88 488 168 474 300 Z" fill={beanie} />
-                    <path d="M126 300 C112 168 196 88 300 88 C404 88 488 168 474 300 Z" fill={u("knit")} />
-                    <path d="M114 262 Q300 222 486 262 L490 322 Q300 286 110 322 Z" fill={beanie} />
-                    <g clipPath={u("cuff")} stroke="#fff" strokeOpacity="0.08" strokeWidth="5">
-                      {Array.from({ length: 34 }, (_, i) => (
-                        <line key={i} x1={112 + i * 11.4} y1="220" x2={112 + i * 11.4} y2="330" />
-                      ))}
-                    </g>
-                    <path d="M114 262 Q300 222 486 262 L490 322 Q300 286 110 322 Z" fill="#000" opacity="0.18" />
-                    <path d="M112 292 Q300 254 488 292" fill="none" stroke="#000" strokeOpacity="0.25" strokeWidth="3" />
-                  </g>
-                  <g ref={set("tag")}>
-                    <g className="mph-tagwig">
-                      <g transform="rotate(-7 190 272)">
-                        <rect x="172" y="238" width="36" height="64" rx="5" fill={tag} />
-                        <rect x="172" y="238" width="36" height="64" rx="5" fill={u("cloth")} />
-                        <rect x="177" y="243" width="26" height="54" rx="3" fill="none" stroke="#fff" strokeOpacity="0.5" strokeWidth="1.6" strokeDasharray="3 3" />
-                      </g>
-                    </g>
-                  </g>
+              <g ref={set("hair")}>
+                <path d={HAIR_CAP} fill={hair} />
+                {/* Ringlets: the body of each curl, then a lighter inner stroke
+                    catching the light along it, then a single lighting pass
+                    over the whole mass. */}
+                <g fill="none" stroke={hair} strokeLinecap="round">
+                  {HAIR.map((c, i) => (
+                    <path key={"b" + i} d={c.d} strokeWidth={c.w} />
+                  ))}
+                </g>
+                <g fill="none" stroke="#000" strokeOpacity="0.45" strokeLinecap="round">
+                  {HAIR.map((c, i) => (
+                    <path key={"o" + i} d={c.d} strokeWidth={c.w * 0.96} />
+                  ))}
+                </g>
+                <g fill="none" stroke="#6b4e39" strokeLinecap="round" opacity="0.18">
+                  {HAIR.filter((_, i) => i % 2 === 0).map((c, i) => (
+                    <path key={"k" + i} d={c.d} strokeWidth={c.w * 0.2} />
+                  ))}
+                </g>
+                <g mask={u("hairmask")}>
+                  <rect x="80" y="40" width="440" height="400" fill={u("hair")} />
                 </g>
               </g>
             </g>
