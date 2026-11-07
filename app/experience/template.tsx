@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 /**
  * Page transition, scoped to the experience routes.
@@ -11,7 +12,7 @@ import { motion, useReducedMotion } from "framer-motion";
  * swapping it. Nothing outside /experience is affected.
  */
 export default function ExperienceTemplate({ children }: { children: ReactNode }) {
-  const still = useReducedMotion();
+  const still = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   if (still) return <>{children}</>;
 

@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 type RevealProps = {
   children: ReactNode;
@@ -17,9 +18,17 @@ type RevealProps = {
  * renders the motion variant with `opacity: 0` inline, so the `data-reveal`
  * hook exists for the `<noscript>` rule in app/layout.tsx that forces these
  * blocks visible when JavaScript never runs.
+ *
+ * The preference is read through `useMediaQuery`, not Framer's
+ * `useReducedMotion`. That hook seeds `useState` from the live media query on
+ * the very first client render, so it disagrees with the server markup during
+ * hydration — and React keeps the server's `data-reveal` and `opacity: 0`
+ * attributes on the reused node, leaving every block permanently invisible.
+ * `useSyncExternalStore` returns the server value while hydrating and flips
+ * afterwards, so the swap happens as an ordinary update that clears them.
  */
 export function Reveal({ children, delay = 0, className }: RevealProps) {
-  const still = useReducedMotion();
+  const still = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   if (still) return <div className={className}>{children}</div>;
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 type ParallaxProps = {
   children: ReactNode;
@@ -16,13 +17,13 @@ type ParallaxProps = {
  * static text instead of moving in lockstep with it.
  *
  * Under reduced motion the offset is pinned to 0 rather than the style being
- * dropped: `useReducedMotion` only reports true after hydration, and by then
- * the motion value is already bound to the element, so removing it from
- * `style` would leave the last offset frozen in place instead of clearing it.
+ * dropped: the preference only reports true after hydration, and by then the
+ * motion value is already bound to the element, so removing it from `style`
+ * would leave the last offset frozen in place instead of clearing it.
  */
 export function Parallax({ children, distance = 20, className }: ParallaxProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const still = useReducedMotion();
+  const still = useMediaQuery("(prefers-reduced-motion: reduce)");
 
   const { scrollYProgress } = useScroll({
     target: ref,
