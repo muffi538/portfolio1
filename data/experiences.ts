@@ -34,6 +34,27 @@ export const experience: ExperienceItem[] = [
       width: 600,
       height: 381,
     },
+    stats: [
+      { value: "£5,000", label: "GMV in 3 months" },
+      { value: "300+", label: "UK affiliates" },
+      { value: "3", label: "product categories" },
+    ],
+    collage: [
+      {
+        src: "/images/ultrahuman-creators.jpg",
+        alt: "The TikTok Shop creator table: affiliate handles, follower counts and sample requests",
+        width: 1400,
+        height: 693,
+        focus: "center 45%",
+      },
+      {
+        src: "/images/ultrahuman-affiliate-deck.jpg",
+        alt: "The Ultrahuman TikTok Shop affiliate deck",
+        width: 880,
+        height: 1170,
+        focus: "center 40%",
+      },
+    ],
     thumb: {
       src: "/images/ultrahuman-affiliate-deck.jpg",
       alt: "The Ultrahuman affiliate deck",
@@ -147,6 +168,34 @@ export const experience: ExperienceItem[] = [
       {
         label: "Amazon performance dashboard",
         href: "https://dashboarddfrido.vercel.app/#/uae",
+      },
+    ],
+    stats: [
+      { value: "10", label: "warehouse inputs" },
+      { value: "3", label: "markets tracked" },
+      { value: "2", label: "dashboards built" },
+    ],
+    collage: [
+      {
+        src: "/images/frido-stock-count.jpg",
+        alt: "Mufaddal counting stock against a notebook in front of racked Frido inventory",
+        width: 1000,
+        height: 1333,
+        focus: "center 55%",
+      },
+      {
+        src: "/images/frido-warehouse-floor.jpg",
+        alt: "The Frido warehouse floor, racking and pallets running the length of the building",
+        width: 1000,
+        height: 1333,
+        focus: "center 58%",
+      },
+      {
+        src: "/images/frido-office.jpg",
+        alt: "The Frido office reception wall, carrying the brand mark",
+        width: 1000,
+        height: 1333,
+        focus: "center 45%",
       },
     ],
     thumb: {
@@ -286,6 +335,34 @@ export const experience: ExperienceItem[] = [
       height: 550,
     },
     links: [{ label: "Instagram", href: "https://www.instagram.com/chewcheerr" }],
+    stats: [
+      { value: "₹1L+", label: "revenue in 3 weeks" },
+      { value: "~200", label: "packets sold" },
+      { value: "200–250", label: "customer conversations" },
+    ],
+    collage: [
+      {
+        src: "/images/chewcheer-customers.jpg",
+        alt: "Two pet parents on a Bengaluru street holding a ChewCheer pack beside their dogs",
+        width: 720,
+        height: 1280,
+        focus: "center 56%",
+      },
+      {
+        src: "/images/chewcheer-pouches.jpg",
+        alt: "Three ChewCheer PawBiota prebiotic inulin stick pouches on a wooden table",
+        width: 1184,
+        height: 864,
+        focus: "center 50%",
+      },
+      {
+        src: "/images/chewcheer-stall.jpg",
+        alt: "The ChewCheer market stall, the brand mascot beside the product display",
+        width: 960,
+        height: 1280,
+        focus: "center 50%",
+      },
+    ],
     thumb: {
       src: "/images/chewcheer-customers.jpg",
       alt: "Pet parents holding a ChewCheer pack",
@@ -438,6 +515,27 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: "GitHub repository", href: "https://github.com/muffi538/msme-rfq" },
     ],
+    stats: [
+      { value: "6 → 2", label: "people on the workflow" },
+      { value: "85%+", label: "extraction accuracy" },
+      { value: "<2 min", label: "per RFQ" },
+    ],
+    collage: [
+      {
+        src: "/images/procur-ai-dashboard.jpg",
+        alt: "Procur.AI RFQ dashboard listing inbound requests by status",
+        width: 1120,
+        height: 574,
+        focus: "center 40%",
+      },
+      {
+        src: "/images/procur-ai-landing.jpg",
+        alt: "Procur.AI landing page reading From inbox to supplier. Instantly.",
+        width: 792,
+        height: 400,
+        focus: "center 40%",
+      },
+    ],
     thumb: {
       src: "/images/procur-ai-landing.jpg",
       alt: "The Procur.AI landing page",
@@ -565,6 +663,34 @@ export const experience: ExperienceItem[] = [
       },
     ],
     links: [{ label: "Instagram", href: "https://www.instagram.com/mufmuf_eats" }],
+    stats: [
+      { value: "1.5M", label: "views on the top video" },
+      { value: "1 → 1,500", label: "followers in under 2 months" },
+      { value: "30–35", label: "food spots explored" },
+    ],
+    collage: [
+      {
+        src: "/images/mufmuf-burger.jpg",
+        alt: "A finished review frame: a burger held to camera under the title In N Out Burger",
+        width: 1000,
+        height: 1575,
+        focus: "center 46%",
+      },
+      {
+        src: "/images/mufmuf-filming.jpg",
+        alt: "Mufaddal filming a review to camera on a restaurant terrace hung with marigold garlands",
+        width: 912,
+        height: 1600,
+        focus: "center 50%",
+      },
+      {
+        src: "/images/mufmuf-dining.jpg",
+        alt: "Mufaddal at a western-themed burger café in Bengaluru",
+        width: 960,
+        height: 1280,
+        focus: "center 45%",
+      },
+    ],
     thumb: {
       src: "/images/mufmuf-burger.jpg",
       alt: "A finished @mufmuf_eats review frame",
@@ -690,6 +816,34 @@ export const experience: ExperienceItem[] = [
     ],
     metric: { value: "98", label: "students coordinated" },
     tags: ["Leadership", "Events", "Sponsorship", "Logistics"],
+    stats: [
+      { value: "98", label: "students coordinated" },
+      { value: "10+", label: "colleges hosted" },
+      { value: "1,000+", label: "sponsor units distributed" },
+    ],
+    collage: [
+      {
+        src: "/images/mesa-tournament.jpg",
+        alt: "The Mesa squad with the trophy after a five-a-side inter-collegiate tournament",
+        width: 1586,
+        height: 992,
+        focus: "center 45%",
+      },
+      {
+        src: "/images/mesa-team-huddle.jpg",
+        alt: "Mufaddal briefing a circle of players on a floodlit pitch",
+        width: 956,
+        height: 1645,
+        focus: "center 38%",
+      },
+      {
+        src: "/images/mesa-cohort-session.jpg",
+        alt: "Mufaddal on stage with a microphone addressing the full student cohort",
+        width: 1400,
+        height: 1050,
+        focus: "center 45%",
+      },
+    ],
     thumb: {
       src: "/images/mesa-tournament.jpg",
       alt: "The Mesa squad with the tournament trophy",

@@ -150,6 +150,16 @@ export type ExperienceItem = {
   metric?: { value: string; label: string };
   tags: string[];
   logo?: Asset;
+  /**
+   * Two or three figures for the directory card. Drawn from this entry's own
+   * Results section — nothing here is a new claim.
+   */
+  stats?: Metric[];
+  /**
+   * The overlapping frames on the directory card, front first. Two or three,
+   * all already used on this role's own page.
+   */
+  collage?: SectionImage[];
   /** Extra frames a section on another page draws on (the About food block). */
   images?: Asset[];
   links?: ExternalLink[];
