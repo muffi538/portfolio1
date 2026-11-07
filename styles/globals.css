@@ -139,6 +139,31 @@
   font-size: clamp(1.75rem, 4.2vw, 3rem);
 }
 
+/* A track that slides itself. The element holds two identical copies of its
+   content, so travelling exactly half its width lands back where it started
+   and the loop never shows a seam. */
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee-track {
+  animation: marquee-x var(--marquee-duration, 60s) linear infinite;
+}
+
+/* The global reduced-motion rule only shortens animations, which would leave
+   this one parked at the end of its travel. It is switched off outright
+   instead, and the track is scrollable by hand. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+}
+
 /* Scrollable tracks keep their own affordances (snap points, arrows), so the
    native bar is hidden rather than left to sit across the images. */
 @utility no-scrollbar {
