@@ -45,7 +45,7 @@ function Polaroid({
         tabIndex={cloned ? -1 : undefined}
         aria-hidden={cloned || undefined}
         className={cn(
-          "group/print block w-40 rounded-lg border border-ink/10 bg-surface p-2.5 sm:w-48",
+          "group/print block w-56 rounded-lg border border-ink/10 bg-surface p-3 sm:w-64",
           "shadow-[0_8px_22px_-14px_rgb(17_17_17/0.45)]",
           "transition-all duration-500 ease-out",
           "hover:rotate-0 hover:-translate-y-1.5 hover:shadow-[0_18px_38px_-18px_rgb(17_17_17/0.5)]",
@@ -61,18 +61,18 @@ function Polaroid({
             priority={priority}
             className="object-cover"
             style={{ objectPosition: moment.image.focus }}
-            sizes="12rem"
+            sizes="16rem"
           />
         </div>
 
         {/* The deep bottom margin of a print is where the caption goes. A
             fixed height keeps every print the same size whether its caption
             runs to one line or two. */}
-        <p className="mb-1 mt-3 flex min-h-9 items-center justify-center gap-1 px-0.5 text-center text-xs font-medium leading-snug">
+        <p className="mb-1.5 mt-3.5 flex min-h-11 items-center justify-center gap-1.5 px-1 text-center text-sm font-medium leading-snug">
           {moment.caption}
           <ArrowUpRight
             aria-hidden="true"
-            className="size-3 shrink-0 text-muted-foreground transition-all duration-300 ease-out group-hover/print:translate-x-0.5 group-hover/print:-translate-y-0.5 group-hover/print:text-ink"
+            className="size-3.5 shrink-0 text-muted-foreground transition-all duration-300 ease-out group-hover/print:translate-x-0.5 group-hover/print:-translate-y-0.5 group-hover/print:text-ink"
           />
         </p>
       </Link>
@@ -118,14 +118,14 @@ export function MomentsSection() {
               "group-hover:[animation-play-state:paused]",
               "group-focus-within:[animation-play-state:paused]",
             )}
-            /* Paced off the content: eight prints at roughly 212px apiece,
+            /* Paced off the content: eight prints at roughly 280px apiece,
                travelling at a readable ~40px a second. */
-            style={{ "--marquee-duration": "44s" } as React.CSSProperties}
+            style={{ "--marquee-duration": "56s" } as React.CSSProperties}
           >
             {[false, true].map((cloned) => (
               <ul
                 key={String(cloned)}
-                className="flex gap-5 pr-5"
+                className="flex gap-6 pr-6"
                 aria-hidden={cloned || undefined}
               >
                 {moments.map((moment, i) => (
