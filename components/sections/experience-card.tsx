@@ -61,7 +61,7 @@ function Collage({
     <div
       className={cn(
         "relative aspect-4/3 w-full lg:max-w-none",
-        compact ? "max-w-[16rem]" : "max-w-[20rem]",
+        compact ? "max-w-[16rem]" : "max-w-[17rem]",
       )}
     >
       {frames.map((frame, i) => {
@@ -125,7 +125,7 @@ export function ExperienceCard({
     <article
       className={cn(
         "group rounded-xl border border-border bg-surface",
-        compact ? "p-4 sm:p-5" : "p-5 sm:p-6 lg:p-8",
+        compact ? "p-4 sm:p-5" : "p-4 sm:p-5 lg:p-6",
         "transition-all duration-500 ease-out hover:-translate-y-1 hover:border-ink",
         "hover:shadow-[0_24px_48px_-32px_rgb(17_17_17/0.45)]",
       )}
@@ -135,7 +135,7 @@ export function ExperienceCard({
           "grid lg:items-center",
           compact
             ? "gap-5 lg:grid-cols-[0.5fr_1.5fr] lg:gap-8"
-            : "gap-7 lg:grid-cols-[0.68fr_1.32fr] lg:gap-10",
+            : "gap-6 lg:grid-cols-[0.58fr_1.42fr] lg:gap-8",
         )}
       >
         <Reveal>
@@ -148,7 +148,7 @@ export function ExperienceCard({
             <h3
               className={cn(
                 "display relative",
-                compact ? "text-lg sm:text-xl" : "text-xl sm:text-2xl",
+                compact ? "text-base sm:text-lg" : "text-lg sm:text-xl",
               )}
             >
               {item.organisation}
@@ -164,17 +164,17 @@ export function ExperienceCard({
           </div>
 
           {item.stats && item.stats.length > 0 && (
-            <ul className={cn("flex flex-wrap", compact ? "mt-3 gap-1.5" : "mt-4 gap-2")}>
+            <ul className={cn("flex flex-wrap gap-1.5", compact ? "mt-3" : "mt-3.5")}>
               {item.stats.map((stat) => (
                 <li
                   key={stat.label}
                   className={cn(
                     "inline-flex items-baseline gap-2 rounded-full border border-border bg-muted/60 transition-colors duration-500 group-hover:border-ink/25",
-                    compact ? "px-2.5 py-1" : "px-3.5 py-1.5",
+                    compact ? "px-2.5 py-1" : "px-3 py-1",
                   )}
                 >
                   <span
-                    className={cn("display leading-none", compact ? "text-xs" : "text-sm")}
+                    className={cn("display text-xs leading-none")}
                   >
                     {stat.value}
                   </span>
@@ -194,13 +194,13 @@ export function ExperienceCard({
           <p
             className={cn(
               "max-w-2xl leading-relaxed text-muted-foreground",
-              compact ? "mt-3 text-sm" : "mt-4",
+              compact ? "mt-3 text-sm" : "mt-3.5 text-sm",
             )}
           >
             {item.summary}
           </p>
 
-          <div className={cn("flex flex-wrap gap-2.5", compact ? "mt-4" : "mt-6")}>
+          <div className={cn("flex flex-wrap gap-2.5", compact ? "mt-4" : "mt-5")}>
             <Link
               href={`/experience/${item.slug}`}
               className={buttonClasses({
