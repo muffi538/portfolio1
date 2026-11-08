@@ -98,7 +98,7 @@ export function MomentsSection() {
   return (
     <Section
       id="in-action"
-      eyebrow="04 / In action"
+      eyebrow="02 / In action"
       title="In action"
       description="Some of the work, as it actually looked."
       titleSize="md"

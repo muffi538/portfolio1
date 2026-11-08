@@ -12,9 +12,9 @@ export default function HomePage() {
       <HeroSection />
       <StudySection />
       <IntroSection />
+      <MomentsSection />
       <SelectedWorkSection />
       <ExperiencePreviewSection />
-      <MomentsSection />
       <CtaSection />
     </>
   );

@@ -19,7 +19,7 @@ export function SelectedWorkSection() {
   return (
     <Section
       id="selected-work"
-      eyebrow="02 / Selected work"
+      eyebrow="03 / Selected work"
       title="Selected work"
       description="A few things I've built, researched and shipped."
       ruled

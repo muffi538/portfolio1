@@ -15,7 +15,7 @@ export function ExperiencePreviewSection() {
   return (
     <Section
       id="experience-preview"
-      eyebrow="03 / Experience"
+      eyebrow="04 / Experience"
       title="Experience"
       description="Growth at Ultrahuman, supply chain at Frido, and the brands I run myself."
       ruled
