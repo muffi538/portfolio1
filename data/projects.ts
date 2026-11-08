@@ -120,8 +120,8 @@ export const projects: Project[] = [
     logo: {
       src: "/images/logo-nua.jpg",
       alt: "Nua logo",
-      width: 387,
-      height: 387,
+      width: 383,
+      height: 184,
     },
     images: [
       {

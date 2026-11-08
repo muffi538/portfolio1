@@ -32,6 +32,7 @@ export function HeroSection() {
           width: 585,
           height: 550,
         },
+        { src: "/images/logo-nua.jpg", alt: "Nua", width: 383, height: 184 },
       ]}
       greetings={[
         "Hi, I'm Mufaddal.",
