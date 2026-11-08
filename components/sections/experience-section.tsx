@@ -22,7 +22,7 @@ export function ExperienceSection() {
       title="Where I've worked"
       description="Growth, supply chain and operations roles, alongside the brands I've built myself. Open any one for the full picture."
     >
-      <ul className="space-y-8 lg:space-y-10">
+      <ul className="space-y-6 lg:space-y-8">
         {roles.map((item, i) => (
           <li key={item.slug}>
             <ExperienceCard item={item} priority={i === 0} />
