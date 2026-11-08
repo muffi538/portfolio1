@@ -6,7 +6,15 @@ export const siteConfig: SiteConfig = {
   title: "Mufaddal Yousuf",
   description:
     "Student at Mesa School of Business, Bengaluru, building D2C brands and AI products. Previously Ultrahuman and Frido.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  /**
+   * The canonical origin, used for `metadataBase`, the OpenGraph tags and
+   * every absolute link a crawler or a link preview builds from them.
+   *
+   * The live domain is the default, so production is right without any
+   * environment setup. `NEXT_PUBLIC_SITE_URL` overrides it, which is what
+   * preview deployments and local work should set.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mufaddalyousuf.com",
   role: "Building brands and products",
   location: "Bengaluru, India",
   email: "mufaddal66you@gmail.com",
