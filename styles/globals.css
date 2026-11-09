@@ -139,6 +139,33 @@
   font-size: clamp(1.75rem, 4.2vw, 3rem);
 }
 
+/* The drift on the experience cards: a slow rise and fall, each card on its
+   own duration and delay so the group never pulses in step. Driven through
+   the `translate` property, which composes with the `transform` Framer Motion
+   writes for the pointer parallax and the hover lift. */
+@keyframes orbit-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 var(--drift, -10px);
+  }
+}
+
+@utility orbit-drift {
+  animation: orbit-drift var(--drift-duration, 7s) ease-in-out infinite;
+  animation-delay: var(--drift-delay, 0s);
+}
+
+/* The global reduced-motion rule only shortens animations, which would park
+   this one at the top of its travel. It is switched off outright instead. */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-drift {
+    animation: none !important;
+  }
+}
+
 /* A track that slides itself. The element holds two identical copies of its
    content, so travelling exactly half its width lands back where it started
    and the loop never shows a seam. */
