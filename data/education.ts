@@ -33,6 +33,12 @@ export const education: EducationItem[] = [
       "Won the FLAMES Tournament as Team Captain",
       "Won the Cambridge Cup Dubai as Team Captain",
     ],
+    image: {
+      src: "/images/rims-sports-fest.jpg",
+      alt: "Mufaddal on the podium with a trophy beside a teammate at the RIMS International School sports fest",
+      width: 768,
+      height: 1024,
+    },
   },
   {
     institution: "Cambridge International School",
@@ -46,10 +52,10 @@ export const education: EducationItem[] = [
       "Attended 10+ Model United Nations (MUN) conferences",
     ],
     logo: {
-      src: "/images/logo-cambridge.jpg",
+      src: "/images/logo-cambridge-dubai.jpg",
       alt: "Cambridge International School, Dubai logo",
-      width: 300,
-      height: 149,
+      width: 1400,
+      height: 467,
     },
   },
 ];
