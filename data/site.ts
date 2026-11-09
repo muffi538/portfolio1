@@ -10,11 +10,12 @@ export const siteConfig: SiteConfig = {
    * The canonical origin, used for `metadataBase`, the OpenGraph tags and
    * every absolute link a crawler or a link preview builds from them.
    *
-   * The live domain is the default, so production is right without any
-   * environment setup. `NEXT_PUBLIC_SITE_URL` overrides it, which is what
-   * preview deployments and local work should set.
+   * The default is the primary domain as Vercel has it — www, with the apex
+   * redirecting to it — so these never point at an address that redirects.
+   * `NEXT_PUBLIC_SITE_URL` overrides it, which is what preview deployments
+   * and local work should set.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mufaddalyousuf.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.mufaddalyousuf.com",
   role: "Building brands and products",
   location: "Bengaluru, India",
   email: "mufaddal66you@gmail.com",
