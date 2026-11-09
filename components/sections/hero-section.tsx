@@ -15,7 +15,7 @@ export function HeroSection() {
       reel={["Portfolio", "Bengaluru, India"]}
       name={["Mufaddal", "Yousuf"]}
       ctaLabel="Currently Building"
-      href="/projects"
+      href="https://www.instagram.com/reel/Det3bVMTSWT/?srtk=dTRtcDV2eG8yMGZz"
       /* Where the work actually happened, in place of the category words
          that were there before. */
       brands={[

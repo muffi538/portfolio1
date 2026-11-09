@@ -6,10 +6,6 @@ import { Reveal } from "@/components/ui/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { projects } from "@/data/projects";
 
-/* ChewCheer carries its own card in the experience section below, so it is
-   not repeated here. Its full entry still stands on /projects. */
-const gist = projects.filter((project) => project.slug !== "chewcheer");
-
 /**
  * Home page teaser — the gist of each project in a single line, not the full
  * write-up. One row per project: a small logo tile, the name, and what it was.
@@ -25,7 +21,7 @@ export function SelectedWorkSection() {
       ruled
     >
       <ul className="rule-ink">
-        {gist.map((project, i) => (
+        {projects.map((project, i) => (
           <li key={project.slug} className="border-b border-border">
             <Reveal delay={Math.min(i, 5) * 0.04}>
               <Link

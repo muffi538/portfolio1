@@ -11,7 +11,7 @@ export function ProjectsSection() {
       headingLevel="h1"
       eyebrow="Projects"
       title="What I've built"
-      description="Products shipped, brands launched and research run — end to end."
+      description="A website shipped, an AI product built and consumer research run — end to end."
     >
       <ul className="space-y-8 lg:space-y-10">
         {projects.map((project, i) => (

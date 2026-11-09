@@ -152,49 +152,4 @@ export const projects: Project[] = [
       },
     ],
   },
-  {
-    slug: "chewcheer",
-    title: "ChewCheer",
-    shortName: "ChewCheer",
-    gist:
-      "a clean-label prebiotic dog-treat brand taken 0\u21921 — \u20b91,00,000+ in revenue in three weeks, built on 200–250 customer conversations.",
-    kind: "D2C brand, 0→1",
-    year: "2025",
-    summary:
-      "A clean-label functional pet nutrition brand built from scratch, improving gut health for dogs through prebiotic-based dog sticks.",
-    highlights: [
-      "Took the product from concept to roughly 500 sticks produced, then to sale.",
-      "Sold at Cubbon Park from 6 AM to 3 PM, speaking to 200–250 dog owners.",
-      "Set up and ran the Shopify channel, which took ~₹20,000 in orders organically.",
-      "₹1,00,000+ in revenue in three weeks, across roughly 200 packets.",
-      "Named Best D2C Product at Mesa School of Business.",
-    ],
-    stats: [
-      { value: "₹1L+", label: "revenue in 3 weeks" },
-      { value: "~200", label: "packets sold" },
-      { value: "200–250", label: "customer conversations" },
-    ],
-    tags: ["D2C", "0→1", "Operations", "Shopify"],
-    logo: {
-      src: "/images/logo-chewcheer.jpg",
-      alt: "ChewCheer logo, a cocker spaniel holding a chew stick",
-      width: 585,
-      height: 550,
-    },
-    images: [
-      {
-        src: "/images/chewcheer-customers.jpg",
-        alt: "Two pet parents on a Bengaluru street holding a ChewCheer pack, with a golden retriever and a labrador",
-        width: 720,
-        height: 1280,
-        // A tall portrait in a 16:9 card: aim the crop at the faces, the pack
-        // and the dogs rather than the trees above them.
-        focus: "center 54%",
-      },
-    ],
-    links: [
-      { label: "Full case study", href: "/experience/chewcheer" },
-      { label: "Instagram", href: "https://www.instagram.com/chewcheerr" },
-    ],
-  },
 ];

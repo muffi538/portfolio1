@@ -39,7 +39,7 @@ export const moments: Moment[] = [
       focus: "center 52%",
     },
     caption: "ChewCheer, out with pet parents",
-    href: "/projects#chewcheer",
+    href: "/experience/chewcheer",
   },
   {
     image: {

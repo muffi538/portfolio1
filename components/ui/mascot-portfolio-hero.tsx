@@ -618,7 +618,14 @@ export default function MascotPortfolioHero({
                 {ctaInner}
               </Link>
             ) : (
-              <a className="mph-cta" href={href}>
+              /* Anything that is not a path leaves the site, so it opens in
+                 its own tab and the new page gets no handle on this one. */
+              <a
+                className="mph-cta"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {ctaInner}
               </a>
             )
