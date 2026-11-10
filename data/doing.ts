@@ -34,8 +34,38 @@ export const doing: Doing[] = [
     context: "Representing Bengaluru",
     category: "Sport",
     description:
-      "Flew out to Tanzania to play for the Bengaluru side. Played as a midfielder, and scored from a free kick.",
+      "Flew out to Tanzania to play for the Bengaluru side at the Pongwe Cup. Played as a midfielder, and scored from a free kick.",
     mark: "TZ",
+    photo: {
+      src: "/images/tanzania-strike.jpg",
+      alt: "Mufaddal striking the ball in the Bangalore kit at the Pongwe Cup",
+      width: 1200,
+      height: 801,
+      focus: "center 55%",
+    },
+    gallery: [
+      {
+        src: "/images/tanzania-kit.jpg",
+        alt: "Mufaddal in the Bangalore number 11 shirt on the pitch",
+        width: 900,
+        height: 506,
+        focus: "center 35%",
+      },
+      {
+        src: "/images/tanzania-dribble.jpg",
+        alt: "Mufaddal carrying the ball past two defenders",
+        width: 900,
+        height: 720,
+        focus: "35% center",
+      },
+      {
+        src: "/images/tanzania-challenge.jpg",
+        alt: "Mufaddal going in for the ball against an opponent",
+        width: 900,
+        height: 720,
+        focus: "center 55%",
+      },
+    ],
   },
   {
     id: "paan-ad",

@@ -46,7 +46,7 @@ function DoingCard({ item }: { item: Doing }) {
   return (
     <article
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface",
+        "group flex flex-col overflow-hidden rounded-xl border border-border bg-surface",
         "transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent",
         "hover:shadow-[0_22px_44px_-30px_rgb(17_17_17/0.45)]",
       )}
@@ -124,10 +124,14 @@ export function DoingSection() {
       title="Doing cool stuff"
       description="Trips, factory floors and one very good paan advert. The things worth remembering that weren't a job or a project."
     >
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      {/* CSS columns rather than a grid: an entry with a gallery stands much
+          taller than one without, and a grid row equalises to the tallest,
+          leaving the short cards padded with dead space. Here each card keeps
+          its own height and the browser packs them. */}
+      <ul className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-6">
         {doing.map((item, i) => (
-          <li key={item.id}>
-            <Reveal delay={Math.min(i, 5) * 0.05} className="h-full">
+          <li key={item.id} className="mb-5 break-inside-avoid lg:mb-6">
+            <Reveal delay={Math.min(i, 5) * 0.05}>
               <DoingCard item={item} />
             </Reveal>
           </li>
