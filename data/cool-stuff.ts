@@ -19,11 +19,15 @@ export type Founder = {
   category?: string;
   takeaway: string;
   /**
-   * A second thing worth keeping, shown only in the dialog. Set where one
-   * conversation left more than a single line behind.
+   * A second thing worth keeping. Set where one conversation left more than
+   * a single line behind.
    */
   more?: string;
-  linkedin?: string;
+  /**
+   * Mufaddal's own LinkedIn post about meeting them — not the founder's
+   * profile, which is why the card calls it a post rather than a name.
+   */
+  post?: string;
   /**
    * The photograph in full, shown in the dialog. Falls back to the company
    * monogram. These are all group frames, so `focus` aims the crop.
@@ -47,7 +51,6 @@ export const founders: Founder[] = [
     category: "Food",
     takeaway:
       "Growth isn't always about expanding everywhere. Master one market, duplicate what works and learn from people who've already done it.",
-    linkedin: "https://www.linkedin.com/in/bert-mueller-47430326/",
     photo: {
       src: "/images/founder-bert-mueller.jpg",
       alt: "Mufaddal with Bert Mueller at a California Burrito counter",
@@ -61,6 +64,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gb8eFS2J",
   },
   {
     id: "utkarsh-gupta",
@@ -82,6 +86,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gfTEEm8D",
   },
   {
     id: "hari-menon",
@@ -90,7 +95,6 @@ export const founders: Founder[] = [
     category: "Consumer tech",
     takeaway:
       "Don't fall in love with your ideas. Sometimes accepting that you're wrong is what moves a business forward.",
-    linkedin: "https://www.linkedin.com/in/harimenon-bigbasket/",
     photo: {
       src: "/images/founder-hari-menon.jpg",
       alt: "Mufaddal with Hari Menon of BigBasket",
@@ -104,6 +108,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/g2GCAgUq",
   },
   {
     id: "aniket-shah",
@@ -112,7 +117,6 @@ export const founders: Founder[] = [
     category: "Food",
     takeaway:
       "Marketing doesn't always need to look like marketing. Curiosity, clever placement and FOMO can make people discover a brand themselves.",
-    linkedin: "https://www.linkedin.com/in/aniketshah30/",
     photo: {
       src: "/images/founder-aniket-shah.jpg",
       alt: "Mufaddal with Aniket Shah at the Swish office",
@@ -126,6 +130,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gNBnR9v9",
   },
   {
     id: "yash-kalra",
@@ -133,7 +138,6 @@ export const founders: Founder[] = [
     company: "Goat Life",
     takeaway:
       "A founder should be willing to get their hands dirty. Founder-led marketing and genuine belief in the product make a difference.",
-    linkedin: "https://www.linkedin.com/in/yashkalra98/",
     photo: {
       src: "/images/founder-yash-kalra.jpg",
       alt: "Mufaddal with Yash Kalra at the Mesa School of Business wall, holding We Eat Breakfast cards",
@@ -147,6 +151,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gweC5jE6",
   },
   {
     id: "garima-luthra",
@@ -168,6 +173,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gwHs2mss",
   },
   {
     id: "ishan-sukul",
@@ -189,6 +195,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gWgFCc-h",
   },
   {
     id: "shantanu-deshpande",
@@ -210,6 +217,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/g-JzY2ry",
   },
   {
     id: "kiran-shah",
@@ -239,7 +247,6 @@ export const founders: Founder[] = [
     category: "Craft",
     takeaway:
       "There's so much value in India's traditional crafts and textiles. Sometimes the opportunity is simply helping people rediscover what already exists.",
-    linkedin: "https://www.linkedin.com/in/shivangchandna/",
     photo: {
       src: "/images/founder-shivang-chandna.jpg",
       alt: "Mufaddal with Shivang Chandna after his fireside chat at Mesa School of Business",
@@ -253,6 +260,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gEyfJWDu",
   },
   {
     id: "anindita-sampath",
@@ -284,6 +292,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gd8nXEnb",
   },
   {
     id: "dhananjay-yadav",
@@ -305,6 +314,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gdVbHBM8",
   },
   {
     id: "sahib-aggarwal",
@@ -325,6 +335,7 @@ export const founders: Founder[] = [
       width: 420,
       height: 420,
     },
+    post: "https://lnkd.in/p/gdVbHBM8",
   },
 ];
 

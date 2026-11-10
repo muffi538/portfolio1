@@ -92,14 +92,16 @@ function PersonCard({ founder }: { founder: Founder }) {
           </p>
         )}
 
-        {founder.linkedin && (
+        {/* Mufaddal's own write-up of the meeting, not the founder's profile,
+            so the link says so rather than just "LinkedIn". */}
+        {founder.post && (
           <a
-            href={founder.linkedin}
+            href={founder.post}
             target="_blank"
             rel="noopener noreferrer"
             className="group/link mt-auto inline-flex items-center gap-1.5 self-start pt-5 text-sm font-bold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent"
           >
-            LinkedIn
+            Read the post
             <ArrowUpRight
               aria-hidden="true"
               className="size-4 transition-transform duration-300 ease-out group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
