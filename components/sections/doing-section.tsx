@@ -74,6 +74,27 @@ function DoingCard({ item }: { item: Doing }) {
           {item.description}
         </p>
 
+        {/* The rest of the day, kept on the card rather than behind a click. */}
+        {item.gallery && item.gallery.length > 0 && (
+          <ul className="mt-4 grid grid-cols-3 gap-2">
+            {item.gallery.map((frame) => (
+              <li
+                key={frame.src}
+                className="relative aspect-square overflow-hidden rounded-md border border-border bg-muted"
+              >
+                <Image
+                  src={frame.src}
+                  alt={frame.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  style={{ objectPosition: frame.focus }}
+                  sizes="7rem"
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
         {item.link && (
           <a
             href={item.link.href}

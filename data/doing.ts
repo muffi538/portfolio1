@@ -18,6 +18,11 @@ export type Doing = {
   mark: string;
   photo?: SectionImage;
   thumb?: SectionImage;
+  /**
+   * A few more frames from the same day, shown as a strip under the copy.
+   * Everything stays on the face of the card — nothing behind a click.
+   */
+  gallery?: SectionImage[];
   /** Somewhere it is written up or shown. */
   link?: { label: string; href: string };
 };
@@ -71,5 +76,33 @@ export const doing: Doing[] = [
     description:
       "A steel factory making electrical steel components — the parts that end up inside motors, transformers and aerospace equipment.",
     mark: "DC",
+    photo: {
+      src: "/images/dev-components-floor.jpg",
+      alt: "The Dev Components shop floor, rows of stamping presses in use",
+      width: 1200,
+      height: 900,
+    },
+    gallery: [
+      {
+        src: "/images/dev-components-cohort.jpg",
+        alt: "The Mesa cohort at the Dev Components reception",
+        width: 1200,
+        height: 669,
+        focus: "center 40%",
+      },
+      {
+        src: "/images/dev-components-laminations.jpg",
+        alt: "A board of electrical steel stampings and laminations in every size",
+        width: 675,
+        height: 900,
+        focus: "center 45%",
+      },
+      {
+        src: "/images/dev-components-coils.jpg",
+        alt: "Coils of electrical steel stacked in the Dev Components warehouse",
+        width: 900,
+        height: 675,
+      },
+    ],
   },
 ];
