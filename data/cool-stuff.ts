@@ -248,14 +248,14 @@ export const founders: Founder[] = [
     takeaway:
       "There's so much value in India's traditional crafts and textiles. Sometimes the opportunity is simply helping people rediscover what already exists.",
     photo: {
-      src: "/images/founder-shivang-chandna.jpg",
+      src: "/images/founder-shivang-chandna-2.jpg",
       alt: "Mufaddal with Shivang Chandna after his fireside chat at Mesa School of Business",
       width: 900,
       height: 1200,
-      focus: "center 32%",
+      focus: "center 34%",
     },
     thumb: {
-      src: "/images/thumb-shivang-chandna.jpg",
+      src: "/images/thumb-shivang-chandna-2.jpg",
       alt: "Shivang Chandna",
       width: 420,
       height: 420,
@@ -336,6 +336,26 @@ export const founders: Founder[] = [
       height: 420,
     },
     post: "https://lnkd.in/p/gdVbHBM8",
+  },
+  {
+    id: "varun-limaye",
+    name: "Varun Limaye",
+    company: "Mesa School of Business",
+    category: "Education",
+    takeaway: "Build useful things.",
+    photo: {
+      src: "/images/founder-varun-limaye.jpg",
+      alt: "Mufaddal with Varun Limaye, holding the Mesa tournament trophy",
+      width: 900,
+      height: 1200,
+      focus: "center 36%",
+    },
+    thumb: {
+      src: "/images/thumb-varun-limaye.jpg",
+      alt: "Varun Limaye",
+      width: 420,
+      height: 420,
+    },
   },
 ];
 
