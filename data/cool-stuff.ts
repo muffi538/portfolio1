@@ -1,4 +1,4 @@
-import type { Asset } from "@/lib/types";
+import type { SectionImage } from "@/lib/types";
 
 /**
  * One founder Mufaddal has met, and what he took from the conversation.
@@ -19,8 +19,19 @@ export type Founder = {
   category?: string;
   takeaway: string;
   linkedin?: string;
-  /** A photograph, once one exists. Falls back to the company monogram. */
-  photo?: Asset;
+  /**
+   * The photograph in full, shown in the dialog. Falls back to the company
+   * monogram. These are all group frames, so `focus` aims the crop.
+   */
+  photo?: SectionImage;
+  /**
+   * A square crop of the same frame for the card.
+   *
+   * A square box of a landscape photograph takes its whole height, so
+   * `object-position` cannot zoom in on a face — the crop has to be cut
+   * rather than steered.
+   */
+  thumb?: SectionImage;
 };
 
 export const founders: Founder[] = [
@@ -32,6 +43,19 @@ export const founders: Founder[] = [
     takeaway:
       "Growth isn't always about expanding everywhere. Master one market, duplicate what works and learn from people who've already done it.",
     linkedin: "https://www.linkedin.com/in/bert-mueller-47430326/",
+    photo: {
+      src: "/images/founder-bert-mueller.jpg",
+      alt: "Mufaddal with Bert Mueller at a California Burrito counter",
+      width: 1200,
+      height: 900,
+      focus: "38% center",
+    },
+    thumb: {
+      src: "/images/thumb-bert-mueller.jpg",
+      alt: "Bert Mueller",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "utkarsh-gupta",
@@ -40,6 +64,19 @@ export const founders: Founder[] = [
     category: "D2C",
     takeaway:
       "A homegrown brand can compete through strong design, smart marketing, seasonal drops and pricing that truly understands its audience.",
+    photo: {
+      src: "/images/founder-utkarsh-gupta.jpg",
+      alt: "Mufaddal with Utkarsh Gupta",
+      width: 1200,
+      height: 900,
+      focus: "40% center",
+    },
+    thumb: {
+      src: "/images/thumb-utkarsh-gupta.jpg",
+      alt: "Utkarsh Gupta",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "hari-menon",
@@ -66,6 +103,19 @@ export const founders: Founder[] = [
     takeaway:
       "A founder should be willing to get their hands dirty. Founder-led marketing and genuine belief in the product make a difference.",
     linkedin: "https://www.linkedin.com/in/yashkalra98/",
+    photo: {
+      src: "/images/founder-yash-kalra.jpg",
+      alt: "Mufaddal with Yash Kalra at the Mesa School of Business wall, holding We Eat Breakfast cards",
+      width: 1200,
+      height: 900,
+      focus: "center 52%",
+    },
+    thumb: {
+      src: "/images/thumb-yash-kalra.jpg",
+      alt: "Yash Kalra",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "garima-luthra",
@@ -98,6 +148,19 @@ export const founders: Founder[] = [
     category: "Food",
     takeaway:
       "Choose distribution around how customers actually shop. Finding the right channel can change the trajectory of a consumer brand.",
+    photo: {
+      src: "/images/founder-kiran-shah.jpg",
+      alt: "Mufaddal with Kiran Shah at the Go Zero office",
+      width: 1200,
+      height: 873,
+      focus: "38% center",
+    },
+    thumb: {
+      src: "/images/thumb-kiran-shah.jpg",
+      alt: "Kiran Shah",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "shivang-chandna",

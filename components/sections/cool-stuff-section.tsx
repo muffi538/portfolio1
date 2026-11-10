@@ -14,9 +14,14 @@ import { founders, monogram, type Founder } from "@/data/cool-stuff";
  * — it claims nothing the way a borrowed logo or a stock portrait would.
  */
 function Mark({ founder, large = false }: { founder: Founder; large?: boolean }) {
-  const size = large ? "size-20 text-2xl" : "size-14 text-lg";
+  const size = large ? "size-20 text-2xl" : "size-16 text-xl";
 
-  if (founder.photo) {
+  /* The square crop where there is one: a square box of a landscape frame
+     takes its whole height, so a face cannot be reached with
+     `object-position` alone. */
+  const frame = founder.thumb ?? founder.photo;
+
+  if (frame) {
     return (
       <span
         className={cn(
@@ -25,11 +30,12 @@ function Mark({ founder, large = false }: { founder: Founder; large?: boolean })
         )}
       >
         <Image
-          src={founder.photo.src}
-          alt={founder.photo.alt}
+          src={frame.src}
+          alt=""
           fill
           className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-110"
-          sizes={large ? "5rem" : "3.5rem"}
+          style={{ objectPosition: frame.focus }}
+          sizes={large ? "5rem" : "4rem"}
         />
       </span>
     );
@@ -157,18 +163,37 @@ export function CoolStuffSection() {
         }}
         className="dialog-pop max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/80 open:fixed open:inset-0 open:flex open:h-full open:w-full open:items-center open:justify-center"
       >
-        <div className="relative w-[92vw] max-w-lg rounded-xl border border-ink bg-surface p-6 sm:p-8">
+        <div className="relative max-h-[90vh] w-[92vw] max-w-lg overflow-y-auto rounded-xl border border-ink bg-surface p-6 sm:p-8">
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
             aria-label="Close"
-            className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-300 hover:border-ink hover:text-ink focus-visible:border-ink focus-visible:text-ink"
+            /* Carries its own background: with a photograph behind it, a bare
+               outline would disappear into the picture. */
+            className="absolute right-4 top-4 z-10 inline-flex size-9 items-center justify-center rounded-full border border-border bg-surface/90 text-muted-foreground backdrop-blur-sm transition-colors duration-300 hover:border-ink hover:text-ink focus-visible:border-ink focus-visible:text-ink"
           >
             <X aria-hidden="true" className="size-4" />
           </button>
 
+          {/* The photograph is the reward for the click: on the card it is a
+              thumbnail, here it runs the width of the panel. Every one of
+              these frames holds two or three people, so the focus point aims
+              the crop at the founder rather than the middle. */}
+          {founder.photo && (
+            <div className="relative mb-6 aspect-3/2 w-full overflow-hidden rounded-lg border border-border bg-muted">
+              <Image
+                src={founder.photo.src}
+                alt={founder.photo.alt}
+                fill
+                className="object-cover"
+                style={{ objectPosition: founder.photo.focus }}
+                sizes="(max-width: 640px) 92vw, 32rem"
+              />
+            </div>
+          )}
+
           <div className="flex items-start gap-5 pr-12">
-            <Mark founder={founder} large />
+            {!founder.photo && <Mark founder={founder} large />}
 
             <div className="min-w-0">
               <h3 className="display text-xl leading-tight sm:text-2xl">
