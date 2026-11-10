@@ -91,6 +91,19 @@ export const founders: Founder[] = [
     takeaway:
       "Don't fall in love with your ideas. Sometimes accepting that you're wrong is what moves a business forward.",
     linkedin: "https://www.linkedin.com/in/harimenon-bigbasket/",
+    photo: {
+      src: "/images/founder-hari-menon.jpg",
+      alt: "Mufaddal with Hari Menon of BigBasket",
+      width: 676,
+      height: 1200,
+      focus: "center 32%",
+    },
+    thumb: {
+      src: "/images/thumb-hari-menon.jpg",
+      alt: "Hari Menon",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "aniket-shah",
@@ -142,6 +155,19 @@ export const founders: Founder[] = [
     category: "D2C",
     takeaway:
       "When customers cannot touch a product, trust has to be built through curation, great visuals, product information and reliable fulfilment.",
+    photo: {
+      src: "/images/founder-garima-luthra.jpg",
+      alt: "Mufaddal with Garima Luthra of Vaaree and two classmates",
+      width: 1200,
+      height: 900,
+      focus: "center 42%",
+    },
+    thumb: {
+      src: "/images/thumb-garima-luthra.jpg",
+      alt: "Garima Luthra",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "ishan-sukul",
@@ -214,6 +240,19 @@ export const founders: Founder[] = [
     takeaway:
       "There's so much value in India's traditional crafts and textiles. Sometimes the opportunity is simply helping people rediscover what already exists.",
     linkedin: "https://www.linkedin.com/in/shivangchandna/",
+    photo: {
+      src: "/images/founder-shivang-chandna.jpg",
+      alt: "Mufaddal with Shivang Chandna after his fireside chat at Mesa School of Business",
+      width: 900,
+      height: 1200,
+      focus: "center 32%",
+    },
+    thumb: {
+      src: "/images/thumb-shivang-chandna.jpg",
+      alt: "Shivang Chandna",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "anindita-sampath",
