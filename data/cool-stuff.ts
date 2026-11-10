@@ -285,6 +285,47 @@ export const founders: Founder[] = [
       height: 420,
     },
   },
+  {
+    id: "dhananjay-yadav",
+    name: "Dhananjay Yadav",
+    company: "NeoSapien",
+    category: "Consumer tech",
+    takeaway:
+      "A screenless AI wearable — a necklace that listens, transcribes and acts like a second brain.",
+    photo: {
+      src: "/images/founder-dhananjay-yadav.jpg",
+      alt: "Mufaddal with Dhananjay Yadav of NeoSapien at the gym",
+      width: 1200,
+      height: 900,
+      focus: "center 32%",
+    },
+    thumb: {
+      src: "/images/thumb-dhananjay-yadav.jpg",
+      alt: "Dhananjay Yadav",
+      width: 420,
+      height: 420,
+    },
+  },
+  {
+    id: "sahib-aggarwal",
+    name: "Sahib Aggarwal",
+    company: "Zen Barefoot",
+    takeaway:
+      "Ran a kilometre with him and talked through the space I'm building in — every doubt I had, answered on the move.",
+    photo: {
+      src: "/images/founder-sahib-aggarwal.jpg",
+      alt: "Mufaddal with Sahib Aggarwal of Zen Barefoot at the gym",
+      width: 1200,
+      height: 900,
+      focus: "center 38%",
+    },
+    thumb: {
+      src: "/images/thumb-sahib-aggarwal.jpg",
+      alt: "Sahib Aggarwal",
+      width: 420,
+      height: 420,
+    },
+  },
 ];
 
 /**
