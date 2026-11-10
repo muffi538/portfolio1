@@ -139,6 +139,57 @@
   font-size: clamp(1.75rem, 4.2vw, 3rem);
 }
 
+/* A native <dialog> animates in and out of the top layer only if `display`
+   and `overlay` take part in the transition — hence `allow-discrete` — and
+   only if the open state has somewhere to come from, hence `@starting-style`.
+   Without both it simply pops. */
+.dialog-pop,
+.dialog-pop::backdrop {
+  transition:
+    opacity 0.28s ease,
+    scale 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    overlay 0.28s ease allow-discrete,
+    display 0.28s ease allow-discrete;
+}
+
+.dialog-pop {
+  opacity: 0;
+  scale: 0.97;
+}
+
+.dialog-pop[open] {
+  opacity: 1;
+  scale: 1;
+}
+
+.dialog-pop::backdrop {
+  opacity: 0;
+}
+
+.dialog-pop[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .dialog-pop[open] {
+    opacity: 0;
+    scale: 0.97;
+  }
+
+  .dialog-pop[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* The global reduced-motion rule shortens the transition but leaves the
+   discrete steps mid-flight, so it is switched off outright instead. */
+@media (prefers-reduced-motion: reduce) {
+  .dialog-pop,
+  .dialog-pop::backdrop {
+    transition: none !important;
+  }
+}
+
 /* The drift on the experience cards: a slow rise and fall, each card on its
    own duration and delay so the group never pulses in step. Driven through
    the `translate` property, which composes with the `transform` Framer Motion

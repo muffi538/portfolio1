@@ -155,7 +155,7 @@ export function CoolStuffSection() {
         onClick={(event) => {
           if (event.target === dialogRef.current) dialogRef.current?.close();
         }}
-        className="max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/80 open:fixed open:inset-0 open:flex open:h-full open:w-full open:items-center open:justify-center"
+        className="dialog-pop max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/80 open:fixed open:inset-0 open:flex open:h-full open:w-full open:items-center open:justify-center"
       >
         <div className="relative w-[92vw] max-w-lg rounded-xl border border-ink bg-surface p-6 sm:p-8">
           <button
