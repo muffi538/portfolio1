@@ -95,6 +95,19 @@ export const founders: Founder[] = [
     takeaway:
       "Marketing doesn't always need to look like marketing. Curiosity, clever placement and FOMO can make people discover a brand themselves.",
     linkedin: "https://www.linkedin.com/in/aniketshah30/",
+    photo: {
+      src: "/images/founder-aniket-shah.jpg",
+      alt: "Mufaddal with Aniket Shah at the Swish office",
+      width: 1200,
+      height: 900,
+      focus: "center 34%",
+    },
+    thumb: {
+      src: "/images/thumb-aniket-shah.jpg",
+      alt: "Aniket Shah",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "yash-kalra",
@@ -132,6 +145,19 @@ export const founders: Founder[] = [
     category: "Consumer tech",
     takeaway:
       "Build products around a real customer gap. Great technology means little if the product isn't accessible to the people who need it.",
+    photo: {
+      src: "/images/founder-ishan-sukul.jpg",
+      alt: "Mufaddal with Ishan Sukul at the Kreo office",
+      width: 900,
+      height: 1200,
+      focus: "center 30%",
+    },
+    thumb: {
+      src: "/images/thumb-ishan-sukul.jpg",
+      alt: "Ishan Sukul",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "shantanu-deshpande",
@@ -140,6 +166,19 @@ export const founders: Founder[] = [
     category: "D2C",
     takeaway:
       "One advertisement, one sharp message. Trying to communicate everything at once makes nothing memorable.",
+    photo: {
+      src: "/images/founder-shantanu-deshpande.jpg",
+      alt: "Mufaddal with Shantanu Deshpande",
+      width: 1200,
+      height: 813,
+      focus: "center 38%",
+    },
+    thumb: {
+      src: "/images/thumb-shantanu-deshpande.jpg",
+      alt: "Shantanu Deshpande",
+      width: 420,
+      height: 420,
+    },
   },
   {
     id: "kiran-shah",
