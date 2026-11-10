@@ -82,10 +82,10 @@ export function CoolStuffSection() {
   return (
     <Section
       id="cool-stuff"
-      eyebrow="05 / Cool stuff"
+      headingLevel="h1"
+      eyebrow="Cool stuff"
       title="Cool stuff."
       description="People I've met. Ideas I've stolen. Lessons I won't forget."
-      ruled
     >
       <Reveal>
         <p className="-mt-2 mb-9 max-w-2xl text-lg leading-relaxed">

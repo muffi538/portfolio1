@@ -4,7 +4,6 @@ import { SelectedWorkSection } from "@/components/sections/selected-work-section
 import { StudySection } from "@/components/sections/study-section";
 import { ExperiencePreviewSection } from "@/components/sections/experience-preview-section";
 import { MomentsSection } from "@/components/sections/moments-section";
-import { CoolStuffSection } from "@/components/sections/cool-stuff-section";
 
 export default function HomePage() {
   return (
@@ -15,7 +14,6 @@ export default function HomePage() {
       <MomentsSection />
       <SelectedWorkSection />
       <ExperiencePreviewSection />
-      <CoolStuffSection />
     </>
   );
 }

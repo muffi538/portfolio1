@@ -17,8 +17,8 @@ export default function NotFound() {
         <ButtonLink href="/projects" variant="outline">
           Projects
         </ButtonLink>
-        <ButtonLink href="/contact" variant="outline">
-          Contact
+        <ButtonLink href="/cool-stuff" variant="outline">
+          Cool stuff
         </ButtonLink>
       </div>
     </Section>
