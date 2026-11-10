@@ -18,6 +18,11 @@ export type Founder = {
   /** Industry label, e.g. "D2C". Left off where it would be a guess. */
   category?: string;
   takeaway: string;
+  /**
+   * A second thing worth keeping, shown only in the dialog. Set where one
+   * conversation left more than a single line behind.
+   */
+  more?: string;
   linkedin?: string;
   /**
    * The photograph in full, shown in the dialog. Falls back to the company
@@ -217,6 +222,29 @@ export const founders: Founder[] = [
     category: "Food",
     takeaway:
       "Building a new category means challenging existing consumer habits. Start with a real need and make people believe in a better alternative.",
+  },
+  {
+    id: "amarpreet-singh",
+    name: "Amar Preet Singh",
+    company: "Neeman's",
+    category: "D2C",
+    takeaway:
+      "You can't be the best in every category. Know who you're for, pick your niche and own it — people buy what a brand stands for.",
+    more:
+      "And in India a claim has to be exact. People will use a product for anything and everything, and if it doesn't hold up in that use, they'll say the product failed.",
+    photo: {
+      src: "/images/founder-amarpreet-singh.jpg",
+      alt: "Mufaddal with Amar Preet Singh of Neeman's",
+      width: 1200,
+      height: 900,
+      focus: "center 36%",
+    },
+    thumb: {
+      src: "/images/thumb-amarpreet-singh.jpg",
+      alt: "Amar Preet Singh",
+      width: 420,
+      height: 420,
+    },
   },
 ];
 

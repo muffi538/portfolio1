@@ -212,9 +212,11 @@ export function CoolStuffSection() {
             </div>
           </div>
 
-          <p className="mt-6 border-t border-border pt-6 text-base leading-relaxed">
-            {founder.takeaway}
-          </p>
+          <div className="mt-6 space-y-4 border-t border-border pt-6 text-base leading-relaxed">
+            <p>{founder.takeaway}</p>
+            {/* Only where one conversation left more than a single line. */}
+            {founder.more && <p className="text-muted-foreground">{founder.more}</p>}
+          </div>
 
           {founder.linkedin && (
             <a
