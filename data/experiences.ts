@@ -589,6 +589,14 @@ export const experience: ExperienceItem[] = [
             "The business roughly doubled its revenue over this period. The product was not the only reason — it ran alongside the growth, by freeing capacity that had been going into manual work.",
             "Built, deployed and in use inside a real operating business rather than a demo.",
           ],
+          image: {
+            src: "/images/procur-ai-pitch.jpg",
+            alt: "Mufaddal presenting Procur.AI to a room, the product on the screen behind him",
+            width: 900,
+            height: 1200,
+            ratio: "3 / 4",
+            focus: "center 45%",
+          },
         },
         {
           title: "Takeaways",

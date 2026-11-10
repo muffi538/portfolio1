@@ -77,6 +77,13 @@ export const projects: Project[] = [
     },
     images: [
       {
+        src: "/images/procur-ai-pitch.jpg",
+        alt: "Mufaddal presenting Procur.AI to a room, the product on the screen behind him",
+        width: 900,
+        height: 1200,
+        focus: "center 45%",
+      },
+      {
         src: "/images/procur-ai-landing.jpg",
         alt: "Procur.AI landing page reading From inbox to supplier. Instantly.",
         width: 792,
