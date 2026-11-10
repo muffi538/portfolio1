@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/utils";
 import { founders } from "@/data/cool-stuff";
+import { doing } from "@/data/doing";
 
 type Chapter = {
   title: string;
@@ -15,11 +16,8 @@ type Chapter = {
 };
 
 /**
- * The chapters of Cool stuff.
- *
- * The second is listed but not linked: it is named and planned, and nothing
- * has been written for it yet. Showing it inert is honest — inventing
- * contents to fill it would not be.
+ * The chapters of Cool stuff. A chapter with nothing in it yet would be
+ * listed without a link rather than invented into existence.
  */
 const chapters: Chapter[] = [
   {
@@ -30,7 +28,9 @@ const chapters: Chapter[] = [
   },
   {
     title: "Doing cool stuff",
-    description: "Coming soon.",
+    description: "Trips, factory floors and one very good paan advert.",
+    count: `${doing.length} things`,
+    href: "/cool-stuff/doing",
   },
 ];
 
