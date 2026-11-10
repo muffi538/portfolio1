@@ -77,7 +77,7 @@ export function ImageLightbox({ images }: { images: AwardImage[] }) {
         }}
         /* `backdrop:bg-black/85` rather than the ink token: `::backdrop` does
            not reliably inherit custom properties across browsers. */
-        className="max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85 open:fixed open:inset-0 open:flex open:h-full open:w-full open:items-center open:justify-center"
+        className="dialog-pop max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85 open:fixed open:inset-0 open:flex open:h-full open:w-full open:items-center open:justify-center"
       >
         <figure
           className="relative flex max-h-[90vh] w-[92vw] max-w-4xl flex-col items-center gap-5"
