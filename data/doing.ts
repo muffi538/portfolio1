@@ -55,6 +55,16 @@ export const doing: Doing[] = [
       height: 801,
       focus: "center 55%",
     },
+    video: {
+      src: "/video/tanzania-free-kick.mp4",
+      poster: {
+        src: "/images/tanzania-goal-poster.jpg",
+        alt: "Mufaddal on the pitch at the Pongwe Cup, the scoreboard behind him",
+        width: 832,
+        height: 464,
+      },
+      caption: "The free kick, at the Pongwe Cup.",
+    },
     gallery: [
       {
         src: "/images/tanzania-kit.jpg",

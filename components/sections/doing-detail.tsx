@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { cn } from "@/lib/utils";
 import type { Doing } from "@/data/doing";
 
 /**
@@ -17,6 +18,12 @@ export function DoingDetail({ item }: { item: Doing }) {
   const frames = [item.photo, ...(item.gallery ?? [])].filter(
     (frame): frame is NonNullable<typeof frame> => Boolean(frame),
   );
+
+  // A phone-shot clip stands tall and a match clip lies wide; the player is
+  // held to a width that suits whichever this one is.
+  const portraitClip = item.video
+    ? item.video.poster.height > item.video.poster.width
+    : false;
 
   return (
     <>
@@ -78,7 +85,10 @@ export function DoingDetail({ item }: { item: Doing }) {
                     poster={item.video.poster.src}
                     width={item.video.poster.width}
                     height={item.video.poster.height}
-                    className="mx-auto w-full max-w-sm rounded-lg border border-ink bg-ink"
+                    className={cn(
+                      "mx-auto w-full rounded-lg border border-ink bg-ink",
+                      portraitClip ? "max-w-sm" : "max-w-3xl",
+                    )}
                   >
                     <source src={item.video.src} type="video/mp4" />
                     Your browser cannot play this video.
@@ -99,21 +109,24 @@ export function DoingDetail({ item }: { item: Doing }) {
                 </p>
               </Reveal>
 
-              {/* CSS columns, so each frame keeps its own shape rather than
-                  being cropped to a common one. */}
-              <ul className="mt-6 columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-6">
+              {/* One square box per frame, so the rows line up however the
+                  photographs themselves were shot. Each keeps its own focus
+                  point, so the crop lands on the subject. */}
+              <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:gap-6">
                 {frames.map((frame, i) => (
-                  <li key={frame.src} className="mb-5 break-inside-avoid lg:mb-6">
+                  <li key={frame.src}>
                     <Reveal delay={Math.min(i, 5) * 0.05}>
-                      <Image
-                        src={frame.src}
-                        alt={frame.alt}
-                        width={frame.width}
-                        height={frame.height}
-                        priority={i === 0}
-                        className="h-auto w-full rounded-lg border border-border bg-muted"
-                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 30vw"
-                      />
+                      <div className="group relative aspect-square w-full overflow-hidden rounded-lg border border-border bg-muted">
+                        <Image
+                          src={frame.src}
+                          alt={frame.alt}
+                          fill
+                          priority={i === 0}
+                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                          style={{ objectPosition: frame.focus }}
+                          sizes="(max-width: 640px) 46vw, (max-width: 1024px) 31vw, 30vw"
+                        />
+                      </div>
                     </Reveal>
                   </li>
                 ))}
