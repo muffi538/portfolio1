@@ -141,9 +141,44 @@ export const doing: Doing[] = [
     description:
       "Followed milk the whole way — how it's produced, how it's processed, and how it reaches the person who buys it.",
     body: [
-      "An immersion at Sid's Farm, following milk the whole way: how it is produced, how it is processed, and how it reaches the person who buys it.",
+      "An immersion at Sid's Farm, following milk the whole way: the herd, the processing floor, and the pack that ends up in somebody's fridge.",
+      "Saw how the cows are kept and how the compost beds work, went into the plant in a hairnet, and came out holding the A2 milk and the lassi that come off the end of it.",
     ],
     mark: "SF",
+    photo: {
+      src: "/images/sids-farm-calf.jpg",
+      alt: "Mufaddal with a calf at Sid's Farm",
+      width: 900,
+      height: 1200,
+      focus: "center 40%",
+    },
+    gallery: [
+      {
+        src: "/images/sids-farm-plant.jpg",
+        alt: "Mufaddal in a hairnet and mask inside the Sid's Farm processing unit, milk cans behind",
+        width: 750,
+        height: 1000,
+        focus: "center 40%",
+      },
+      {
+        src: "/images/sids-farm-milk.jpg",
+        alt: "A pouch of Sid's Farm A2 desi cow milk",
+        width: 675,
+        height: 900,
+      },
+      {
+        src: "/images/sids-farm-lassi.jpg",
+        alt: "A cup of Sid's Farm sweet lassi",
+        width: 675,
+        height: 900,
+      },
+      {
+        src: "/images/sids-farm-compost.jpg",
+        alt: "An earthworm held over the compost bed at the farm",
+        width: 675,
+        height: 900,
+      },
+    ],
   },
   {
     slug: "dev-components",
