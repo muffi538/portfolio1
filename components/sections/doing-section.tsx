@@ -12,7 +12,7 @@ import { doing, type Doing } from "@/data/doing";
  * the grid stays even either way.
  */
 function Frame({ item }: { item: Doing }) {
-  const image = item.thumb ?? item.photo;
+  const image = item.photo;
 
   if (image) {
     return (
@@ -41,27 +41,35 @@ function Frame({ item }: { item: Doing }) {
   );
 }
 
-/** One thing done, with everything on the face of the card. */
+/** One thing done. The card opens the entry's own page. */
 function DoingCard({ item }: { item: Doing }) {
   return (
-    <article
+    <Link
+      href={`/cool-stuff/doing/${item.slug}`}
       className={cn(
         "group flex flex-col overflow-hidden rounded-xl border border-border bg-surface",
         "transition-all duration-500 ease-out hover:-translate-y-1 hover:border-accent",
         "hover:shadow-[0_22px_44px_-30px_rgb(17_17_17/0.45)]",
+        "focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink",
       )}
     >
       <Frame item={item} />
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="display relative inline-block self-start text-lg leading-tight">
-          {item.title}
-          {/* Accent rule, drawn from the left when the card is hovered. */}
-          <span
+        <div className="flex items-start gap-3">
+          <h3 className="display relative inline-block flex-1 text-lg leading-tight">
+            {item.title}
+            {/* Accent rule, drawn from the left when the card is hovered. */}
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:scale-x-100"
+            />
+          </h3>
+          <ArrowUpRight
             aria-hidden="true"
-            className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:scale-x-100"
+            className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-all duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
           />
-        </h3>
+        </div>
 
         <p className="mt-2.5 flex flex-wrap items-center gap-2">
           <span className="text-sm font-bold text-muted-foreground">{item.context}</span>
@@ -74,43 +82,9 @@ function DoingCard({ item }: { item: Doing }) {
           {item.description}
         </p>
 
-        {/* The rest of the day, kept on the card rather than behind a click. */}
-        {item.gallery && item.gallery.length > 0 && (
-          <ul className="mt-4 grid grid-cols-3 gap-2">
-            {item.gallery.map((frame) => (
-              <li
-                key={frame.src}
-                className="relative aspect-square overflow-hidden rounded-md border border-border bg-muted"
-              >
-                <Image
-                  src={frame.src}
-                  alt={frame.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                  style={{ objectPosition: frame.focus }}
-                  sizes="7rem"
-                />
-              </li>
-            ))}
-          </ul>
-        )}
 
-        {item.link && (
-          <a
-            href={item.link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/link mt-auto inline-flex items-center gap-1.5 self-start pt-5 text-sm font-bold underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent"
-          >
-            {item.link.label}
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-300 ease-out group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-            />
-          </a>
-        )}
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -122,7 +96,7 @@ export function DoingSection() {
       headingLevel="h1"
       eyebrow={`Cool stuff · ${doing.length} so far`}
       title="Doing cool stuff"
-      description="Trips, factory floors and one very good paan advert. The things worth remembering that weren't a job or a project."
+      description="Trips, factory floors and an advert that beat 500 people. The things worth remembering that weren't a job or a project."
     >
       {/* CSS columns rather than a grid: an entry with a gallery stands much
           taller than one without, and a grid row equalises to the tallest,
@@ -130,7 +104,7 @@ export function DoingSection() {
           its own height and the browser packs them. */}
       <ul className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-6">
         {doing.map((item, i) => (
-          <li key={item.id} className="mb-5 break-inside-avoid lg:mb-6">
+          <li key={item.slug} className="mb-5 break-inside-avoid lg:mb-6">
             <Reveal delay={Math.min(i, 5) * 0.05}>
               <DoingCard item={item} />
             </Reveal>

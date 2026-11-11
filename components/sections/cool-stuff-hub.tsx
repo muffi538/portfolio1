@@ -28,7 +28,7 @@ const chapters: Chapter[] = [
   },
   {
     title: "Doing cool stuff",
-    description: "Trips, factory floors and one very good paan advert.",
+    description: "Trips, factory floors and an advert that beat 500 people.",
     count: `${doing.length} things`,
     href: "/cool-stuff/doing",
   },
