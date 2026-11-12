@@ -276,6 +276,12 @@ export const founders: Founder[] = [
     category: "Food",
     takeaway:
       "Building a new category means challenging existing consumer habits. Start with a real need and make people believe in a better alternative.",
+    photo: {
+      src: "/images/founder-anindita-sampath.jpg",
+      alt: "Mufaddal with Anindita Sampath of Yoga Bar after a fireside session",
+      width: 1200,
+      height: 900,
+    },
   },
   {
     id: "amarpreet-singh",
