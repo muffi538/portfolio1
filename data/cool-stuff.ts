@@ -357,6 +357,21 @@ export const founders: Founder[] = [
       height: 420,
     },
   },
+  {
+    id: "vinay-kothari",
+    name: "Vinay Kothari",
+    company: "GO DESi",
+    category: "Food",
+    takeaway:
+      "A product that already exists in a village can become a national brand. The hard part isn't inventing something new — it's the sourcing, the packaging and the distribution that get it onto shelves across the country.",
+    photo: {
+      src: "/images/founder-vinay-kothari.jpg",
+      alt: "Mufaddal with Vinay Kothari of GO DESi",
+      width: 900,
+      height: 1200,
+      focus: "center 15%",
+    },
+  },
 ];
 
 /**
