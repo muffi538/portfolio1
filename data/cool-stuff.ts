@@ -14,10 +14,17 @@ import type { SectionImage } from "@/lib/types";
 export type Founder = {
   id: string;
   name: string;
-  company: string;
+  /** Where they work. Left off for someone whose name is the thing itself. */
+  company?: string;
   /** Industry label, e.g. "D2C". Left off where it would be a guess. */
   category?: string;
-  takeaway: string;
+  /** What Mufaddal took from the conversation. */
+  takeaway?: string;
+  /**
+   * Who they are, in a line. Stands in the takeaway's place until Mufaddal
+   * has written one, so a card says something true rather than nothing.
+   */
+  about?: string;
   /**
    * A second thing worth keeping. Set where one conversation left more than
    * a single line behind.
@@ -370,6 +377,45 @@ export const founders: Founder[] = [
       width: 900,
       height: 1200,
       focus: "center 15%",
+    },
+  },
+  {
+    id: "akshay-gulati",
+    name: "Akshay Gulati",
+    company: "Slikk",
+    category: "Consumer tech",
+    takeaway:
+      "Speed can be the product. Slikk puts clothes at your door in an hour and lets you try them before you keep them — the logistics are the reason people come back, not the catalogue.",
+    photo: {
+      src: "/images/founder-akshay-gulati.jpg",
+      alt: "Mufaddal with Akshay Gulati of Slikk",
+      width: 1200,
+      height: 900,
+    },
+  },
+  {
+    id: "ishan-varma",
+    name: "Ishan Varma",
+    category: "Creator",
+    about: "A creator, and one of the bigger names on Instagram.",
+    photo: {
+      src: "/images/founder-ishan-varma.jpg",
+      alt: "Mufaddal with Ishan Varma",
+      width: 1200,
+      height: 900,
+    },
+  },
+  {
+    id: "saad-sells",
+    name: "Saad Sells",
+    category: "Sales",
+    about: "A sales creator, with about a million followers on Instagram.",
+    photo: {
+      src: "/images/founder-saad.jpg",
+      alt: "Mufaddal with Saad Sells",
+      width: 900,
+      height: 1200,
+      focus: "center 25%",
     },
   },
 ];

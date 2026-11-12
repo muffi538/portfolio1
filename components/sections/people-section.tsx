@@ -36,7 +36,7 @@ function Frame({ founder }: { founder: Founder }) {
       className="flex aspect-4/3 w-full items-center justify-center border-b border-border bg-muted transition-colors duration-500 group-hover:bg-accent/15"
     >
       <span className="display text-4xl text-ink/70 transition-transform duration-500 ease-out group-hover:scale-105">
-        {monogram(founder.company)}
+        {monogram(founder.company ?? founder.name)}
       </span>
     </div>
   );
@@ -72,9 +72,11 @@ function PersonCard({ founder }: { founder: Founder }) {
         </h3>
 
         <p className="mt-2.5 flex flex-wrap items-center gap-2">
-          <span className="text-sm font-bold text-muted-foreground">
-            {founder.company}
-          </span>
+          {founder.company && (
+            <span className="text-sm font-bold text-muted-foreground">
+              {founder.company}
+            </span>
+          )}
           {founder.category && (
             <span className="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-500 group-hover:border-accent group-hover:text-ink">
               {founder.category}
@@ -82,9 +84,12 @@ function PersonCard({ founder }: { founder: Founder }) {
           )}
         </p>
 
-        <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-ink">
-          {founder.takeaway}
-        </p>
+        {/* The learning where one is written, and who they are until then. */}
+        {(founder.takeaway ?? founder.about) && (
+          <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-ink">
+            {founder.takeaway ?? founder.about}
+          </p>
+        )}
 
         {founder.more && (
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
